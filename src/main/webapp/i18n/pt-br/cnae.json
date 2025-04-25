@@ -1,0 +1,20 @@
+{
+    "nfseApp": {
+        "cnae": {
+            "home": {
+                "title": "Cnaes",
+                "createLabel": "Criar um novo Cnae",
+                "createOrEditLabel": "Criar ou editar CNAE"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Cnae {{ id }}?"
+            },
+            "detail": {
+                "title": "Cnae"
+            },
+            "codigo": "Codigo",
+            "descricao": "Descricao",
+            "ativo": "Ativo"
+        }
+    }
+}

@@ -1,0 +1,59 @@
+# Disable the spring security default configuration from spring-boot-actuator
+# Disable the spring security default configuration from spring-boot-actuator
+management.security.enabled: true
+security.basic.enabled: true
+
+# Disable Jolokia - An http/json bridge for remote JMX access
+endpoints.jolokia.enabled: false
+
+# security configuration (this key should be unique for your application, and kept secret)
+jhipster.security.rememberme.key: 945b54c6e67249e1d4d866dd045d08329d98698c
+
+async:
+    corePoolSize: 2
+    maxPoolSize: 50
+    queueCapacity: 10000
+
+authentication:
+    oauth:
+        clientid: nfseapp
+        secret: mySecretOAuthSecret
+        # Token is valid 30 minutes
+        tokenValidityInSeconds: 1800
+
+swagger:
+    title: nfse API
+    description: nfse applications and beyond!
+    version: 0.0.1
+    termsOfServiceUrl: http://jhipster.github.io/
+    contact:
+    license: Apache 2.0
+    licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.html
+
+app:
+    name: ^project.artifactId^
+    version: ^project.version^
+    timestamp: ^timestamp^
+
+webpublico:
+    api-key: fcc5f16f-452b-478e-8803-6d3d33fc68bf
+
+management:
+    endpoint:
+        health:
+            show-details: always
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+    health:
+        mail:
+            enabled: false
+
+urls:
+    nfse: http://localhost:8484
+    webpublico: http://localhost:8080
+    damService: http://localhost:8083
+    rpsService: http://localhost:8081
+
+queueEnviarEmail: enviarEmail

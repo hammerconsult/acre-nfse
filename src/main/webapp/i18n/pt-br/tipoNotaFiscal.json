@@ -1,0 +1,10 @@
+{
+    "nfseApp": {
+        "TipoPorte": {
+            "null": "",
+            "ELETRONICA": "Eletrônica",
+            "CONVENCIONAL": "Convencional",
+            "NAO_EMITE": "Não Emite"
+        }
+    }
+}

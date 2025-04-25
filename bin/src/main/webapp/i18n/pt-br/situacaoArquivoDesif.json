@@ -1,0 +1,11 @@
+{
+  "nfseApp": {
+    "SituacaoArquivoDesif": {
+      "null": "",
+      "AGUARDANDO": "Aguardando",
+      "EM_PROCESSAMENTO": "Em Processamento",
+      "PROCESSADO": "Processado",
+      "INCONSISTENTE": "Inconsistênte"
+    }
+  }
+}

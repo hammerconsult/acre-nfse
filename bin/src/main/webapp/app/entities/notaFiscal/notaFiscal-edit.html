@@ -1,0 +1,1279 @@
+<div class="row">
+    <div class="col-lg-12">
+        <form name="editForm" role="form" novalidate>
+
+            <div class="ibox" style="z-index: 9999 !important;">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12 small">
+
+                            <div class="form-group col-md-6">
+                                <label
+                                        for="field_prestador_servicos">Prestador</label>
+
+                                <input enter-as-tab type="text" class="form-control" name="field_prestador_servicos"
+                                       id="field_prestador_servicos"
+                                       disabled
+                                       value="{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.nomeRazaoSocial}} ({{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.cpfCnpj | brCpfCnpj}})">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label
+                                        for="field_prestador_servicos">Tipo de ISSQN</label>
+
+                                <input enter-as-tab type="text" class="form-control" name="field_tipoIssqn"
+                                       id="field_tipoIssqn"
+                                       disabled
+                                       title="{{'nfseApp.TipoIssqn.' + notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.tipoIssqn | translate}}"
+                                       value="{{'nfseApp.TipoIssqn.' + notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.tipoIssqn | translate}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox"
+                 ng-show="notaFiscal.rps && passoAtual == passos.tipoTomador">
+                <div class="ibox-content">
+                    <div class="row animated fadeInDown">
+                        <div class="form-group col-md-12">
+                            <h3>Dados do Rps</h3>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label
+                                    for="field_numeroRps">Número</label>
+
+                            <input enter-as-tab type="text" class="form-control" name="numeroRps"
+                                   id="field_numeroRps"
+                                   required
+                                   ng-blur="handleNumeroRps()"
+                                   ng-model="notaFiscal.rps.numero">
+
+                            <p class="help-block"
+                               ng-show="editForm.numeroRps.$error.required">
+                                Informe o Número do RPS
+                            </p>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label
+                                    for="field_serieRps">Série</label>
+
+                            <input enter-as-tab type="text" class="form-control" name="serieRps"
+                                   id="field_serieRps"
+                                   ng-model="notaFiscal.rps.serie">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label>Data de Emissão</label>
+                            <p class="input-group">
+                                <input type="date" class="form-control"
+                                       datepicker-popup
+                                       ng-model="notaFiscal.rps.dataEmissao"
+                                       ng-blur="handleDataEmissaoRps()"
+                                       name="emissaoRps"
+                                       is-open="opened"/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event)">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                </span>
+                            </p>
+
+                            <p class="help-block"
+                               ng-show="editForm.emissaoRps.$error.required">
+                                Informe a Emissão do RPS
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox" ng-show="passoAtual == passos.tipoTomador">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Para quem foi prestado o serviço? </h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button class="btn btn-primary btn-block"
+                                    ng-class="{'btn-outline': notaFiscal.modalidade != 'IDENTIFICADO'}"
+                                    ng-click="changeModalidade('IDENTIFICADO')"
+                                    type="button">
+                                <i class="fa {{notaFiscal.modalidade == 'IDENTIFICADO'? 'fa-check-circle-o':'fa-circle-o'}}"></i>
+                                Tomador Identificado
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary btn-block"
+                                    ng-click="changeModalidade('SEM_CPF')"
+                                    ng-class="{'btn-outline': notaFiscal.modalidade != 'SEM_CPF'}"
+                                    type="button">
+                                <i class="fa {{notaFiscal.modalidade == 'SEM_CPF'? 'fa-check-circle-o':'fa-circle-o'}}"></i>
+                                Tomador Estrangeiro
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary btn-outline btn-block"
+                                    ng-class="{'btn-outline': notaFiscal.modalidade != 'NAO_IDENTIFICADO'}"
+                                    ng-click="changeModalidade('NAO_IDENTIFICADO')"
+                                    type="button">
+                                <i class="fa {{notaFiscal.modalidade == 'NAO_IDENTIFICADO'? 'fa-check-circle-o':'fa-circle-o'}}"></i>
+                                Não Identificado (Consumidor)
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row m-t-sm">
+                        <div class="col-md-12">
+                            <div class="row animated fadeInDown" ng-show="notaFiscal.modalidade == 'IDENTIFICADO'">
+                                <div class="form-group col-md-4"
+                                     ng-class="{'has-error' : editForm.cpfCnpj.$invalid && (editForm.$submitted || editForm.cpfCnpj.$touched)}">
+                                    <label class="control-label">
+                                        {{tipoPessoa == 'JURIDICA' ? 'CNPJ' : 'CPF'}}</label>
+
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-white"
+                                                    title="Clique para alterar para Jurídica"
+                                                    ng-click="changeTipoPessoa()"
+                                                    ng-show="tipoPessoa == 'FISICA'"
+                                                    type="button">
+                                                <span>Física</span>
+                                                <i class="fa fa-exchange"></i>
+                                            </button>
+                                            <button class="btn btn-white"
+                                                    title="Clique para alterar para Física"
+                                                    ng-click="changeTipoPessoa()"
+                                                    ng-show="tipoPessoa == 'JURIDICA'"
+                                                    type="button">
+                                                <span>Jurídica</span>
+                                                <i class="fa fa-exchange"></i>
+                                            </button>
+                                        </span>
+                                        <input enter-as-tab type="text" class="form-control"
+                                               ng-show="tipoPessoa == 'FISICA'"
+                                               name="cpf"
+                                               ui-br-cpf-mask
+                                               ng-change="preLoadTomador(editForm.cpf.$valid)"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.cpfCnpj"
+                                               required>
+                                        <input enter-as-tab type="text" class="form-control"
+                                               name="cnpj"
+                                               ng-show="tipoPessoa == 'JURIDICA'"
+                                               ui-br-cnpj-mask
+                                               ng-change="preLoadTomador(editForm.cnpj.$valid)"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.cpfCnpj"
+                                               required>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-success"
+                                                    ng-click="searchTomadorServico()">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                                    </div>
+                                    <div ng-show="editForm.cpf.$invalid || editForm.cnpj.$invalid">
+                                        <p class="help-block"
+                                           ng-show="(tipoPessoa == 'FISICA' && editForm.cpf.$error.required) ||
+                                           (tipoPessoa == 'JURIDICA' && editForm.cnpj.$error.required)">
+                                            Informe o {{tipoPessoa == 'JURIDICA' ? 'CNPJ' : 'CPF'}}
+                                        </p>
+
+                                        <p class="help-block"
+                                           ng-show="(tipoPessoa == 'FISICA' && editForm.cpf.$error.cpf)
+                                            || (tipoPessoa == 'JURIDICA' && editForm.cnpj.$error.cnpj)">
+                                            {{tipoPessoa == 'JURIDICA' ? 'CNPJ' : 'CPF'}} inválido
+                                        </p>
+                                    </div>
+                                    <div ng-show="notaFiscal.substitutoTributario">
+                                        <p class="help-block">
+                                            Substituto Tributário
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label
+                                            for="field_prestadoNoPais">Tomador Habitual?</label>
+                                    <div class="switch">
+                                        <div class="onoffswitch">
+                                            <input enter-as-tab type="checkbox" checked name="tomadorHabitual"
+                                                   ng-model="notaFiscal.tomadorHabitual"
+                                                   class="onoffswitch-checkbox"
+                                                   id="field_tomadorHabitual">
+                                            <label class="onoffswitch-label"
+                                                   for="field_tomadorHabitual">
+                                                <span class="onoffswitch-inner"></span>
+                                                <span class="onoffswitch-switch"></span>
+                                                <span class="onoffswitch-switch"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-show="((tipoPessoa == 'FISICA' && editForm.cpf.$valid) || (tipoPessoa == 'JURIDICA' && editForm.cnpj.$valid))
+                            || notaFiscal.modalidade == 'SEM_CPF'"
+                                 class="fadeInDown animated">
+                                <div class="row" ng-show="!isFisica()">
+                                    <div class="form-group col-md-4">
+                                        <label
+                                                for="field_inscricaoMunicipal">Inscrição Municipal</label>
+
+                                        <input enter-as-tab type="text" class="form-control" name="inscricaoMunicipal"
+                                               id="field_inscricaoMunicipal"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.inscricaoMunicipal">
+                                    </div>
+
+                                    <div class="form-group col-md-8">
+                                        <label
+                                                class="control-label"
+                                                for="field_nomeFantasia">Nome Fantasia</label>
+                                        <input enter-as-tab type="text" class="form-control" name="nomeFantasia"
+                                               id="field_nomeFantasia"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.nomeFantasia">
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-4"
+                                         ng-show="!isFisica()"
+                                         ng-class="{'has-error' : editForm.inscricaoEstadual.$invalid && (editForm.$submitted || editForm.inscricaoEstadual.$touched)}">
+                                        <label
+                                                class="control-label"
+                                                for="field_inscricaoEstadual">
+                                            Inscrição Estadual
+                                        </label>
+
+                                        <input enter-as-tab type="text" class="form-control" name="inscricaoEstadual"
+                                               id="field_inscricaoEstadual"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.inscricaoEstadualRg">
+
+
+                                    </div>
+
+                                    <div class="form-group col-md-4"
+                                         ng-show="isFisica() && notaFiscal.modalidade != 'SEM_CPF'"
+                                         ng-class="{'has-error' : editForm.rg.$invalid  && (editForm.$submitted || editForm.rg.$touched)}">
+                                        <label
+                                                class="control-label"
+                                                for="field_rg">
+                                            RG
+                                        </label>
+
+                                        <input enter-as-tab type="text" class="form-control" name="rg"
+                                               id="field_rg"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.inscricaoEstadualRg">
+
+                                    </div>
+
+                                    <div
+                                            class="form-group {{isFisica() && notaFiscal.modalidade != 'SEM_CPF' ? 'col-md-8': 'col-md-4'}}"
+                                            ng-class="{'has-error' : editForm.nomeRazaoSocial.$invalid && (editForm.$submitted || editForm.nomeRazaoSocial.$touched)}">
+                                        <label
+                                                class="control-label"
+                                                for="field_nomeRazaoSocial">
+                                            {{notaFiscal.modalidade == 'SEM_CPF' ? 'Nome ou Razão Social ' : isFisica() ? 'Nome' : 'Razão Social'}}
+                                        </label>
+
+                                        <input enter-as-tab type="text" class="form-control" name="nomeRazaoSocial"
+                                               id="field_nomeRazaoSocial"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.nomeRazaoSocial"
+                                               required>
+
+                                        <div ng-show="editForm.nomeRazaoSocial.$invalid" class="has-error">
+                                            <p class="help-block"
+                                               ng-show="editForm.nomeRazaoSocial.$error.required">
+                                                O campo é obrigatório.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-4"
+                                         ng-show="notaFiscal.modalidade === 'SEM_CPF'"
+                                         ng-class="{'has-error' : editForm.cpfCnpjEstrangeiro.$invalid && (editForm.$submitted || editForm.cpfCnpjEstrangeiro.$touched)}">
+                                        <label
+                                                class="control-label"
+                                                for="field_cpfCnpjEstrangeiro">CPF ou CNPJ</label>
+
+                                        <input enter-as-tab type="text" class="form-control" name="cpfCnpjEstrangeiro"
+                                               id="field_cpfCnpjEstrangeiro"
+                                               ui-br-cpfcnpj-mask
+                                               ng-model="notaFiscal.tomador.dadosPessoais.cpfCnpj">
+
+
+                                        <div ng-show="editForm.cpfCnpjEstrangeiro.$invalid">
+                                            <p class="help-block"
+                                               ng-show="editForm.cpfCnpjEstrangeiro.$error.cpf || editForm.cpfCnpjEstrangeiro.$error.cnpj">
+                                                CPF ou CNPJ inválido
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div ng-show="notaFiscal.modalidade === 'SEM_CPF'"
+                                         class="form-group col-md-4">
+                                        <label
+                                                class="control-label"
+                                                for="field_identificacaoFora">
+                                            Nº. Identificação
+                                        </label>
+
+                                        <input enter-as-tab type="text" class="form-control"
+                                               name="field_identificacaoFora"
+                                               id="field_identificacaoFora"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.numeroIdentificacao"
+                                        >
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label for="field_apelido">Apelido</label>
+                                        <input enter-as-tab type="text" class="form-control" name="email"
+                                               id="field_apelido"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.apelido">
+
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                        <label for="field_email">e-Mail</label>
+                                        <input enter-as-tab type="text" class="form-control" name="email"
+                                               id="field_email"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.email">
+
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <label
+                                                for="field_telefone">Telefone</label>
+                                        <input enter-as-tab type="text" class="form-control" name="telefone"
+                                               id="field_telefone"
+                                               ui-br-phone-number
+                                               ng-model="notaFiscal.tomador.dadosPessoais.telefone">
+                                    </div>
+                                </div>
+
+                                <div class="row fadeInDown animated"
+                                     ng-show="notaFiscal.modalidade == 'SEM_CPF'">
+
+                                    <div class="form-group col-md-6">
+                                        <label for="field_apelido">Município</label>
+                                        <input enter-as-tab type="text" class="form-control" name="email"
+                                               id="field_municipio_fora"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.municipio.nome">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="field_servico_nome_pais">Pais</label>
+                                        <div class="input-group">
+                                            <input enter-as-tab type="text" class="form-control" name="field_pais_fora"
+                                                   id="field_pais_fora"
+                                                   disabled
+                                                   value="{{notaFiscal.tomador.dadosPessoais.pais.nome}}">
+                                            <span class="input-group-btn">
+                                            <button type="button" class="btn"
+                                                    ng-click="searchPais(notaFiscal.tomador.dadosPessoais)">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row fadeInDown animated"
+                                     ng-show="notaFiscal.modalidade == 'IDENTIFICADO' || notaFiscal.modalidade == 'SEM_CPF' ">
+
+                                    <div class="form-group col-md-2"
+                                         ng-class="{'has-error' : editForm.cep.$invalid && (editForm.cep.$touched)}">
+                                        <label for="field_cep">Cep</label>
+                                        <input enter-as-tab type="text" class="form-control"
+                                               name="cep"
+                                               id="field_cep"
+                                               ng-required="notaFiscal.modalidade == 'IDENTIFICADO'"
+                                               ui-br-cep-mask
+                                               ng-blur="loadEnderecoByCEP(notaFiscal.tomador.dadosPessoais.cep)"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.cep">
+
+                                        <div ng-show="editForm.cep.$invalid" class="has-error">
+                                            <p class="help-block"
+                                               ng-show="editForm.cep.$error.required">
+                                                O campo é obrigatório
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-8"
+                                         ng-class="{'has-error' : editForm.nome_municipio.$invalid && (editForm.nome_municipio.$touched)}"
+                                         ng-show="notaFiscal.modalidade == 'IDENTIFICADO'">
+                                        <label for="field_nome_municipio">Município</label>
+                                        <div class="input-group">
+                                            <input enter-as-tab type="text" class="form-control" name="nome_municipio"
+                                                   id="field_nome_municipio"
+                                                   disabled
+                                                   required
+                                                   ng-model="notaFiscal.tomador.dadosPessoais.municipio.nome">
+                                            <span class="input-group-btn">
+                                            <button type="button" class="btn  btn-success"
+                                                    ng-click="searchMunicipio(notaFiscal.tomador.dadosPessoais)">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                                        </div>
+                                        <div ng-show="editForm.nome_municipio.$invalid" class="has-error">
+                                            <p class="help-block"
+                                               ng-show="editForm.nome_municipio.$error.required">
+                                                O campo é obrigatório
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-2"
+                                         ng-class="{'has-error' : editForm.estado_municipio.$invalid && (editForm.estado_municipio.$touched)}"
+                                         ng-show="notaFiscal.modalidade == 'IDENTIFICADO'">
+                                        <label for="field_estado_municipio">Estado</label>
+                                        <input enter-as-tab type="text" class="form-control" name="estado_municipio"
+                                               id="field_estado_municipio"
+                                               required
+                                               disabled
+                                               ng-model="notaFiscal.tomador.dadosPessoais.municipio.estado">
+                                    </div>
+
+                                    <div class="form-group {{notaFiscal.modalidade == 'IDENTIFICADO' ? 'col-md-12': 'col-md-10'}}">
+                                        <label
+                                                for="field_logradouro">Logradouro</label>
+                                        <input enter-as-tab type="text" class="form-control" name="logradouro"
+                                               id="field_logradouro"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.logradouro">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="field_bairro">Bairro</label>
+                                        <input enter-as-tab type="text" class="form-control" name="bairro"
+                                               id="field_bairro"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.bairro">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="field_numero">Número</label>
+                                        <input enter-as-tab type="text" class="form-control" name="numero"
+                                               id="field_numero"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.numero">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label
+                                                for="field_complemento">Complemento</label>
+                                        <input enter-as-tab type="text" class="form-control" name="complemento"
+                                               id="field_complemento"
+                                               ng-model="notaFiscal.tomador.dadosPessoais.complemento">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-show="notaFiscal.modalidade && passoAtual == passos.tipoTomador">
+                        <div class="col-md-12">
+                            <button class="btn btn-success"
+                                    ng-click="proximoPasso(); verificarExigibilidadeIss()"
+                                    type="button">
+                                <i class="fa fa-chevron-right"></i>
+                                Continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox" ng-show="passoAtual == passos.servico">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Qual o serviço prestado? </h3>
+                        </div>
+                    </div>
+
+                    <div class="fadeInDown">
+                        <div class="row m-t-md">
+
+                            <div class="form-group col-md-2">
+                                <label
+                                        for="field_prestadoNoPais">Foi prestado no pais?</label>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input enter-as-tab type="checkbox" checked name="prestadoNoPais"
+                                               ng-model="notaFiscal.declaracaoPrestacaoServico.itens[0].prestadoNoPais"
+                                               ng-disabled="!permiteMudarPais"
+                                               ng-change="verificarRetencaoIss(); verificarExigibilidadeIss(); verificarBloqueioAliquotaNota();"
+                                               class="onoffswitch-checkbox"
+                                               id="field_prestadoNoPais">
+                                        <label class="onoffswitch-label {{permiteMudarPais ? '': 'disabled'}}"
+                                               for="field_prestadoNoPais">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch {{permiteMudarPais ? '': 'disabled'}}"></span>
+                                            <span class="onoffswitch-switch {{permiteMudarPais ? '': 'disabled'}}"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-show="notaFiscal.declaracaoPrestacaoServico.itens[0].prestadoNoPais"
+                                 class="form-group col-md-4">
+                                <label for="field_servico_nome_municipio">Qual Municipio?</label>
+                                <div class="input-group">
+                                    <input enter-as-tab type="text" class="form-control" name="nome_servico_municipio"
+                                           id="field_servico_nome_municipio"
+                                           disabled
+                                           value="{{notaFiscal.declaracaoPrestacaoServico.itens[0].municipio.nome}}/{{notaFiscal.declaracaoPrestacaoServico.itens[0].municipio.estado}}">
+                                    <span class="input-group-btn">
+                                            <button type="button" class="btn {{permiteMudarCidade ? 'btn-success': ''}}"
+                                                    ng-disabled="!permiteMudarCidade"
+                                                    ng-click="searchMunicipio(notaFiscal.declaracaoPrestacaoServico.itens[0])">
+                                                <span class="fa fa-search"></span>
+                                            </button>
+                                         </span>
+                                </div>
+                            </div>
+
+                            <div ng-show="!itemDeclaracaoServico().prestadoNoPais"
+                                 class="form-group col-md-4">
+                                <label for="field_servico_nome_pais">Qual Pais?</label>
+                                <div class="input-group">
+                                    <input enter-as-tab type="text" class="form-control" name="nome_servico_pais"
+                                           id="field_servico_nome_pais"
+                                           disabled
+                                           value="{{itemDeclaracaoServico().pais.nome}}">
+                                    <span class="input-group-btn">
+                                            <button type="button" class="btn btn-success"
+                                                    ng-click="searchPais(itemDeclaracaoServico())">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label translate="nfseApp.declaracaoPrestacaoServico.naturezaOperacao"
+                                       for="field_naturezaOperacao">NaturezaOperacao</label>
+                                <select class="form-control" name="naturezaOperacao"
+                                        ng-model="notaFiscal.declaracaoPrestacaoServico.naturezaOperacao"
+                                        ng-disabled="!permiteExigibilidade || !naturezasOperacao || naturezasOperacao.length <= 1"
+                                        id="field_naturezaOperacao"
+                                        required
+                                        ng-options="naturezaOperacao as 'nfseApp.NaturezaOperacao.' + naturezaOperacao | translate for naturezaOperacao in naturezasOperacao">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-md-2">
+                                <label class="center-block">Serviço</label>
+                                <div class="input-group">
+                                    <input enter-as-tab type="text" class="form-control" name="codigoServico"
+                                           id="field_codigoServico"
+                                           ng-blur="selecionarServicoPorCodigo()"
+                                           ng-model="codigoServico">
+                                    <span class="input-group-btn">
+                                            <button type="button" class="btn btn-success"
+                                                    ng-click="searchServico()">
+                                                <span class="fa fa-search"></span>
+                                            </button>
+                                         </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-10">
+                                <label class="center-block">&ensp;</label>
+
+                                <input enter-as-tab class="form-control"
+                                       id="field_servico_descricao" name="servico_descricao"
+                                       disabled
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.itens[0].servico.descricao">
+                            </div>
+                        </div>
+
+                        <div class="row m-b-md"
+                             ng-show="isPrestadorSimplesNacional() && notaFiscal.declaracaoPrestacaoServico.issRetido && rbt12 > 0">
+                            <div class="col-md-12 small" style="display: flex; justify-content: flex-end;">
+                                <table>
+                                    <tr>
+                                        <td style="padding-right: 3px; font-weight: bold">RBT12:</td>
+                                        <td>{{rbt12 | number:2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 3px; font-weight: bold">Anexo da Lei 123/2006:</td>
+                                        <td>
+                                            {{anexoLei1232006.descricao}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 3px; font-weight: bold">Faixa de faturamento até:</td>
+                                        <td>
+                                            {{anexoLei1232006Faixa.valorMaximo | number:2}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 3px; font-weight: bold">Alíquota Mínima:</td>
+                                        <td>{{aliquotaMinima | number:2}}</td>
+                                    </tr>
+                                    <tr ng-show="itemDeclaracaoServico().servico.permiteAlterarAnexoLei1232006">
+                                        <td colspan="2" style="text-align: center">
+                                            <a ng-click="alterarAliquotaSimples()">
+                                                <i class="fa fa-refresh"></i>
+                                                Alterar Anexo
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row form-group text-center text-small text-muted"
+                             ng-show="notaFiscal.declaracaoPrestacaoServico.itens[0].servico && notaFiscal.declaracaoPrestacaoServico.itens[0].servico.id">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <i class="{{notaFiscal.declaracaoPrestacaoServico.itens[0].servico && notaFiscal.declaracaoPrestacaoServico.itens[0].servico.permiteRecolhimentoFora ? 'fa fa-check-circle-o text-success' : 'fa fa-times-circle text-danger'}}"></i>
+                                    {{notaFiscal.declaracaoPrestacaoServico.itens[0].servico &&
+                                notaFiscal.declaracaoPrestacaoServico.itens[0].servico.permiteRecolhimentoFora ? ''
+                                        : 'Não'
+                                    }}
+                                    Permite Recolhimento Fora
+                                </div>
+                                <div class="col-md-4">
+                                    <i class="{{notaFiscal.declaracaoPrestacaoServico.itens[0].servico && notaFiscal.declaracaoPrestacaoServico.itens[0].servico.permiteDeducao ? 'fa fa-check-circle-o text-success' : 'fa fa-times-circle text-danger'}}"></i>
+                                    {{notaFiscal.declaracaoPrestacaoServico.itens[0].servico &&
+                                notaFiscal.declaracaoPrestacaoServico.itens[0].servico.permiteDeducao ? '' : 'Não' }}
+                                    Permite Dedução
+                                </div>
+                                <div class="col-md-4"
+                                     ng-show="notaFiscal.tomador.cadastroEconomico && notaFiscal.tomador.cadastroEconomico.enquadramentoFiscal.substitutoTributario">
+                                    <i class="{{notaFiscal.tomador.cadastroEconomico && notaFiscal.tomador.cadastroEconomico.enquadramentoFiscal.substitutoTributario ? 'fa fa-check-circle-o text-success' : 'fa fa-times-circle text-danger'}}"></i>
+                                    {{notaFiscal.tomador.cadastroEconomico &&
+                                notaFiscal.tomador.cadastroEconomico.enquadramentoFiscal.substitutoTributario ? '' :
+                                        'Não' }}
+                                    Substituto Tributário
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row fadeInDown animated"
+                             ng-show="notaFiscal.declaracaoPrestacaoServico.itens[0].servico.construcaoCivil">
+
+                            <div class="form-group col-md-4">
+                                <label class="center-block">ART</label>
+
+                                <input enter-as-tab type="text"
+                                       id="field_art"
+                                       name="art"
+                                       class="form-control"
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.construcaoCivil.art"
+                                       ng-blur="buscarObra()">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="center-block">Código da Obra</label>
+
+                                <input enter-as-tab type="text"
+                                       id="field_codigo_obra"
+                                       name="codigoObra"
+                                       class="form-control"
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.construcaoCivil.codigoObra"
+                                       ng-disabled="notaFiscal.declaracaoPrestacaoServico.construcaoCivil.id">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="center-block">N° Alvará</label>
+
+                                <input enter-as-tab type="text"
+                                       id="field_numero_alvara"
+                                       name="numeroAlvara"
+                                       class="form-control"
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.construcaoCivil.numeroAlvara"
+                                       ng-disabled="notaFiscal.declaracaoPrestacaoServico.construcaoCivil.id">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label
+                                        for="field_incorporacao">Incorporação?</label>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input enter-as-tab type="checkbox" checked name="field_incorporacao"
+                                               ng-model="notaFiscal.declaracaoPrestacaoServico.construcaoCivil.incorporacao"
+                                               class="onoffswitch-checkbox"
+                                               ng-change="selecionouObra()"
+                                               id="field_incorporacao">
+                                        <label class="onoffswitch-label"
+                                               for="field_incorporacao">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row" ng-show="exigibilidadeSuspensa()">
+                            <div class="form-group col-md-8">
+                                <label class="control-label">Número do Processo de Suspensão da Exigibilidade do
+                                    ISSQN</label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       required
+                                       name="processoSuspensa" id="field_processoSuspensa"
+                                       ng-model="notaFiscal.processoSuspensao">
+
+                                <div class="margin">
+                                    <p class="help-block"
+                                       ng-show="exigibilidadeSuspensa() && editForm.processoSuspensa.$error.required">
+                                        Informe o número do processo de suspensão da exigibilidade do ISSQN
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="margin"
+                             ng-show="getSomaDescontosServico() > servico.valorServico * servico.quantidade">
+                            <p class="help-block text-danger">
+                                O valor dos descontos não pode ser maior que o valor dos serviços
+                            </p>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-3"
+                                 ng-class="{'has-error' : servico.valorServico <= 0 && (editForm.$submitted || editForm.servico_aliquota.$touched)}">
+                                <label class="control-label">Valor do Serviço</label>
+
+                                <input enter-as-tab type="text" class="form-control"
+                                       ui-money-mask=""
+                                       ng-disabled="!notaFiscal.declaracaoPrestacaoServico.itens[0].servico"
+                                       name="servico_valor_servico"
+                                       id="field_servico_valor_servico"
+                                       ng-blur="calculaValoresDaNota()"
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.itens[0].valorServico">
+
+
+                                <div class="margin">
+                                    <div ng-show="editForm.servico_aliquota.$invalid">
+                                        <p class="help-block text-danger">
+                                            O valor inválido deve ser maior que ZERO (R$ 0,00) e ter até 5 casas
+                                            decimais
+                                        </p>
+                                    </div>
+                                    <p class="help-block"
+                                       ng-show="notaFiscal.declaracaoPrestacaoServico.itens[0].valorServico <= 0">
+                                        O valor deve ser maior que ZERO (R$ 0,00)
+                                    </p>
+                                </div>
+
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="center-block">Quantidade</label>
+                                <input enter-as-tab type="number" class="form-control"
+                                       ng-class="{'has-error' : notaFiscal.declaracaoPrestacaoServico.itens[0].quantidade <= 0 &&
+                                       (editForm.$submitted || editForm.servico_quantidade.$touched)}"
+                                       ng-blur="calculaValoresDaNota()"
+                                       ng-disabled="!notaFiscal.declaracaoPrestacaoServico.itens[0].servico"
+                                       name="servico_quantidade" id="field_servico_quantidade"
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.itens[0].quantidade">
+
+                                <div class="margin">
+                                    <p class="help-block"
+                                       ng-show="notaFiscal.declaracaoPrestacaoServico.itens[0].quantidade <= 0">
+                                        O valor deve ser maior que ZERO (0)
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3"
+                                 ng-class="{'has-error' : getSomaDescontosServico() >
+                                 notaFiscal.totalServicos  && (editForm.$submitted || editForm.field_servico_desconto_incondicionado.$touched)}">
+                                <label class="center-block">Desconto
+                                    <small>(Incondicionado)</small>
+                                </label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       ui-money-mask=""
+                                       ng-disabled="!notaFiscal.declaracaoPrestacaoServico.itens[0].servico"
+                                       name="servico_desconto_incondicionado"
+                                       id="field_servico_desconto_incondicionado"
+                                       ng-blur="calculaValoresDaNota()"
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.itens[0].descontosIncondicionados">
+                            </div>
+
+                            <div class="form-group col-md-3"
+                                 ng-class="{'has-error' : notaFiscal.declaracaoPrestacaoServico.itens[0].deducoes > notaFiscal.totalNota
+                                  && (editForm.$submitted || editForm.field_servico_deducao.$touched)}">
+                                <label class="center-block">Valor de Dedução</label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       ui-money-mask=""
+                                       ng-disabled="!notaFiscal.declaracaoPrestacaoServico.itens[0].servico.permiteDeducao ||
+                                       !notaFiscal.declaracaoPrestacaoServico.itens[0].servico"
+                                       name="servico_deducao"
+                                       ng-blur="calculaValoresDaNota()"
+                                       id="field_servico_deducao"
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.itens[0].deducoes">
+                            </div>
+                        </div>
+
+                        <div class="row fadeInDown animated "
+                             ng-show="notaFiscal.declaracaoPrestacaoServico.itens[0].deducoes > 0">
+                            <div class="form-group col-md-3">
+                                <label class="center-block" for="tipoDeducao">Tipo de Dedução</label>
+
+                                <select class="form-control"
+                                        id="tipoDeducao" name="tipoDeducao"
+                                        ng-model="notaFiscal.declaracaoPrestacaoServico.itens[0].tipoDeducao">
+                                    <option value="MATERIAL">Material</option>
+                                    <option value="SUB_EMPREITADA"> Sub Empreitada</option>
+                                    <option value="ALUGUEL_DE_EQUIPAMENTOS">Aluguel de Equipamentos</option>
+                                </select>
+
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="center-block" for="tipoOperacao">Tipo de Operacao</label>
+                                <select class="form-control"
+                                        id="tipoOperacao" name="tipoOperacao"
+                                        ng-model="notaFiscal.declaracaoPrestacaoServico.itens[0].tipoOperacao">
+                                    <option value="VENDAS">Vendas</option>
+                                    <option value="PRESTACAO_DE_SERVICOS">Prestação de Serviços</option>
+                                </select>
+
+                            </div>
+
+                            <div class="form-group col-md-2" ng-show="false">
+                                <label class="center-block" for="numeroDocFiscalDeducao">Nº Doc. Fiscal</label>
+
+                                <input enter-as-tab type="text" class="form-control"
+                                       name="numeroDocFiscalDeducao" id="numeroDocFiscalDeducao"
+                                       maxlength="100" minlength="3"
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.itens[0].numeroDocumentoFiscal">
+
+                            </div>
+
+                            <div class="form-group col-md-2" ng-show="false">
+                                <label class="center-block" for="valorDocFiscalDeducao">Valor Doc. Fiscal</label>
+
+                                <input enter-as-tab type="text" class="form-control"
+                                       ui-money-mask=""
+                                       name="valorDocFiscalDeducao"
+                                       id="valorDocFiscalDeducao"
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.itens[0].valorDocumentoFiscal">
+
+                            </div>
+
+                            <div class="form-group col-md-2" ng-show="false">
+                                <label class="center-block" for="cpfCnpjDeducao">CPF/CNPJ</label>
+
+                                <input enter-as-tab type="text" class="form-control"
+                                       name="cpfCnpjDeducao" id="cpfCnpjDeducao"
+                                       ui-br-cpfcnpj-mask=""
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.itens[0].cpfCnpjDeducao">
+
+                                <p class="help-block"
+                                   ng-show="editForm.cpfCnpjDeducao.$error.cpf || editForm.cpfCnpjDeducao.$error.cnpj">
+                                    CPF ou CNPJ inválido
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label class="center-block">Total do Serviço</label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       ui-money-mask=""
+                                       disabled
+                                       name="servico_total_servico" id="field_servico_total_servico"
+                                       ng-model="notaFiscal.totalNota">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label class="center-block">Base de Calculo</label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       ui-money-mask=""
+                                       disabled
+                                       name="servico_base_calculo" id="field_servico_base_calculo"
+                                       ng-model="notaFiscal.baseCalculo">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label class="center-block">Alíquota ISS</label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       name="percentual_iss"
+                                       ui-number-mask=""
+                                       ng-disabled="bloqueiaAliquota"
+                                       id="field_percentual_iss"
+                                       ng-blur="calculaValoresDaNota(false)"
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.itens[0].aliquotaServico">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label class="center-block">Valor ISS</label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       name="iss"
+                                       disabled
+                                       id="field_iss"
+                                       value="{{notaFiscal.issCalculado |  finance:true:2}}">
+                            </div>
+
+                            <div class="form-group col-md-2"
+                                 ng-show="notaFiscal.tomador.cadastroEconomico.enquadramentoFiscal.substitutoTributario && !tributadoEmOutroMunicipio()">
+                                <label
+                                        for="field_retencao">ISS Retido?</label>
+
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input enter-as-tab type="checkbox" checked name="retencao"
+                                               ng-disabled="!permiteRetencao || !notaFiscal.declaracaoPrestacaoServico.itens[0].servico"
+                                               ng-change="verificarExigibilidadeIss(); validarAliquotaNota()"
+                                               ng-model="notaFiscal.declaracaoPrestacaoServico.issRetido"
+                                               class="onoffswitch-checkbox"
+                                               id="field_retencao">
+                                        <label class="onoffswitch-label {{permiteRetencao ? '': 'disabled'}}"
+                                               for="field_retencao">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span
+                                                    class="onoffswitch-switch {{permiteRetencao ? '': 'disabled'}}"></span>
+                                            <span
+                                                    class="onoffswitch-switch {{permiteRetencao ? '': 'disabled'}}"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <a class="text-muted m-sm"
+                               ng-click="novoDetalhamentoServico()"
+                               ng-show="notaFiscal.totalNota"
+                               id="btn-add-servico">
+                                <i class="fa fa-plus-circle"></i>
+                                Informar itens do serviço
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row"
+                         ng-show="notaFiscal.declaracaoPrestacaoServico.itens[0].detalhes && notaFiscal.declaracaoPrestacaoServico.itens[0].detalhes.length > 0">
+                        <div class="col-md-12">
+                            <h3>Itens do Serviço</h3>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive" style="max-height: 400px; overflow-y: auto">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Descrição</th>
+                                        <th>Quantidade</th>
+                                        <th class="text-right">Valor Unitário</th>
+                                        <th class="text-right">Valor Total</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="detalhe in notaFiscal.declaracaoPrestacaoServico.itens[0].detalhes">
+                                        <td>{{detalhe.descricao}}</td>
+                                        <td>{{detalhe.quantidade}}</td>
+                                        <td class="text-right">{{detalhe.valorUnitario | number:2}}</td>
+                                        <td class="text-right">{{detalhe.valorServico | number:2}}</td>
+                                        <td class="pull-right">
+                                            <button type="submit"
+                                                    ng-click="removerDetalhe($index)"
+                                                    class="btn btn-danger btn-sm">
+                                                <span class="fa fa-times"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-md m-b-md">
+
+                        <div class="col-md-12">
+                            <h3>
+                                Outras Retenções
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group  col-md-2">
+                            <label class="center-block">PIS</label>
+                            <input enter-as-tab type="text" class="form-control"
+                                   ui-money-mask=""
+                                   name="pis"
+                                   id="field_pis"
+                                   ng-blur="calcularAliquotaPorValor('pis', 'percentualPis')"
+                                   ng-model="notaFiscal.declaracaoPrestacaoServico.tributosFederais.pis">
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label class="center-block">COFINS</label>
+                            <input enter-as-tab type="text" class="form-control"
+                                   ui-money-mask=""
+                                   name="cofins"
+                                   id="field_cofins"
+                                   ng-blur="calcularAliquotaPorValor('cofins', 'percentualCofins')"
+                                   ng-model="notaFiscal.declaracaoPrestacaoServico.tributosFederais.cofins">
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label class="center-block">INSS</label>
+                            <input enter-as-tab type="text" class="form-control"
+                                   ui-money-mask=""
+                                   name="inss"
+                                   id="field_inss"
+                                   ng-blur="calcularAliquotaPorValor('inss', 'percentualInss')"
+                                   ng-model="notaFiscal.declaracaoPrestacaoServico.tributosFederais.inss">
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label class="center-block">IR</label>
+                            <input enter-as-tab type="text" class="form-control"
+                                   ui-money-mask=""
+                                   name="irrf"
+                                   id="field_irrf"
+                                   ng-blur="calcularAliquotaPorValor('irrf', 'percentualIrrf')"
+                                   ng-model="notaFiscal.declaracaoPrestacaoServico.tributosFederais.irrf">
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label class="center-block">CSLL</label>
+                            <input enter-as-tab type="text" class="form-control"
+                                   ui-money-mask=""
+                                   name="csll"
+                                   id="field_csll"
+                                   ng-blur="calcularAliquotaPorValor('csll', 'percentualCsll')"
+                                   ng-model="notaFiscal.declaracaoPrestacaoServico.tributosFederais.csll">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="center-block">Outras Retenções</label>
+                            <input enter-as-tab type="text" class="form-control"
+                                   ui-money-mask=""
+                                   name="outrasRetencoes"
+                                   id="field_outrasRetencoes"
+                                   ng-blur="calcularAliquotaPorValor('outrasRetencoes', 'percentualOutrasRetencoes')"
+                                   ng-model="notaFiscal.declaracaoPrestacaoServico.tributosFederais.outrasRetencoes">
+                        </div>
+                    </div>
+
+                    <div class="margin">
+                        <p class="help-block text-danger"
+                           ng-show="notaFiscal.retencoesFederais > notaFiscal.totalNota">
+                            O valor da retenções federais não pode ser maior que o valor dos serviços
+                        </p>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="center-block">Discriminação do serviço
+                                <a ng-click="searchItemDeclaracaoServico()" class="small">
+                                    Consulta descriminações
+                                    anteriores</a>
+                            </label>
+
+                            <textarea type="text" class="form-control"
+                                      required
+                                      rows="7"
+                                      maxlength="3000" minlength="3"
+                                      name="servico_descriminacao_nota" id="field_descriminacao_servico_nota"
+                                      ng-model="notaFiscal.descriminacaoServico">
+                                        </textarea>
+                            <p class="small text-danger"
+                               ng-show="editForm.servico_descriminacao_nota.$invalid">
+                                A Discriminação do serviço deve ter entre 3 e 3000 caracteres
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>
+                                <a ng-click="mostrarIntermediario = !mostrarIntermediario ">
+                                    <i class="fa {{mostrarIntermediario  ? 'fa-chevron-down': 'fa-chevron-right'}} "></i>
+                                    Intermediário do Serviço <i>(Opcional)</i>
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="row fadeInDown animated" ng-show="mostrarIntermediario">
+                        <div class=" col-md-12">
+                            <div class="form-group col-md-6"
+                                 ng-class="{'has-error' : editForm.cpfCnpjIntermediario.$invalid
+                                     && (editForm.$submitted || editForm.cpfCnpjIntermediario.$touched)}">
+                                <label
+                                        class="control-label"
+                                        for="field_cpfCnpjIntermediario">CPF ou CNPJ</label>
+
+                                <div class="input-group">
+                                    <input enter-as-tab type="text" class="form-control"
+                                           name="cpfCnpjIntermediario" id="field_cpfCnpjIntermediario"
+                                           ui-br-cpfcnpj-mask
+                                           ng-model="notaFiscal.declaracaoPrestacaoServico.intermediario.cpfCnpj"
+                                           required>
+                                    <span class="input-group-btn">
+                                            <button type="button" class="btn btn-success"
+                                                    ng-click="searchIntermediarioServico()">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                                </div>
+                                <div ng-show="editForm.cpfCnpjIntermediario.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.cpfCnpjIntermediario.$error.required">
+                                        Informe o CPF ou CNPJ
+                                    </p>
+
+                                    <p class="help-block"
+                                       ng-show="editForm.cpfCnpjIntermediario.$error.cpf || editForm.cpfCnpjIntermediario.$error.cnpj">
+                                        CPF ou CNPJ inválido
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6"
+                                 ng-class="{'has-error' : editForm.nomeRazaoSocialIntermediario.$invalid
+                                     && (editForm.$submitted || editForm.nomeRazaoSocialIntermediario.$touched)}">
+                                <label
+                                        class="control-label"
+                                        for="field_nomeRazaoSocialIntermediario">Nome ou Razão Social</label>
+
+                                <input enter-as-tab type="text" class="form-control" name="nomeRazaoSocialIntermediario"
+                                       id="field_nomeRazaoSocialIntermediario"
+                                       ng-model="notaFiscal.declaracaoPrestacaoServico.intermediario.nomeRazaoSocial"
+                                       required>
+
+                                <div ng-show="editForm.nomeRazaoSocialIntermediario.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.nomeRazaoSocialIntermediario.$error.required">
+                                        Informe o Nome ou a Razão Social
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-md">
+                        <div class="col-md-12">
+                            <button class="btn btn-default"
+                                    ng-click="passoAnterior();"
+                                    type="button">
+                                <i class="fa fa-chevron-left"></i>
+                                Voltar
+                            </button>
+                            <button class="btn btn-success"
+                                    ng-disabled="!notaFiscal.descriminacaoServico"
+                                    ng-show="!mostraFormServicos"
+                                    ng-click="proximoPasso()"
+                                    type="button">
+                                <i class="fa fa-chevron-right"></i>
+                                Continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox" ng-show="passoAtual === passos.resumo">
+
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div ng-include="'app/entities/notaFiscal/notaFiscal-ver.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox" ng-show="passoAtual === passos.resumo">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12 m-b-md m-t-md">
+                            <h3>
+                                Deseja notificar mais alguém por e-mail?
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <input enter-as-tab type="text" class="form-control"
+                                   multiple-emails
+                                   name="recipientEmail"
+                                   ng-model="notaFiscal.emails">
+
+                            <div ng-show="editForm.recipientEmail.$invalid">
+                                <p class="help-block">
+                                    E-mail informado inválido
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <small class="help-block m-b-none">
+                                Sugestão:
+                                <a ng-click="adicionarEmail(notaFiscal.tomador.dadosPessoais.email)"
+                                   ng-show="notaFiscal.tomador
+                               && notaFiscal.tomador.dadosPessoais.email">
+                                    &ensp; {{notaFiscal.tomador.dadosPessoais.email}}
+                                </a>
+                                <a ng-click="adicionarEmail(notaFiscal.prestador.pessoa.dadosPessoais.email)"
+                                   ng-show="notaFiscal.prestador
+                                && notaFiscal.prestador.pessoa.dadosPessoais.email">
+                                    &ensp;{{notaFiscal.prestador.pessoa.dadosPessoais.email}}
+                                </a>
+                                <a ng-click="adicionarEmail(account.email)"
+                                   ng-show="account.email">
+                                    &ensp;{{account.email}}
+                                </a>
+                                <small>
+                                    (clique no email para adicionar)
+                                </small>
+                            </small>
+
+                        </div>
+                        <div class="col-md-12">
+                                 <span class="help-block m-b-none">
+                                    Informe todos os e-mails a serem notificados separados por virgula. Ex. jose@gmail.com, maria@gmail.com
+                                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox" ng-show="passoAtual === passos.resumo">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" ui-sref="notaFiscal">
+                                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                                    translate="entity.action.cancel">Cancel</span>
+                            </button>
+
+                            <button class="btn btn-default"
+                                    ng-click="passoAnterior();"
+                                    type="button">
+                                <i class="fa fa-chevron-left"></i>
+                                Voltar
+                            </button>
+
+                            <button type="submit"
+                                    not-has-role="ROLE_ADMIN"
+                                    ng-click="save()"
+                                    class="btn btn-primary">
+                                <span class="fa fa-check-circle-o"></span>&nbsp;
+                                <span>{{!notaFiscal.rps ? 'Emitir' : 'Converter RPS para Nota Fiscal'}}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

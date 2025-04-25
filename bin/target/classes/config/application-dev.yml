@@ -1,0 +1,73 @@
+server:
+    port: 8485
+spring:
+    profiles:
+        active: dev
+    data:
+        elasticsearch:
+            cluster-name:
+            cluster-nodes:
+            properties:
+                http:
+                    enabled: true
+                path:
+                  logs: target/elasticsearch/log
+                  data: target/elasticsearch/data
+        mongodb:
+            host: 192.168.1.12
+            port: 27017
+            database: nfse
+    messages:
+        cache-seconds: 1
+    thymeleaf:
+        mode: XHTML
+        cache: false
+    datasource:
+        url: jdbc:oracle:thin:@//192.168.1.10:1521/wpub2
+        username: outraatualizacaosemanal
+        password: senha10
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+    jpa:
+        show-sql: true
+    rabbitmq:
+        host: 192.168.1.24
+        port: 5672
+        username: user
+        password: senha10
+
+metrics:
+    jmx.enabled: true
+    spark:
+        enabled: false
+        host: localhost
+        port: 9999
+    graphite:
+        enabled: false
+        host: localhost
+        port: 2003
+        prefix: nfse
+
+logging:
+    level:
+        ROOT: INFO
+        br:
+            com:
+                webpublico: DEBUG
+        io:
+            github:
+                jhipster: DEBUG
+#        org:
+#            springframework:
+#                jdbc:
+#                    core:
+#                        JdbcTemplate: DEBUG
+#                        StatementCreatorUtils: TRACE
+#            hibernate:
+#                SQL: DEBUG
+#                type:
+#                    descriptor:
+#                        sql:
+#                            BasicBinder: TRACE
+
+perfil:
+    aplicacao: HOMOLOGACAO

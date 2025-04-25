@@ -1,0 +1,138 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <h2>Application Metrics</h2>
+        <p>
+            <button type="button" class="btn btn-primary" ng-click="refresh()">
+                <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+                <span>Refresh</span></button>
+        </p>
+
+        <h3>JVM Metrics</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <b>Memory</b>
+                <p><span>Total Memory</span>
+                    ({{metrics.jvm.memory.used / 1000000 | number:0}}M /
+                    {{metrics.jvm.memory.max / 1000000 | number:0}}M)</p>
+                <div class="progress progress-striped">
+                    <div class="progress-bar progress-bar-success" role="progressbar"
+                         aria-valuenow="{{metrics.jvm.memory.used / 1000000 | number:0}}"
+                         aria-valuemin="0"
+                         aria-valuemax="{{metrics.jvm.memory.max / 1000000 | number:0}}"
+                         ng-style="{width: (metrics.jvm.memory.used * 100 / metrics.jvm.memory.max | number:0) + '%'}">
+                        {{metrics.jvm.memory.used * 100 / metrics.jvm.memory.max | number:0}}%
+                    </div>
+                </div>
+                <p><span>Heap Memory</span>
+                    ({{metrics.jvm.memory.heap.used / 1000000 | number:0}}M /
+                    {{metrics.jvm.memory.heap.max / 1000000 | number:0}}M)</p>
+                <div class="progress progress-striped">
+                    <div class="progress-bar progress-bar-success" role="progressbar"
+                         aria-valuenow="{{metrics.jvm.memory.heap.used / 1000000 | number:0}}"
+                         aria-valuemin="0"
+                         aria-valuemax="{{metrics.jvm.memory.heap.max / 1000000 | number:0}}"
+                         ng-style="{width: (metrics.jvm.memory.heap.used * 100 / metrics.jvm.memory.heap.max | number:0) + '%'}">
+                        {{(metrics.jvm.memory.heap.used * 100 / metrics.jvm.memory.heap.max | number:0)}}%
+                    </div>
+                </div>
+                <p><span>Non-Heap Memory</span>
+                    ({{metrics.jvm.memory.nonheap.used / 1000000 | number:0}}M /
+                    {{metrics.jvm.memory.nonheap.max / 1000000 | number:0}}M)</p>
+                <div class="progress progress-striped">
+                    <div class="progress-bar progress-bar-success" role="progressbar"
+                         aria-valuenow="{{metrics.jvm.memory.nonheap.used / 1000000 | number:0}}"
+                         aria-valuemin="0"
+                         aria-valuemax="{{metrics.jvm.memory.nonheap.max / 1000000 | number:0}}"
+                         ng-style="{width: (metrics.jvm.memory.nonheap.used * 100 / metrics.jvm.memory.nonheap.max | number:0) + '%'}">
+                        {{(metrics.jvm.memory.nonheap.used * 100 / metrics.jvm.memory.nonheap.max | number:0)}}%
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <b>Threads</b> (Total: {{metrics.jvm.threads.count}})
+                <p><span>Runnable</span>
+                    ({{metrics.jvm.threads.runnable}})</p>
+                <div class="progress progress-striped">
+                    <div class="progress-bar progress-bar-success" role="progressbar"
+                         aria-valuenow="{{metrics.jvm.threads.runnable}}"
+                         aria-valuemin="0"
+                         aria-valuemax="{{metrics.jvm.threads.count}}"
+                         ng-style="{width: (metrics.jvm.threads.runnable * 100 / metrics.jvm.threads.count | number:0) + '%'}">
+                        {{metrics.jvm.threads.runnable * 100 / metrics.jvm.threads.count | number:0}}%
+                    </div>
+                </div>
+                <p><span>Timed Waiting</span>
+                    ({{metrics.jvm.threads.timed_waiting}})</p>
+                <div class="progress progress-striped">
+                    <div class="progress-bar progress-bar-warning" role="progressbar"
+                         aria-valuenow="{{metrics.jvm.threads.timed_waiting}}"
+                         aria-valuemin="0"
+                         aria-valuemax="{{metrics.jvm.threads.count}}"
+                         ng-style="{width: (metrics.jvm.threads.timed_waiting * 100 / metrics.jvm.threads.count | number:0) + '%'}">
+                        {{metrics.jvm.threads.timed_waiting * 100 / metrics.jvm.threads.count | number:0}}%
+                    </div>
+                </div>
+                <p><span>Waiting</span>
+                    ({{metrics.jvm.threads.new}})</p>
+                <div class="progress progress-striped">
+                    <div class="progress-bar progress-bar-warning" role="progressbar"
+                         aria-valuenow="{{metrics.jvm.threads.new}}"
+                         aria-valuemin="0"
+                         aria-valuemax="{{metrics.jvm.threads.count}}"
+                         ng-style="{width: (metrics.jvm.threads.new * 100 / metrics.jvm.threads.count | number:0) + '%'}">
+                        {{metrics.jvm.threads.new * 100 / metrics.jvm.threads.count | number:0}}%
+                    </div>
+                </div>
+                <p><span>Blocked</span>
+                    ({{metrics.jvm.threads.blocked}})</p>
+                <div class="progress progress-striped">
+                    <div class="progress-bar progress-bar-danger" role="progressbar"
+                         aria-valuenow="{{metrics.jvm.threads.blocked}}"
+                         aria-valuemin="0"
+                         aria-valuemax="{{metrics.jvm.threads.count}}"
+                         ng-style="{width: (metrics.jvm.threads.blocked * 100 / metrics.jvm.threads.count | number:0) + '%'}">
+                        {{metrics.jvm.threads.blocked * 100 / metrics.jvm.threads.count | number:0}}%
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <b>Garbage collections</b>
+                <div class="row">
+                    <div class="col-md-9">Memory promoted</div>
+                    <div class="col-md-3 text-right">{{metrics.jvm.gc.memory_promoted / 1000000 | number:0}}M</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">Memory allocated</div>
+                    <div class="col-md-3 text-right">{{metrics.jvm.gc.memory_allocated / 1000000 | number:0}}M</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">Max data size</div>
+                    <div class="col-md-3 text-right">{{metrics.jvm.gc.max_data_size / 1000000 | number:0}}M</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">Live data size</div>
+                    <div class="col-md-3 text-right">{{metrics.jvm.gc.live_data_size / 1000000 | number:0}}M</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">Pause - G1 Evacuation</div>
+                    <div class="col-md-3 text-right">{{metrics.jvm.gc.pause.g1_evacuation}}s</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">Pause - Metadata GC Threshold</div>
+                    <div class="col-md-3 text-right">{{metrics.jvm.gc.pause.metadata_gc_threshold}}s</div>
+                </div>
+            </div>
+        </div>
+
+        <h3>HTTP requests (events per second)</h3>
+        <p><span>Count</span>
+            <b>{{metrics.http_server_request.count}}</b>
+        </p>
+        <p><span>Total time</span>
+            <b>{{metrics.http_server_request.total_time}}s</b>
+        </p>
+        <p><span>Max</span>
+            <b>{{metrics.http_server_request.max}}s</b>
+        </p>
+    </div>
+</div>

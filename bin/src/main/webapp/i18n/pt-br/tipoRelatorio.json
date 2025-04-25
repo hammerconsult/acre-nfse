@@ -1,0 +1,9 @@
+{
+  "nfseApp": {
+    "TipoRelatorio": {
+      "null": "",
+      "RESUMIDO": "Resumido",
+      "DETALHADO": "Detalhado"
+    }
+  }
+}

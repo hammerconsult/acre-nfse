@@ -1,0 +1,11 @@
+{
+  "nfseApp": {
+    "TipoConsolidacaoArquivoDesif": {
+      "null": "",
+      "TIPO_1": "1 – Instituição e alíquota",
+      "TIPO_2": "2 – Instituição, alíquota e código de tributação DES-IF",
+      "TIPO_3": "3 – Dependência e alíquota",
+      "TIPO_4": "4 – Dependência, alíquota e código de tributação DES-IF"
+    }
+  }
+}

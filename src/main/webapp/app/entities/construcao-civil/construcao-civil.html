@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-10">
+                        <search-box ng-model="searchQuery" search-method="loadAll()"></search-box>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary pull-right btn-block" ui-sref="construcaoCivil.incluir">
+                            <span class="fa fa-plus"></span> <span>Incluir</span>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="table-responsive">
+                    <table class="table table-striped small">
+                        <thead>
+                        <tr>
+                            <th class="col-md-2 text-center">Opções</th>
+                            <th class="col-md-2">Código da Obra</th>
+                            <th class="col-md-6">Responsável da Obra</th>
+                            <th class="col-md-2 text-center">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="obra in obras">
+                            <td class="col-md-2 text-center">
+                                <button class="btn btn-sm btn-primary"
+                                        title="Clique para editar o registro."
+                                        ui-sref="construcaoCivil.editar({id:obra.id})">
+                                    <span class="fa fa-edit"></span>
+                                </button>
+                                <button class="btn btn-sm btn-success"
+                                        title="Clique para visualizar o registro."
+                                        ng-show="false"
+                                        ui-sref="construcaoCivil.visualizar({id:obra.id})">
+                                    <span class="fa fa-eye"></span>
+                                </button>
+                                <button class="btn btn-sm btn-danger"
+                                        title="Clique para remover o registro."
+                                        ng-click="remover(obra.id)">
+                                    <span class="fa fa-trash"></span>
+                                </button>
+                            </td>
+                            <td class="col-md-2">{{obra.codigoObra}}</td>
+                            <td class="col-md-6">{{obra.responsavel.dadosPessoais.cpfCnpj}} -
+                                {{obra.responsavel.dadosPessoais.nomeRazaoSocial}}
+                            </td>
+                            <td class="col-md-2 text-center">
+                                <span ng-class="buscarClasseStatus(obra.status)">{{'nfseApp.ConstrucaoCivilStatus.' + obra.status | translate}}</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul class="pager">
+                            <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a href="#">&lt;&lt;</a>
+                            </li>
+                            <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a href="#">&lt;</a></li>
+                            <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a href="#">&gt;</a></li>
+                            <li ng-show="links['last']" ng-click="loadPage(links['last'])"><a href="#">&gt;&gt;</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

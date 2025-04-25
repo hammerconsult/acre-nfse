@@ -1,0 +1,396 @@
+<div class="row">
+    <div class="col-lg-12">
+        <form name="editForm" role="form" novalidate>
+            <div class="ibox float-e-margins animated fadeInDown">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Dados do Serviço {{servicoDeclarado.tipoServicoDeclarado == 'SERVICO_PRESTADO' ?
+                                'Prestado' : 'Tomado'}}</h3>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-sm">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label for="field_numero_nota">Número</label>
+                                <input enter-as-tab type="number" class="form-control" name="numeroNota" id="field_numero_nota"
+                                       readonly
+                                       ng-maxlength="7"
+                                       ng-model="servicoDeclarado.numero">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="field_tipodoc">Tipo de Documento</label>
+
+                                <input enter-as-tab type="text"
+                                       value="{{servicoDeclarado.tipoDocumentoServicoDeclarado.descricao}}"
+                                       id="field_tipodoc"
+                                       required
+                                       readonly
+                                       class="form-control"
+                                       name="tipodoc">
+                                </input>
+
+                                <div ng-show="editForm.competencia.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.competencia.$error">
+                                        Informe uma data de competência válida
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="field_competencia">Competência</label>
+
+                                <input enter-as-tab type="text"
+                                       value="{{servicoDeclarado.declaracaoPrestacaoServico.competencia | date:'MM/yyyy': '+0000'}}"
+                                       id="field_competencia"
+                                       required
+                                       readonly
+                                       class="form-control"
+                                       name="competencia">
+                                </input>
+
+                                <div ng-show="editForm.competencia.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.competencia.$error">
+                                        Informe uma data de competência válida
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label
+                                    for="field_emissao">Emissão</label>
+                                <input enter-as-tab type="text"
+                                       value="{{servicoDeclarado.emissao | date:'dd/MM/yyyy': '+0000'}}"
+                                       id="field_emissao"
+                                       required
+                                       readonly
+                                       class="form-control"
+                                       name="competencia">
+                                </input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins animated fadeInDown">
+
+                <div class="ibox-content" ng-show="servicoDeclarado.modalidade != 'NAO_IDENTIFICADO'">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>{{servicoDeclarado.tipoServicoDeclarado == 'SERVICO_TOMADO' ? 'Quem prestou o serviço?'
+                                : 'Quem tomou o serviço'}}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row animated fadeInDown"
+                                 ng-show="servicoDeclarado.declaracaoPrestacaoServico.modalidade == 'IDENTIFICADO'">
+                                <div class="form-group col-md-4">
+                                    <label
+                                        class="control-label"
+                                        for="field_cpfCnpj">CPF ou CNPJ</label>
+
+                                    <input enter-as-tab type="text" class="form-control" name="cpfCnpj" id="field_cpfCnpj"
+                                           ui-br-cpfcnpj-mask
+                                           readonly
+                                           ng-model="servicoDeclarado.dadosPessoais.cpfCnpj"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="fadeInDown animated">
+                                <div class="row" ng-show="!isFisica()">
+                                    <div class="form-group col-md-4">
+                                        <label
+                                            for="field_inscricaoMunicipal">Inscrição Municipal</label>
+
+                                        <input enter-as-tab type="text" class="form-control" name="inscricaoMunicipal"
+                                               id="field_inscricaoMunicipal"
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.inscricaoMunicipal">
+                                    </div>
+
+                                    <div class="form-group col-md-8">
+                                        <label
+                                            class="control-label"
+                                            for="field_nomeFantasia">Nome Fantasia</label>
+                                        <input enter-as-tab type="text" class="form-control" name="nomeFantasia"
+                                               id="field_nomeFantasia"
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.nomeFantasia">
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-4"
+                                         ng-if="!isFisica()"
+                                         ng-class="{'has-error' : editForm.inscricaoEstadual.$invalid && (editForm.$submitted || editForm.inscricaoEstadual.$touched)}">
+                                        <label
+                                            class="control-label"
+                                            for="field_inscricaoEstadual">
+                                            Inscrição Estadual
+                                        </label>
+
+                                        <input enter-as-tab type="text" class="form-control" name="inscricaoEstadual"
+                                               id="field_inscricaoEstadual"
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.inscricaoEstadualRg">
+
+
+                                    </div>
+
+                                    <div class="form-group col-md-4"
+                                         ng-if="isFisica() && notaFiscal.declaracaoPrestacaoServico.modalidade != 'SEM_CPF'"
+                                         ng-class="{'has-error' : editForm.rg.$invalid  && (editForm.$submitted || editForm.rg.$touched)}">
+                                        <label
+                                            class="control-label"
+                                            for="field_rg">
+                                            RG
+                                        </label>
+
+                                        <input enter-as-tab type="text" class="form-control" name="rg"
+                                               id="field_rg"
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.inscricaoEstadualRg">
+
+                                    </div>
+
+                                    <div
+                                        class="form-group {{isFisica() && notaFiscal.modalidade != 'SEM_CPF' ? 'col-md-8': 'col-md-8'}}"
+                                        ng-class="{'has-error' : editForm.nomeRazaoSocial.$invalid && (editForm.$submitted || editForm.nomeRazaoSocial.$touched)}">
+                                        <label
+                                            class="control-label"
+                                            for="field_nomeRazaoSocial"> {{isFisica() ? 'Nome ':'Razão
+                                            Social'}}</label>
+
+                                        <input enter-as-tab type="text" class="form-control" name="nomeRazaoSocial"
+                                               id="field_nomeRazaoSocial"
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.nomeRazaoSocial"
+                                               required>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-9">
+                                        <label for="field_email">e-Mail</label>
+                                        <input enter-as-tab type="text" class="form-control" name="email" id="field_email"
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.email">
+
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <label
+                                            for="field_telefone">Telefone</label>
+                                        <input enter-as-tab type="text" class="form-control" name="telefone" id="field_telefone"
+                                               ui-br-phone-number
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.telefone">
+                                    </div>
+                                </div>
+
+                                <div class="row fadeInDown animated">
+
+                                    <div class="form-group col-md-2">
+                                        <label for="field_cep">Cep</label>
+                                        <input enter-as-tab type="text" class="form-control" name="id" id="field_cep"
+                                               ui-br-cep-mask
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.cep">
+                                    </div>
+
+                                    <div class="form-group col-md-8">
+                                        <label for="field_nome_municipio">Município</label>
+                                        <input enter-as-tab type="text" class="form-control" name="nome_municipio"
+                                               id="field_nome_municipio"
+                                               disabled
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.municipio.nome">
+
+
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label for="field_estado_municipio">Estado</label>
+                                        <input enter-as-tab type="text" class="form-control" name="estado_municipio"
+                                               id="field_estado_municipio"
+                                               disabled
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.municipio.estado">
+
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label
+                                            for="field_logradouro">Logradouro</label>
+                                        <input enter-as-tab type="text" class="form-control" name="logradouro"
+                                               id="field_logradouro"
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.logradouro"
+                                        >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="field_bairro">Bairro</label>
+                                        <input enter-as-tab type="text" class="form-control"
+                                               readonly
+                                               name="bairro" id="field_bairro"
+                                               ng-model="servicoDeclarado.dadosPessoais.bairro">
+
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="field_numero">Número</label>
+                                        <input enter-as-tab type="text" class="form-control" name="numero" id="field_numero"
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.numero">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label
+                                            for="field_complemento">Complemento</label>
+                                        <input enter-as-tab type="text" class="form-control" name="complemento"
+                                               id="field_complemento"
+                                               readonly
+                                               ng-model="servicoDeclarado.dadosPessoais.complemento">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins animated fadeInDown">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Qual o serviço prestado? </h3>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12"
+                             ng-show="servicoDeclarado.declaracaoPrestacaoServico.itens.length > 0">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Descrição</th>
+                                    <th>Alíquota</th>
+                                    <th>Base de Cálculo</th>
+                                    <th>Valor ISS</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="serv in servicoDeclarado.declaracaoPrestacaoServico.itens">
+                                    <td class="col-md-1">{{serv.servico.codigo}}</td>
+                                    <td class="col-md-5">{{serv.nomeServico}}</td>
+                                    <td class="col-md-1">{{serv.servico.aliquota}}</td>
+                                    <td class="col-md-2">{{serv.baseCalculo | currency : 'R$ '}}</td>
+                                    <td class="col-md-1">{{serv.iss | currency : 'R$ '}}</td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <small>Total dos Serviços</small>
+                                <br>
+                                <input enter-as-tab type="text" readonly class="form-control"
+                                       value="{{servicoDeclarado.declaracaoPrestacaoServico.totalServicos | finance:'R$ '}}">
+                            </div>
+                            <div class="col-md-3">
+                                <small>Deduções</small>
+                                <br>
+                                <input enter-as-tab type="text" readonly class="form-control"
+                                       value="{{servicoDeclarado.declaracaoPrestacaoServico.deducoesLegais | finance:'R$ '}}">
+                            </div>
+                            <div class="col-md-3">
+                                <small>Base de Cálculo</small>
+                                <br>
+                                <input enter-as-tab type="text" readonly class="form-control"
+                                       value="{{servicoDeclarado.declaracaoPrestacaoServico.baseCalculo | finance:'R$ '}}">
+                            </div>
+                            <div class="col-md-3">
+                                <small>ISS</small>
+                                <br>
+                                <input enter-as-tab type="text" readonly class="form-control"
+                                       value="{{servicoDeclarado.declaracaoPrestacaoServico.issCalculado | finance:'R$ '}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-if="parcelas && parcelas.length > 0">
+                        <div class="col-md-12 m-t-md border-bottom">
+                            <h3>Débitos</h3>
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>DAM</th>
+                                    <th>Referência</th>
+                                    <th>Exercício</th>
+                                    <th>Vencimento</th>
+                                    <th>Imposto</th>
+                                    <th>Taxa</th>
+                                    <th>Juros</th>
+                                    <th>Multa</th>
+                                    <th>Correção</th>
+                                    <th>Honorários</th>
+                                    <th>Total</th>
+                                    <th>Situação</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="parc in parcelas">
+                                    <td>
+                                        <a ui-sref="debitos.details({id:parc.idParcela})">
+                                            {{parc.dam.numeroDAM}}
+                                        </a>
+                                    </td>
+                                    <td>{{parc.referencia}}</td>
+                                    <td>{{parc.exercicio}}</td>
+                                    <td>{{parc.vencimento | date:'dd/MM/yyyy': '+0000'}}</td>
+                                    <td>{{parc.valorImposto | currency: ' '}}</td>
+                                    <td>{{parc.valorTaxa | currency: ' '}}</td>
+                                    <td>{{parc.valorJuros | currency: ' '}}</td>
+                                    <td>{{parc.valorMulta | currency: ' '}}</td>
+                                    <td>{{parc.valorCorrecao | currency: ' '}}</td>
+                                    <td>{{parc.valorHonorarios | currency: ' '}}</td>
+                                    <td>{{parc.total | currency: ' '}}</td>
+                                    <td>{{'nfseApp.SituacaoParcela.' + parc.situacao | translate}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-md">
+                        <div class="col-md-12">
+                            <button type="submit"
+                                    ui-sref="servicoDeclarado"
+                                    class="btn btn-info">
+                                <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;
+                                <span>Voltar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

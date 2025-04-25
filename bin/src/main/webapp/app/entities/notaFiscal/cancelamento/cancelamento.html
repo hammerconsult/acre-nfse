@@ -1,0 +1,128 @@
+<ul class="nav nav-tabs" role="tablist">
+    <li>
+        <a class="nav-link" ui-sref="notaFiscal">
+            Nfs-e Emitidas
+        </a>
+    </li>
+    <li>
+        <a class="nav-link" ui-sref="notas-recebidas">
+            Nfs-e Recebidas
+        </a>
+    </li>
+    <li>
+        <a class="nav-link" ui-sref="servicoDeclarado">
+            Serviços Declarados
+        </a>
+    </li>
+    <li>
+        <a class="nav-link active" ui-sref="cancelamento-nota-fiscal">
+            Solicitações de Cancelamento
+        </a>
+    </li>
+</ul>
+
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <form name="formFiltros" class="validate-input">
+            <div class="row">
+                <div class="col-lg-12 text-right">
+                    <button class="btn btn-outline btn-primary" ng-show="!mostrarFiltros"
+                            ng-click="habilitarDesabilitarFiltros()">
+                        <i class="fa fa-filter"></i> <span>Filtrar</span>
+                    </button>
+
+                    <button class="btn btn-primary" ui-sref="notaFiscal.new">
+                        <i class="fa fa-plus"></i> <span>Emitir Nota</span>
+                    </button>
+                </div>
+            </div>
+            <div class="row m-t-md" ng-show="mostrarFiltros">
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <div class="form-group col-md-3">
+                            <label>Período Inicial</label>
+                            <input enter-as-tab type="date"
+                                   id="dataInicial"
+                                   name="dataInicial"
+                                   ng-model="emissaoInicial"
+                                   class="form-control">
+                            <div ng-show="formFiltros.dataInicial.$invalid">
+                                <p class="help-block">Data inválida.</p>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Período Final</label>
+                            <input enter-as-tab
+                                   type="date"
+                                   name="dataFinal"
+                                   ng-model="emissaoFinal"
+                                   class="form-control">
+                            <div ng-show="formFiltros.dataFinal.$invalid">
+                                <p class="help-block">Data inválida.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>N° Nota Inicial</label>
+                            <input enter-as-tab type="text"
+                                   ng-model="notaFiscalInicial"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>N° Nota Final</label>
+                            <input enter-as-tab type="text"
+                                   ng-model="notaFiscalFinal"
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <button type="button"
+                            ng-disabled="formFiltros.$invalid"
+                            ng-click="loadAll()"
+                            class="btn btn-primary">
+                        <span class="fa fa-search"></span>
+                        <span>Pesquisar</span>
+                    </button>
+                    <button ng-click="habilitarDesabilitarFiltros()"
+                            class="btn btn-default">
+                        <span class="fa fa-close"></span>
+                        <span>Cancelar</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="row m-t-md">
+            <div class="col-lg-12">
+                <div id="div-tabela-notas" class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <th>Data</th>
+                            <th>Solicitante</th>
+                            <th>Nota</th>
+                            <th>Emissão</th>
+                            <th>Situação</th>
+                            <th>Observações do Fiscal</th>
+                        </tr>
+                        <tr ng-repeat="cancelamento in notaFiscals"
+                            style="cursor: pointer"
+                            ng-click="visualizarCancelamento(cancelamento)">
+                            <td>{{cancelamento.dataCancelamento | date:'dd/MM/yyyy': '+0000'}}</td>
+                            <td>{{cancelamento.solicitante}}</td>
+                            <td>
+                                <a ui-sref="notaFiscal.detail({id:cancelamento.notaFiscal.id})">{{cancelamento.notaFiscal.numero}}</a>
+                            </td>
+                            <td>{{cancelamento.notaFiscal.emissao | date : 'dd/MM/yyyy'}}</td>
+                            <td>
+                                {{'nfseApp.SituacaoDeferimento.'+cancelamento.situacaoFiscal | translate}}
+                            </td>
+                            <td>{{cancelamento.observacoesFiscal}}</td>
+                        </tr>
+                    </table>
+                    <span nfse-app-pagination></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

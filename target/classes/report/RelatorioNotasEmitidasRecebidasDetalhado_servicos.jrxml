@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioNotasEmitidasRecebidasDetalhado_servicos" language="groovy" pageWidth="554" pageHeight="792" columnWidth="554" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="aliquotaServico" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[aliquotaServico]]></fieldDescription>
+	</field>
+	<field name="baseCalculo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[baseCalculo]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="cnae" class="br.com.webpublico.domain.dto.CnaeNfseDTO">
+		<fieldDescription><![CDATA[cnae]]></fieldDescription>
+	</field>
+	<field name="cpfCnpjDeducao" class="java.lang.String">
+		<fieldDescription><![CDATA[cpfCnpjDeducao]]></fieldDescription>
+	</field>
+	<field name="credito" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[credito]]></fieldDescription>
+	</field>
+	<field name="debito" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[debito]]></fieldDescription>
+	</field>
+	<field name="deducao" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[deducao]]></fieldDescription>
+	</field>
+	<field name="deducoes" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[deducoes]]></fieldDescription>
+	</field>
+	<field name="descontos" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[descontos]]></fieldDescription>
+	</field>
+	<field name="descontosCondicionados" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[descontosCondicionados]]></fieldDescription>
+	</field>
+	<field name="descontosIncondicionados" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[descontosIncondicionados]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[descricao]]></fieldDescription>
+	</field>
+	<field name="detalhes" class="java.util.List">
+		<fieldDescription><![CDATA[detalhes]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="iss" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[iss]]></fieldDescription>
+	</field>
+	<field name="itemPlanoContasInterno" class="br.com.webpublico.domain.dto.ItemPlanoContasInternoNfseDTO">
+		<fieldDescription><![CDATA[itemPlanoContasInterno]]></fieldDescription>
+	</field>
+	<field name="municipio" class="br.com.webpublico.domain.dto.MunicipioNfseDTO">
+		<fieldDescription><![CDATA[municipio]]></fieldDescription>
+	</field>
+	<field name="nomeServico" class="java.lang.String">
+		<fieldDescription><![CDATA[nomeServico]]></fieldDescription>
+	</field>
+	<field name="numeroDocumentoFiscal" class="java.lang.String">
+		<fieldDescription><![CDATA[numeroDocumentoFiscal]]></fieldDescription>
+	</field>
+	<field name="observacoes" class="java.lang.String">
+		<fieldDescription><![CDATA[observacoes]]></fieldDescription>
+	</field>
+	<field name="pais" class="br.com.webpublico.domain.dto.PaisNfseDTO">
+		<fieldDescription><![CDATA[pais]]></fieldDescription>
+	</field>
+	<field name="prestadoNoPais" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[prestadoNoPais]]></fieldDescription>
+	</field>
+	<field name="processoSuspensao" class="java.lang.String">
+		<fieldDescription><![CDATA[processoSuspensao]]></fieldDescription>
+	</field>
+	<field name="quantidade" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[quantidade]]></fieldDescription>
+	</field>
+	<field name="saldoAnterior" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[saldoAnterior]]></fieldDescription>
+	</field>
+	<field name="servico" class="br.com.webpublico.domain.dto.ServicoNfseDTO">
+		<fieldDescription><![CDATA[servico]]></fieldDescription>
+	</field>
+	<field name="tipoDeducao" class="br.com.webpublico.domain.dto.enums.TipoDeducaoNfseDTO">
+		<fieldDescription><![CDATA[tipoDeducao]]></fieldDescription>
+	</field>
+	<field name="tipoOperacao" class="br.com.webpublico.domain.dto.enums.TipoOperacaoNfseDTO">
+		<fieldDescription><![CDATA[tipoOperacao]]></fieldDescription>
+	</field>
+	<field name="valorDocumentoFiscal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[valorDocumentoFiscal]]></fieldDescription>
+	</field>
+	<field name="valorServico" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[valorServico]]></fieldDescription>
+	</field>
+	<variable name="TOTAL_SERVICOS" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{valorServico}.multiply($F{quantidade})]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_BASE_CALCULO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{baseCalculo}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_ISS" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{iss}]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="12" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="554" height="12"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="290" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do Serviço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="0" width="80" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Serviço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="80" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Base de Cálculo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="0" width="42" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Alíquota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="492" y="0" width="62" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ISS Nota]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="554" height="12"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="290" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeServico}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="290" y="0" width="80" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorServico}.multiply($F{quantidade})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="370" y="0" width="80" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{baseCalculo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="450" y="0" width="42" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aliquotaServico}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="492" y="0" width="62" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{iss}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="12" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="554" height="12"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="290" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Totais]]></text>
+			</staticText>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="290" y="0" width="80" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_SERVICOS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="370" y="0" width="80" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_BASE_CALCULO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="492" y="0" width="62" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_ISS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

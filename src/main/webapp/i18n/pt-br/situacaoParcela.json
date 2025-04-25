@@ -1,0 +1,43 @@
+{
+    "nfseApp": {
+        "SituacaoParcela" : {
+            "null": "",
+           "EM_ABERTO":"Aberto",
+           "AGUARDANDO":"Aguardando",
+           "AGUARDANDO_REVISAO":"Aguardando Revisão",
+           "ANISTIA":"Anistiado",
+           "BAIXADO":"Baixado",
+           "CANCELADA_INSCRICAO_DIVIDA_ATIVA":"Cancelada na Inscrição em Dívida Ativa",
+           "BAIXADO_OUTRA_OPCAO":"Cancelado por Outra Opção de Pagamento",
+           "CANCELADO_RECALCULO":"Cancelado por Recálculo",
+           "CANCELADO_ISENCAO":"Cancelado por Isenção",
+           "CANCELAMENTO":"Cancelado",
+           "COMPENSACAO":"Compensado",
+           "DACAO":"Dação",
+           "DECADENCIA":"Decadência",
+           "DESISTENCIA":"Desistência",
+           "DIVIDA_ATIVA_EM_REVISAO":"Dívida Ativa em Revisão",
+           "ESTORNADO":"Estornado",
+           "INSCRITA_EM_DIVIDA_ATIVA":"Inscrito em Dívida Ativa",
+           "ISENTO":"Isento",
+           "PAGO":"Pago",
+           "PAGO_PARCELAMENTO":"Pago por Parcelamento",
+           "PAGO_REFIS":"Pago por Refis",
+           "PAGO_SUBVENCAO":"Pago por Subvenção",
+           "PARCELADO":"Parcelado",
+           "PARCELAMENTO_CANCELADO":"Parcelamento Cancelado",
+           "PRESCRICAO":"Prescrita",
+           "REFIS":"Refis",
+           "REMISSAO":"Remissão",
+           "RETIDO_NA_FONTE":"Retido na Fonte ",
+           "REVISADO":"Revisado",
+           "SEM_MOVIMENTO":"Sem Movimento de ISS",
+           "SUBSTITUIDA_POR_COMPENSACAO":"Substituída por compensação",
+           "SUBSTITUIDO":"Substituído",
+           "SUSPENSAO":"Suspenso",
+           "SUSPENSAO_LEI":"Suspenso por Lei",
+           "ISOLAMENTO":"Parcela Isolada",
+           "SUBSTITUIDA_POR_CANCELAMENTO_PARCELAMENTO":"Substituída por Cancelamento do Parcelamento"
+        }
+    }
+}

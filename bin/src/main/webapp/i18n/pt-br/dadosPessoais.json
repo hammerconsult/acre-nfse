@@ -1,0 +1,33 @@
+{
+    "nfseApp": {
+        "dadosPessoais" : {
+            "home": {
+                "title": "Dados Pessoaiss",
+                "createLabel": "Create a new DadosPessoais",
+                "createOrEditLabel": "Create or edit a DadosPessoais"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete DadosPessoais {{ id }}?"
+            },
+            "detail": {
+                "title": "Dados Pessoais"
+            },
+            "cpfCnpj": "CPF ou CNPJ",
+            "inscricaoMunicipal": "Inscrição Municipal",
+            "inscricaoEstadualRg": "Inscricao Estadual ou RG",
+            "nomeRazaoSocial": "Nome ou Razão Social",
+            "nomeFantasia": "Nome Fantasia",
+            "email": "e-Mail",
+            "telefone": "Telefone",
+            "porte": "Porte",
+            "optanteSimplesNacional": "Optante do Simples Nacional",
+            "issRetido": "ISS Retido",
+            "responsavelRetencao": "Responsável Pela Retenção",
+            "validation": {
+                "cpfCnpj": {
+                    "exists" : "o CPF ou CNPJ informado já existe na Base de Dados"
+                }
+            }
+        }
+    }
+}

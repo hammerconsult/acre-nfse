@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h4 class="modal-title" id="templateLabel">
+                    Dados do Template
+                </h4>
+            </div>
+            <div class="ibox-content">
+                <form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label
+                                for="field_tipo">Tipo</label>
+                            <select class="form-control" name="tipo"
+                                    ng-model="template.tipo"
+                                    id="field_tipo">
+                                <option value="EMAIL_SOLICITACAO_ATIVACAO_CADASTRO">Envio de e-mail para ativação do
+                                    cadastro
+                                </option>
+                                <option value="EMAIL_SOLICITACAO_ALTERACAO_SENHA">Envio de e-mail para alterção de
+                                    senha
+                                </option>
+                                <option value="NFSE">Nota Fiscal</option>
+                                <option value="ITEM_SERVICO">Serviço da Nota Fiscal</option>
+                                <option value="EMAIL_NOTAFISCAL">Envio de e-mail da Nota Fiscal</option>
+                                <option value="TERMO_CREDENCIAMENTO">Termo de Credenciamento</option>
+                                <option value="EMAIL_CREDENCIAMENTO">Email de Credenciamento</option>
+                                <option value="EMAIL_SOLICITADO_ACESSO_SEM_CADASTRO">Envio de e-mail para
+                                    confirmação de acesso para usuário solicitado sem cadastro
+                                </option>
+                                <option value="EMAIL_SOLICITANTE_ACESSO">Envio de e-mail para
+                                    confirmação de acesso para usuário solicitante
+                                </option>
+                                <option value="EMAIL_SOLICITADO_ACESSO_COM_CADASTRO">Envio de e-mail para usuário
+                                    solicitado com cadastro
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="field_template">Template</label>
+                            <summernote name="template" id="field_template"
+                                        ng-model="template.template">
+                            </summernote>
+
+                            <div ng-show="editForm.template.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.template.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-default" ui-sref="template">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                            translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid"
+                                class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

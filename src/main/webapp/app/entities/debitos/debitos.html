@@ -1,0 +1,146 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-4">
+                            <label for="field_vencimentoInicial">Vencimento Inicial</label>
+
+                            <input type="date"
+                                   ng-model="filtro.vencimentoInicial"
+                                   id="field_vencimentoInicial"
+                                   class="form-control"
+                                   name="vencimentoInicial">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="field_vencimentoFinal">Vencimento Final</label>
+
+                            <input type="date"
+                                   ng-model="filtro.vencimentoFinal"
+                                   id="field_vencimentoFinal"
+                                   class="form-control"
+                                   name="vencimentoFinal">
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <label for="btn_pesquisar">&nbsp;</label>
+
+                            <button class="btn btn-success btn-block"
+                                    id="btn_pesquisar"
+                                    name="btn_pesquisar"
+                                    title="Pesquisar"
+                                    ng-click="loadAll()">
+                                <span class="fa fa-search"></span>
+                                Filtrar Débitos
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="btn_pesquisar">&nbsp;</label>
+
+                            <a class="btn btn-success btn-block"
+                               title="Criar Nova Guia"
+                               ui-sref="guia">
+                                <span class="fa fa-plus-circle"></span>
+                                Nova Guia
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" ng-repeat="situacao in situacoes">
+                        <a ng-click="filtro.situacoes.splice(filtro.situacoes.indexOf(situacao), 1); loadAll();"
+                           ng-show="filtro.situacoes.indexOf(situacao) >= 0"
+                           class="btn btn-primary btn-block">
+                            <i class="fa fa-check-circle-o"></i>
+                            {{situacao.descricao}}
+                        </a>
+
+                        <a ng-click="filtro.situacoes.push(situacao); loadAll();"
+                           ng-show="filtro.situacoes.indexOf(situacao) < 0"
+                           class="btn btn-default btn-block">
+                            <i class="fa fa-circle-o"></i>
+                            {{situacao.descricao}}
+                        </a>
+                    </div>
+                </div>
+                <div class="table-responsive m-t-md">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Referência</th>
+                            <th>Imposto</th>
+                            <th>Taxa</th>
+                            <th>Juros</th>
+                            <th>Multa</th>
+                            <th>Correção</th>
+                            <th>Honorários</th>
+                            <th>Desconto</th>
+                            <th>Pago</th>
+                            <th>Total</th>
+                            <th>Vencimento</th>
+                            <th>Situação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="debito in debitos"
+                            class="{{isDebitoAbertoVencido(debito) ? 'text-danger': ''}} {{agrupador.parcelas.indexOf(debito) >= 0 ? 'success' : ''}}">
+                            <td>
+                                <a ng-click="removerParcela(agrupador.parcelas.indexOf(debito))"
+                                   ng-show="agrupador.parcelas.indexOf(debito) >= 0 && !debito.bloqueiaImpressao"
+                                   ng-if="debito.situacao === 'EM_ABERTO'"
+                                   class="text-info">
+                                    <i class="fa fa-check-circle-o"></i>
+                                </a>
+
+                                <a ng-click="adicionarParcela(debito)"
+                                   ng-show="agrupador.parcelas.indexOf(debito) < 0 && !debito.bloqueiaImpressao"
+                                   ng-if="debito.situacao === 'EM_ABERTO'">
+                                    <i class="fa fa-circle-o"></i>
+                                </a>
+                            </td>
+                            <td><a ui-sref="debitos.details({id: debito.idParcela})">{{debito.referencia}}</a></td>
+                            <td>{{debito.valorImposto | currency: 'R$'}}</td>
+                            <td>{{debito.valorTaxa | currency: 'R$'}}</td>
+                            <td>{{debito.valorJuros | currency: 'R$'}}</td>
+                            <td>{{debito.valorMulta | currency: 'R$'}}</td>
+                            <td>{{debito.valorCorrecao | currency: 'R$'}}</td>
+                            <td>{{debito.valorHonorarios | currency: 'R$'}}</td>
+                            <td>{{debito.valorDesconto | currency: 'R$'}}</td>
+                            <td>{{debito.valorPago | currency: 'R$'}}</td>
+                            <td>{{debito.valorTotal | currency: 'R$'}}</td>
+                            <td>{{debito.vencimento | date: 'dd/MM/yyyy': '+0000'}}</td>
+                            <td>
+                                {{'nfseApp.SituacaoParcela.' + debito.situacao |
+                            translate}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-info"
+                                ng-disabled="agrupador.parcelas.length <= 0"
+                                title="Imprimir Guia"
+                                ng-click="imprimirDam()">
+                            <span class="fa fa-print"></span>
+                            Imprimir Guia
+                        </button>
+
+                        <button class="btn btn-success"
+                                ng-disabled="agrupador.parcelas.length <= 0"
+                                title="Imprimir Guia"
+                                ng-click="enviarDam()">
+                            <span class="fa fa-envelope"></span>
+                            Enviar Guia
+                        </button>
+                    </div>
+                    <span nfse-app-pagination></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

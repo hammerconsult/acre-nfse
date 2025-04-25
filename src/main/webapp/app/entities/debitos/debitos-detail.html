@@ -1,0 +1,174 @@
+<div class="ibox">
+
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-md-12 m-t-md">
+                <h3>Dados da DMS</h3>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-2">
+                    <small>Código</small>
+                    <br>
+                    <strong>{{dms.codigo}}</strong>
+                </div>
+
+                <div class="col-md-2">
+                    <small> Competência </small>
+                    <br>
+                    <strong>{{dms.mes }}/{{dms.exercicio}}</strong>
+                </div>
+
+                <div class="col-md-3">
+                    <small>CPF ou CNPJ</small>
+                    <br>
+                    <strong>{{dms.prestador.pessoa.dadosPessoais.cpfCnpj |
+                        brCpfCnpj}}</strong>
+                </div>
+
+                <div class="col-md-2">
+                    <small>Inscrição Municipal</small>
+                    <br>
+                    <strong>{{dms.prestador.inscricaoMunicipal}}</strong>
+                </div>
+
+                <div class="col-md-3">
+                    <small>Nome</small>
+                    <br>
+                    <strong>{{dms.prestador.pessoa.dadosPessoais.nomeRazaoSocial}}</strong>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 m-t-md">
+                <h3>Dados do Débito</h3>
+            </div>
+            <div class="col-md-12">
+                <div class="table-responsive m-t-md">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Referência</th>
+                            <th>Imposto</th>
+                            <th>Taxa</th>
+                            <th>Juros</th>
+                            <th>Multa</th>
+                            <th>Correção</th>
+                            <th>Honorários</th>
+                            <th>Desconto</th>
+                            <th>Pago</th>
+                            <th>Total</th>
+                            <th>Vecimento</th>
+                            <th>Situação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{debito.referencia}}</td>
+                            <td>{{debito.valorImposto | currency: 'R$'}}</td>
+                            <td>{{debito.valorTaxa | currency: 'R$'}}</td>
+                            <td>{{debito.valorJuros | currency: 'R$'}}</td>
+                            <td>{{debito.valorMulta | currency: 'R$'}}</td>
+                            <td>{{debito.valorCorrecao | currency: 'R$'}}</td>
+                            <td>{{debito.valorHonorarios | currency: 'R$'}}</td>
+                            <td>{{debito.valorDesconto | currency: 'R$'}}</td>
+                            <td>{{debito.valorPago | currency: 'R$'}}</td>
+                            <td>{{debito.total | currency: 'R$'}}</td>
+                            <td>{{debito.vencimento | date: 'dd/MM/yyyy': '+0000'}}</td>
+                            <td>{{'nfseApp.SituacaoParcela.' + debito.situacao | translate}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 m-t-md">
+                <h3>Notas Relacionadas</h3>
+            </div>
+            <div class="col-md-12">
+                <div class="table-responsive" ng-show="notas && notas.length > 0">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th class="issue-info">
+                                Número
+                                <small>Emissão</small>
+                            </th>
+                            <th class="issue-info">
+                                Prestador
+                                <small>Tomador</small>
+                            </th>
+                            <th class="text-right issue-info">
+                                Valor Serviços
+                                <small>
+                                    Valor ISS
+                                </small>
+                            </th>
+                            <th class="text-center">Situação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="notaFiscal in notas">
+                            <td class="issue-info">
+                                <a ui-sref="notaFiscal.detail({id:notaFiscal.id})" >{{notaFiscal.numero}}</a>
+                                <small>{{notaFiscal.emissao | date : 'dd/MM/yyyy'}}</small>
+                            </td>
+                            <td class="issue-info">
+                                <span ng-if="notaFiscal.cpfCnpjPrestador">({{notaFiscal.cpfCnpjPrestador | brCpfCnpj}})&ensp;</span>
+                                {{notaFiscal.nomePrestador}}
+                                <small>
+                                    <span ng-if="notaFiscal.cpfCnpjTomador">({{notaFiscal.cpfCnpjTomador | brCpfCnpj}})&ensp;</span>
+                                    {{notaFiscal.nomeTomador}}
+                                </small>
+                            </td>
+                            <td class="text-right issue-info">
+                                {{notaFiscal.totalServicos | currency : 'R$ '}}
+                                <small>{{notaFiscal.iss | currency : 'R$ '}}</small>
+                            </td>
+                            <td class="text-center">
+                        <span class="label {{notaFiscal.situacao === 'CANCELADA' ? 'label-danger': 'label-primary'}}">
+                        {{'nfseApp.SituacaoNota.' + notaFiscal.situacao | translate}}
+                        </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ibox">
+    <div class="ibox-content text-center">
+        <button type="button"
+                ui-sref="debitos"
+                class="btn btn-default">
+            <span class="fa fa-arrow-left"></span>&nbsp;<span>Voltar</span>
+        </button>
+
+        <button class="btn btn-info"
+                ng-disabled="agrupador.parcelas.length <= 0"
+                title="Imprimir Guia"
+                ng-click="imprimirDam()">
+            <span class="fa fa-print"></span>
+            Imprimir Guia
+        </button>
+
+        <button class="btn btn-info"
+                ng-disabled="agrupador.parcelas.length <= 0"
+                title="Imprimir Guia"
+                ng-click="imprimirComposicaoGuia()">
+            <span class="fa fa-print"></span>
+            Composição da Guia
+        </button>
+
+        <button class="btn btn-success"
+                ng-disabled="agrupador.parcelas.length <= 0"
+                title="Imprimir Guia"
+                ng-click="enviarDam()">
+            <span class="fa fa-envelope"></span>
+            Enviar Guia
+        </button>
+    </div>
+</div>

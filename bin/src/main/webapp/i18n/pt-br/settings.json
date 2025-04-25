@@ -1,0 +1,25 @@
+{
+  "settings": {
+    "title": "Configurações para o usuário [<b>{{username}}</b>]",
+    "form": {
+      "nomerazao": "nome ou razão social",
+      "nomerazao.placeholder": "nome ou razão social",
+      "language": "Idioma",
+      "button": "Salvar"
+    },
+    "messages": {
+      "error": {
+        "fail": "<strong>Ocorreu um erro!</strong> As configurações não foram salvas.",
+        "emailexists": "<strong>E-mail is already in use!</strong> Please choose another one."
+      },
+      "success": "<strong>Configurações salvas com sucesso!</strong>",
+      "validate": {
+        "nomerazao": {
+          "required": "O campo nome ou razão social é obrigatório.",
+          "minlength": "O campo nome ou razão social deve ter pelo menos 1 caractere",
+          "maxlength": "O campo nome ou razão social não pode ter mais de 50 caracteres"
+        }
+      }
+    }
+  }
+}

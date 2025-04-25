@@ -1,0 +1,18 @@
+{
+    "nfseApp": {
+        "solicitacaorps": {
+            "home": {
+                "title": "RPS",
+                "createLabel": "Solicitar RPS",
+                "createOrEditLabel": "Solicitar RPS",
+                "deferimentoAidfe": "Deferimento de RPS"
+            },
+            "delete": {
+                "question": "Você tem certeza que quer excluir essa solicitação de RPS {{ id }}?"
+            },
+            "detail": {
+                "title": "Detalhes da RPS"
+            }
+        }
+    }
+}

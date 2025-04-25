@@ -1,0 +1,18 @@
+{
+    "nfseApp": {
+        "tomadorNota" : {
+            "home": {
+                "title": "TomadorNotas",
+                "createLabel": "Create a new TomadorNota",
+                "createOrEditLabel": "Create or edit a TomadorNota"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete TomadorNota {{ id }}?"
+            },
+            "detail": {
+                "title": "TomadorNota"
+            },
+            "tomador": "tomador"
+        }
+    }
+}

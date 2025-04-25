@@ -1,0 +1,449 @@
+<div class="row">
+    <div class="col-lg-12">
+        <form name="editForm" role="form" novalidate>
+
+            <div class="ibox float-e-margins animated fadeInDown">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Dados do Prestador do Serviço</h3>
+                        </div>
+                    </div>
+                    <div class="row m-t-sm">
+                        <div class="fodrm-group">
+                            <div class="col-md-2">
+                                <label for="field_cpf_cnpj_prestador">CPF/CNPJ</label>
+                                <input type="text" class="form-control" name="cpfCnpjPrestador"
+                                       ui-br-cpfcnpj-mask
+                                       id="field_cpf_cnpj_prestador"
+                                       readonly
+                                       ng-model="notaFiscalAvulsa.prestador.dadosPessoais.cpfCnpj">
+                            </div>
+                            <div class="col-md-10">
+                                <label for="field_nome_razao_social_prestador">Nome/Razão Social</label>
+                                <input type="text" class="form-control" name="nomeRazaoSocialPrestador"
+                                       id="field_nome_razao_social_prestador"
+                                       readonly
+                                       ng-maxlength="7"
+                                       ng-model="notaFiscalAvulsa.prestador.dadosPessoais.nomeRazaoSocial">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins animated fadeInDown">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Dados da Nota Fiscal Avulsa</h3>
+                        </div>
+                    </div>
+                    <div class="row m-t-sm">
+                        <div class="fodrm-group">
+                            <div class="col-md-3">
+                                <label for="field_numero_nota">Número</label>
+                                <input type="number" class="form-control" name="numeroNota" id="field_numero_nota"
+                                       readonly
+                                       ng-maxlength="7"
+                                       ng-model="notaFiscalAvulsa.numero">
+                                <div ng-show="!notaFiscalAvulsa.numero">
+                                    <p class="help-block">
+                                        Gerado automaticamente.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="field_data_nota">Data da Nota</label>
+                                <input class="form-control"
+                                       value="{{notaFiscalAvulsa.dataNota | date:'dd/MM/yyyy': '+0000'}}"
+                                       id="field_data_nota"
+                                       readonly
+                                       name="dataNota">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins animated fadeInDown">
+
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Para quem foi prestado o serviço?</h3>
+                        </div>
+                    </div>
+                    <div class="row m-t-sm">
+                        <div class="col-md-12">
+                            <div class="row animated fadeInDown">
+                                <div class="form-group col-md-4"
+                                     ng-class="{'has-error' : editForm.cpfCnpj.$invalid && (editForm.$submitted || editForm.cpfCnpj.$touched)}">
+                                    <label
+                                        class="control-label"
+                                        for="field_cpfCnpj">CPF ou CNPJ</label>
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="cpfCnpj" id="field_cpfCnpj"
+                                               ui-br-cpfcnpj-mask
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.cpfCnpj"
+                                               required>
+                                    </div>
+                                    <div ng-show="editForm.cpfCnpj.$invalid">
+                                        <p class="help-block"
+                                           ng-show="editForm.cpfCnpj.$error.required">
+                                            Informe o CPF ou CNPJ
+                                        </p>
+
+                                        <p class="help-block"
+                                           ng-show="editForm.cpfCnpj.$error.cpf || editForm.cpfCnpj.$error.cnpj">
+                                            CPF ou CNPJ inválido
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="editForm.cpfCnpj.$valid"
+                                 class="fadeInDown animated">
+                                <div class="row" ng-show="!isFisica()">
+                                    <div class="form-group col-md-4">
+                                        <label
+                                            for="field_inscricaoMunicipal">Inscrição Municipal</label>
+
+                                        <input type="text" class="form-control" name="inscricaoMunicipal"
+                                               id="field_inscricaoMunicipal"
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.inscricaoMunicipal">
+                                    </div>
+
+                                    <div class="form-group col-md-8">
+                                        <label
+                                            class="control-label"
+                                            for="field_nomeFantasia">Nome Fantasia</label>
+                                        <input type="text" class="form-control" name="nomeFantasia"
+                                               id="field_nomeFantasia"
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.nomeFantasia">
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-4"
+                                         ng-if="!isFisica()"
+                                         ng-class="{'has-error' : editForm.inscricaoEstadual.$invalid && (editForm.$submitted || editForm.inscricaoEstadual.$touched)}">
+                                        <label
+                                            class="control-label"
+                                            for="field_inscricaoEstadual">
+                                            Inscrição Estadual
+                                        </label>
+
+                                        <input type="text" class="form-control" name="inscricaoEstadual"
+                                               id="field_inscricaoEstadual"
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.inscricaoEstadualRg">
+
+
+                                    </div>
+
+                                    <div class="form-group col-md-4"
+                                         ng-if="isFisica()"
+                                         ng-class="{'has-error' : editForm.rg.$invalid  && (editForm.$submitted || editForm.rg.$touched)}">
+                                        <label
+                                            class="control-label"
+                                            for="field_rg">
+                                            RG
+                                        </label>
+
+                                        <input type="text" class="form-control" name="rg"
+                                               id="field_rg"
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.inscricaoEstadualRg">
+
+                                    </div>
+
+                                    <div
+                                        class="form-group col-md-8"
+                                        ng-class="{'has-error' : editForm.nomeRazaoSocial.$invalid && (editForm.$submitted || editForm.nomeRazaoSocial.$touched)}">
+                                        <label
+                                            class="control-label"
+                                            for="field_nomeRazaoSocial"> {{isFisica() ? 'Nome ':'Razão Social'}}</label>
+
+                                        <input type="text" class="form-control" name="nomeRazaoSocial"
+                                               id="field_nomeRazaoSocial"
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.nomeRazaoSocial"
+                                               required>
+
+                                        <div ng-show="editForm.nomeRazaoSocial.$invalid">
+                                            <p class="help-block"
+                                               ng-show="editForm.nomeRazaoSocial.$error.required">
+                                                Informe o Nome ou a Razão Social
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-9">
+                                        <label for="field_email">e-Mail</label>
+                                        <input type="text" class="form-control" name="email" id="field_email"
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.email">
+
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <label
+                                            for="field_telefone">Telefone</label>
+                                        <input type="text" class="form-control" name="telefone" id="field_telefone"
+                                               ui-br-phone-number
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.telefone">
+                                    </div>
+                                </div>
+
+                                <div class="row fadeInDown animated">
+
+                                    <div class="form-group col-md-2">
+                                        <label for="field_cep">Cep</label>
+                                        <input type="text" class="form-control" name="id" id="field_cep"
+                                               ui-br-cep-mask
+                                               ng-blur="loadEnderecoByCEP(notaFiscalAvulsa.tomador.dadosPessoais.cep)"
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.cep">
+                                    </div>
+                                    <div class="form-group col-md-8">
+                                        <label for="field_nome_municipio">Município</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="nome_municipio"
+                                                   id="field_nome_municipio"
+                                                   disabled
+                                                   ng-model="notaFiscalAvulsa.tomador.dadosPessoais.municipio.nome">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn  btn-info"
+                                                        ng-click="searchMunicipio(notaFiscalAvulsa.tomador.dadosPessoais)">
+                                                    <span class="glyphicon glyphicon-search"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label for="field_estado_municipio">Estado</label>
+                                        <input type="text" class="form-control" name="estado_municipio"
+                                               id="field_estado_municipio"
+                                               disabled
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.municipio.estado">
+
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label
+                                            for="field_logradouro">Logradouro</label>
+                                        <input type="text" class="form-control" name="logradouro"
+                                               id="field_logradouro"
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.logradouro"
+                                        >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="field_bairro">Bairro</label>
+                                        <input type="text" class="form-control" name="bairro" id="field_bairro"
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.bairro">
+
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="field_numero">Número</label>
+                                        <input type="text" class="form-control" name="numero" id="field_numero"
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.numero">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label
+                                            for="field_complemento">Complemento</label>
+                                        <input type="text" class="form-control" name="complemento"
+                                               id="field_complemento"
+                                               ng-model="notaFiscalAvulsa.tomador.dadosPessoais.complemento">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="editForm.cpfCnpj.$valid" class="ibox float-e-margins animated fadeInDown">
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Qual o serviço prestado?</h3>
+                        </div>
+                    </div>
+
+                    <div ng-if="notaFiscalAvulsa.itens.length == 0" class="fadeIn">
+                        <div class="row">
+                            <div class="form-group col-md-8">
+                                <label class="center-block">Serviço</label>
+                                <div class="input-group">
+
+                                    <input class="form-control"
+                                           readonly
+                                           id="field_servico_descricao" name="servico_descricao"
+                                           value="{{item.servico.descricao}}">
+                                    <span class="input-group-btn">
+                                             <button type="button" class="btn btn-info" ng-click="searchServico()">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="center-block">Aliquota</label>
+
+                                <input class="form-control"
+                                       readonly
+                                       id="field_servico_aliquota" name="servico_aliquota"
+                                       value="{{item.aliquota}}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="center-block">Discriminação do serviço</label>
+
+                                <textarea type="text" class="form-control"
+                                          name="descriminacao_servico" id="field_descriminacao_servico"
+                                          ng-model="item.descricao">
+                                        </textarea>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-1">
+                                <label class="center-block">Quantidade</label>
+                                <input type="number" class="form-control"
+                                       ng-class="{'has-error' : item.quantidade <= 0 && (editForm.$submitted || editForm.servico_quantidade.$touched)}"
+                                       ng-disabled="!item.servico"
+                                       ng-blur="calcularValoresServico()"
+                                       name="servico_quantidade" id="field_servico_quantidade"
+                                       ng-model="item.quantidade">
+
+                                <div class="margin">
+                                    <p class="help-block"
+                                       ng-show="item.quantidade <= 0">
+                                        O valor deve ser maior que ZERO (0)
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3"
+                                 ng-class="{'has-error' : item.valorUnitario <= 0 && (editForm.$submitted || editForm.servico_valor_unitario.$touched)}">
+                                <label class="control-label">Valor Unitário</label>
+                                <input type="text" class="form-control"
+                                       ui-money-mask="R$"
+                                       ng-disabled="!item.servico"
+                                       ng-change="calcularValoresServico()"
+                                       name="servico_valor_unitario" id="field_servico_valor_unitario"
+                                       ng-model="item.valorUnitario">
+
+                                <div class="margin">
+                                    <p class="help-block"
+                                       ng-show="item.valorUnitario <= 0">
+                                        O valor deve ser maior que ZERO (R$ 0,00)
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Valor Total</label>
+                                <input type="text" class="form-control"
+                                       ui-money-mask="R$"
+                                       readonly
+                                       name="servico_valor_total" id="field_servico_valor_total"
+                                       ng-model="item.valorTotal">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Valor ISS</label>
+                                <input type="text" class="form-control"
+                                       ui-money-mask="R$"
+                                       readonly
+                                       name="servico_valor_iss" id="field_servico_valor_iss"
+                                       ng-model="item.valorIss">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <button class="btn btn-success"
+                                        ng-click="addServico()"
+                                        type="button">
+                                    <i class="fa fa-chevron-right"></i>
+                                    Adicionar Serviço
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-md-12"
+                             ng-show="notaFiscalAvulsa.itens.length > 0">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th colspan="6">
+                                        Serviço adicionado
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Descrição</th>
+                                    <th>Alíquota</th>
+                                    <th>Quant.</th>
+                                    <th>Valor Unit.</th>
+                                    <th>Valor Total</th>
+                                    <th>Valor ISS</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in notaFiscalAvulsa.itens">
+                                    <td class="col-md-1">{{item.servico.codigo}}</td>
+                                    <td class="col-md-3">{{item.servico.descricao}}</td>
+                                    <td class="col-md-1">{{item.servico.aliquota}}</td>
+                                    <td class="col-md-1">{{item.quantidade}}</td>
+                                    <td class="col-md-1">{{item.valorUnitario | currency : 'R$ '}}</td>
+                                    <td class="col-md-2">{{item.valorTotal | currency : 'R$ '}}</td>
+                                    <td class="col-md-1">{{item.valorIss | currency : 'R$ '}}</td>
+                                    <td class="col-md-2 text-center">
+                                        <div class="pull-right">
+                                            <button type="submit"
+                                                    ng-click="delServico($index)"
+                                                    class="btn btn-danger btn-sm">
+                                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                            </button>
+                                            <button type="submit"
+                                                    ng-click="editServico($index)"
+                                                    class="btn btn-info btn-sm">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row m-t-md">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-default" ui-sref="notaFiscalAvulsa">
+                        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+                    </button>
+
+                    <button type="submit"
+                            ng-disabled="!editForm.cpfCnpj.$valid"
+                            not-has-role="ROLE_ADMIN"
+                            ng-click="salvar()"
+                            class="btn btn-success">
+                        <span class="glyphicon glyphicon-check"></span>&nbsp;
+                        <span>Salvar</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

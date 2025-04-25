@@ -1,0 +1,113 @@
+<div class="alert alert-info">
+    <strong>Atenção!</strong> Você tem uma nova mensagem.
+</div>
+
+<div class="ibox animated fadeInDown">
+    <div class="ibox-title">
+        <h4>{{entity.mensagem.titulo}}</h4>
+    </div>
+
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-md-12 m-t-md">
+                <div ng-bind-html="trustAsHtml(entity.mensagem.conteudo)"></div>
+            </div>
+
+            <div ng-if="entity.mensagem.tipo == 'QUESTIONAMENTO'">
+                <div class="col-md-12 m-t-md">
+                    <div class="form-group">
+                        <label class="center-block">Resposta</label>
+                        <textarea type="text" class="form-control"
+                                  required=""
+                                  rows="7"
+                                  maxlength="3000" minlength="3"
+                                  ng-model="entity.resposta"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h3>Documento(s)</h3>
+                </div>
+                <div class="col-md-12">
+                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th class="col-md-10">Descrição do Documento</th>
+                                <th class="col-md-1">Obrigatório?</th>
+                                <th class="col-md-1"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="documento in entity.documentos">
+                                <td>{{documento.documento.descricaoDocumento}}</td>
+                                <td>{{documento.documento.obrigatorio ? 'Sim' : 'Não'}}</td>
+                                <td>
+                                    <label for="file-upload{{documento.documento.id}}"
+                                           class="custom-file-upload">
+                                        <span class="fa fa-cloud-upload"></span>Selecionar Arquivo
+                                    </label>
+                                    <input type="file"
+                                           id="file-upload{{documento.documento.id}}"
+                                           ngf-select="uploadFile($file, documento)"
+                                           ngf-max-size="15MB">
+                                    <br/>
+                                    <label ng-if="documento.file">{{documento.fileName}}</label>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 m-t-md">
+                <div
+                        ng-if="entity.mensagem.detentorArquivoComposicao && entity.mensagem.detentorArquivoComposicao.arquivos.length > 0">
+                    <h5>Anexo(s)</h5>
+                    <div ng-repeat="arquivo in entity.mensagem.detentorArquivoComposicao.arquivos">
+                        <a class="btn btn-xs btn-success" style="color: white"
+                           ng-click="baixouArquivo(arquivo)"
+                           href="/api/arquivo/{{arquivo.arquivoNfseDTO.id}}" target="_blank">
+                            <i class="fa fa-download"></i>
+                            {{arquivo.arquivoNfseDTO.nome}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ibox-footer">
+        <div class="row">
+            <div ng-if="!habilitaBotaoConfirmar()" class="alert alert-warning" style="text-align: left">
+                <strong>Para confirmar você precisa:</strong><br/>
+                <div ng-if="isQuestionamento() && !isQuestionamentoRespondido()">
+                    <span>- Responder a pergunta.</span><br/>
+                </div>
+                <div ng-if="isQuestionamento() && !isQuestionamentoDocAnexados()">
+                    <span>- Anexar os documentos obrigatórios.</span>
+                </div>
+                <div ng-if="!baixouAnexos()">
+                    <span>- Baixar os anexos</span><br/>
+                </div>
+                <div ng-if="!declaro">
+                    <span>- Declarar ter lido a mensagem</span><br/>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <input type="checkbox" ng-model="declaro">
+                <span>Declaro ter lido a mensagem</span>
+            </div>
+
+            <div class="col-md-12 m-t-md">
+                <button type="button" class="btn btn-success"
+                        ng-disabled="!habilitaBotaoConfirmar()"
+                        ng-click="confirmar()">
+                    <span class="fa fa-check"></span>&nbsp;
+                    <span>Confirmar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

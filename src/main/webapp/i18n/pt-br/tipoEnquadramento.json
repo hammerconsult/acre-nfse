@@ -1,0 +1,14 @@
+{
+    "nfseApp": {
+        "TipoPorte": {
+            "null": "",
+            "PADRAO": "Padrão",
+            "CONSTRUCAO_CIVIL": "Construção Civil",
+            "INSTITUICAO_FINANCEIRA": "Instiruição Finanaceira",
+            "OPERADORA_CREDITO": "Operadora de Crédito",
+            "ORGAO_PUBLICO": "Orgão PÚblico",
+            "CARTORIO": "Cartorário, Notarial e Registros Públicos",
+            "CONCESSIONARIA_RODOVIAS": "Concessionária de Rodovias"
+        }
+    }
+}

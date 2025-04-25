@@ -1,0 +1,9 @@
+{
+    "nfseApp": {
+        "TipoPorte": {
+            "null": "",
+            "MENSAL": "Mensal",
+            "ANUAL": "Anual"
+        }
+    }
+}

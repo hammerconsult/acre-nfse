@@ -1,0 +1,21 @@
+{
+    "nfseApp": {
+        "prestadorServicos": {
+            "home": {
+                "title": "Prestador de Serviços",
+                "createLabel": "Criar um novo Prestador de Serviços",
+                "createOrEditLabel": "Criar ou editar um Prestador de Serviços"
+            },
+            "delete": {
+                "question": "Você tem certeza que quer excluir o Prestador de Serviços {{ id }}?"
+            },
+            "detail": {
+                "title": "Prestador de Serviços"
+            },
+            "credenciamento": {
+                "title": "<h5>Formulário<small> Informe os dados para o cadastro de sua empresa junto a prefeitura </small> </h5>"
+            },
+            "pessoa": "pessoa"
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+  "nfseApp": {
+    "notaFiscal": {
+      "home": {
+        "title": "Nota Fiscal",
+        "createLabel": "Criar uma Nota Fiscal de Serviços",
+        "createOrEditLabel": "Criar ou editar uma Nota Fiscal"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete NotaFiscal {{ id }}?"
+      },
+      "detail": {
+        "title": "NotaFiscal"
+      },
+      "numero": "Número",
+      "codigoVerificacao": "Codigo de Verificação",
+      "emissao": "Emissão",
+      "declaracaoPrestacaoServico": "Declaração do Prestador de Serviços",
+      "situacao": "Situação"
+    }
+  }
+}

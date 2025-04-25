@@ -1,0 +1,13 @@
+{
+    "nfseApp": {
+        "MotivoCancelamento" : {
+            "null": "",
+            "ERRO_EMISSAO": "Erro na Emissão",
+            "SERVICO_NAO_PRESTADO": "Serviço não prestado",
+            "ERRO_ASSINATURA": "Erro na assinatura",
+            "DUPLICIDADE" : "Duplicidade",
+            "ERRO_PROCESSAMENTO": "Erro de processamento",
+            "ERRO_DADOS": "Erro de dados na Emissão"
+        }
+    }
+}

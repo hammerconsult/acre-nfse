@@ -1,0 +1,49 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button"
+                        class="btn btn-success"
+                        ng-click="get()">
+                    Get
+                </button>
+            </div>
+
+            <div class="col-md-3">
+                <span>Data Get: {{dataGet}}</span> <br/>
+                <span>Data Get Formatada: {{dataGet | date: 'dd/MM/yyyy HH:mm': '+0000'}}</span>
+            </div>
+
+            <div class="col-md-3">
+                <button type="button"
+                        class="btn btn-success"
+                        ng-click="post()">
+                    Post
+                </button>
+            </div>
+
+            <div class="col-md-3">
+                <span>Data Post: {{dataPost}}</span> <br/>
+                <span>Data Post Formatada: {{dataPost | date: 'dd/MM/yyyy HH:mm': '+0000'}}</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label>Componente</label>
+                <div class='input-group date-input'>
+                    <input enter-as-tab
+                           datepicker-popup='dd/MM/yyyy'
+                           is-open="emissaoPopUp"
+                           ng-model="dataGet"
+                           class="form-control">
+                    <span class='input-group-btn'>
+                        <button type='button' class='btn btn-info' ng-click='openDateDialog($event)'>
+                            <i class='glyphicon glyphicon-calendar'></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

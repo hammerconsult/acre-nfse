@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-md-offset-4 col-md-4">
+        <pagination boundary-links="true"
+                    total-items="per_page * links.last"
+                    ng-model="page"
+                    max-size="5"
+                    items-per-page="per_page"
+                    ng-change="loadPage(page)"
+                    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                    first-text="&laquo;"
+                    last-text="&raquo;"></pagination>
+    </div>
+    <div class="col-md-4 text-right">
+        <ul class="pagination-sm pagination ">
+            <li ng-class="{'active':per_page == 10}">
+                <a ng-click="per_page = 10; loadPage(page)">10</a>
+            </li>
+            <li ng-class="{'active':per_page == 20}">
+                <a ng-click="per_page = 20; loadPage(page)">20</a>
+            </li>
+            <li ng-class="{'active':per_page == 50}">
+                <a ng-click="per_page = 50; loadPage(page)">50</a>
+            </li>
+            <li ng-class="{'active':per_page == 100}">
+                <a ng-click="per_page = 100; loadPage(page)">100</a>
+            </li>
+            <li ng-class="{'active':per_page == 500}">
+                <a ng-click="per_page = 500; loadPage(page)">500</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-offset-8 col-md-4 text-right">
+        <span>Página <strong>{{page ? page : 1}}</strong> de <strong>{{links.last}}</strong>.</span>
+        <br/>
+        <span ng-if="totalItens">Total de registros <strong>{{totalItens}}.</strong></span>
+    </div>
+</div>

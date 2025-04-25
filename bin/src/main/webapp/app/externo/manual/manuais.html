@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="ok()">&times;
+    </button>
+
+</div>
+<div class="modal-body">
+    <div class="row" ng-repeat="manual in manuais">
+
+        <h4 class="modal-title" id="myMunicipioLabel">
+            <strong>{{manual.tipoManualDTO.descricao}}</strong>
+            <div class="font-bold">{{manual.nome}}</div>
+        </h4>
+
+        <p class="font-bold">{{manual.resumo}}</p>
+        <div class="p-xs text-center" ng-if="manual.link">
+            <youtube-video video-url="manual.link" player-width="'100%'"></youtube-video>
+        </div>
+        <div class="p-xs" ng-if="manual.arquivo">
+            <a class="btn btn-xs btn-success" style="color: white"
+               href="/api/arquivo/{{manual.arquivo.id}}" target="_blank">
+                <i class="fa fa-download"></i>
+                Download
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cancel()">&times;
+    </button>
+    <h4 class="modal-title" id="myMunicipioLabel">
+        <strong>{{legislacao.tipoLegislacaoDTO.descricao}}</strong>
+        <div class="font-bold">{{legislacao.nome}}</div>
+    </h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+
+        <p class="font-bold">{{legislacao.sumula}}</p>
+
+        <div class="p-xs">
+            <a class="btn btn-xs btn-success" style="color: white"
+               href="/api/arquivo/{{legislacao.arquivoDTO.id}}" target="_blank">
+                <i class="fa fa-download"></i>
+                Download
+            </a>
+        </div>
+    </div>
+</div>

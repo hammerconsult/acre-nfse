@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cancel()">&times;</button>
+    <h4 class="modal-title" id="myServicoLabel"
+        translate="nfseApp.adife.home.title">
+        Create or edit a AIDF-e</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group input-group">
+                <input type="text" class="form-control"
+                       ng-model="searchQuery" id="searchQuery"
+                       placeholder="{{'global.form.search' | translate}}">
+                                    <span class="input-group-btn">
+                                             <button class="btn btn-info" ng-click="search()"><span
+                                                     class="glyphicon glyphicon-search"></span>
+                                             </button>
+                                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Número</th>
+                <th>Solicitado em</th>
+                <th>QTD Solicitada</th>
+                <th>QTD Deferida</th>
+                <th>Deferido em</th>
+                <th>Numero Inicial</th>
+                <th>Numero Final</th>
+                <th>Situação</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="aidfe in aidfes">
+                <td>{{aidfe.numero}}</td>
+                <td>{{aidfe.solicitadoEm |date:'dd/MM/yyyy HH:mm' : '+0000' }}</td>
+                <td>{{aidfe.quantidade}}</td>
+                <td>{{aidfe.quantidadeDeferida}}</td>
+                <td>{{aidfe.deferidoEm |date:'dd/MM/yyyy HH:mm': '+0000'}}</td>
+                <td>{{aidfe.numeroInicial}}</td>
+                <td>{{aidfe.numeroFinal}}</td>
+                <td>{{aidfe.situacaoAIDFE}}</td>
+                <td class="pull-right">
+                    <button type="submit"
+                            ng-click="ok(adife)"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-check"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

@@ -1,0 +1,23 @@
+{
+    "nfseApp": {
+        "servico" : {
+            "home": {
+                "title": "Serviços",
+                "createLabel": "Criar um novo Serviço",
+                "createOrEditLabel": "Criar ou Editar um Serviço"
+            },
+            "delete": {
+                "question": "Você tem certeza que quer remover o Serviço {{ id }}?"
+            },
+            "detail": {
+                "title": "Serviço"
+            },
+            "id": "ID",
+            "codigo": "Codigo",
+            "descricao": "Descricao",
+            "aliquota": "Aliquota",
+            "aliquotaIBPT": "Aliquota IBPT",
+            "cnae": "Cnae"
+        }
+    }
+}

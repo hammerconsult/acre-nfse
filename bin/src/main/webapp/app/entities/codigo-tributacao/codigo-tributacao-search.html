@@ -1,0 +1,73 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;
+    </button>
+    <h4 class="modal-title">Pesquisa Código de Tributação</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Opções de Filtros</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group col-md-2">
+                                <label>Código</label>
+                                <input class="form-control"
+                                       ng-model="filtro.codigo"/>
+                            </div>
+                            <div class="form-group col-md-10">
+                                <label>Descrição</label>
+                                <input class="form-control"
+                                       ng-model="filtro.descricao"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <button class="btn btn-primary" ng-click="loadAll()">
+                                    <span class="fa fa-search"></span> <span>Pesquisar</span>
+                                </button>
+                                <button class="btn btn-default" ng-click="filtro = {}">
+                                    <span class="fa fa-close"></span> <span>Limpar Filtros</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-t-md">
+        <div class="col-md-12">
+            <span nfse-app-pagination></span>
+
+            <div class="table-responsive">
+                <table class="table table-striped small">
+                    <thead>
+                    <tr>
+                        <th class="col-md-2">Código</th>
+                        <th>Descrição</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="codigoTributacao in codigosTributacao">
+                        <td class="col-md-2">{{codigoTributacao.codigo}}</td>
+                        <td>{{codigoTributacao.descricao}}</td>
+                        <td class="pull-right">
+                            <button type="submit"
+                                    ng-click="ok(codigoTributacao)"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-check"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <span nfse-app-pagination></span>
+        </div>
+    </div>
+</div>

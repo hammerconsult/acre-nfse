@@ -1,0 +1,950 @@
+<div class="row">
+
+
+
+    <form name="editForm" class="form-horizontal" role="form" novalidate ng-submit="save()">
+        <div class="col-lg-12">
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Dados da Pessoa</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-6"
+                             ng-class="{'has-error' : editForm.cpfCnpj.$invalid && (editForm.$submitted || editForm.cpfCnpj.$touched)}"
+                                >
+                            <label class="control-label" for="field_cpfCnpj">CNPJ</label>
+
+                            <input type="text" class="form-control" name="cpfCnpj" id="field_cpfCnpj"
+                                   ui-br-cnpj-mask
+                                   ng-disabled="prestadorServicos.id"
+                                   ng-blur="loadByCpfCnpj()"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.cpfCnpj" required>
+
+                            <div ng-show="editForm.cpfCnpj.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.cpfCnpj.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+
+                                <p class="help-block"
+                                   ng-show="editForm.cpfCnpj.$error.exists"
+                                   translate="nfseApp.dadosPessoais.validation.cpfCnpj.exists">
+                                    Já existe
+                                </p>
+
+                                <p class="help-block"
+                                   ng-show="editForm.cpfCnpj.$error.cpf || editForm.cpfCnpj.$error.cnpj">
+                                    CNPJ inválido
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label translate="nfseApp.dadosPessoais.inscricaoMunicipal"
+                                   for="field_inscricaoMunicipal">InscricaoMunicipal</label>
+
+                            <input type="text" class="form-control" name="inscricaoMunicipal"
+                                   id="field_inscricaoMunicipal"
+                                   ng-model="prestadorServicos.inscricaoCadastral">
+                        </div>
+
+                        <div class="col-md-3"
+                             ng-class="{'has-error' : editForm.inscricaoEstadualRg.$invalid && (editForm.$submitted || editForm.inscricaoEstadualRg.$touched)}">
+                            <label class="control-label"
+                                   for="field_inscricaoEstadualRg">Inscrição Estadual</label>
+
+                            <input type="text" class="form-control" name="inscricaoEstadualRg"
+                                   id="field_inscricaoEstadualRg"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.inscricaoEstadualRg" required>
+
+                            <div ng-show="editForm.inscricaoEstadualRg.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.inscricaoEstadualRg.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-6"
+                             ng-class="{'has-error' : editForm.nomeRazaoSocial.$invalid && (editForm.$submitted || editForm.nomeRazaoSocial.$touched)}">
+                            <label class="control-label"
+                                   for="field_nomeRazaoSocial">Razão Social</label>
+
+                            <input type="text" class="form-control" name="nomeRazaoSocial" id="field_nomeRazaoSocial"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.nomeRazaoSocial" required>
+
+                            <div ng-show="editForm.nomeRazaoSocial.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.nomeRazaoSocial.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label translate="nfseApp.dadosPessoais.nomeFantasia"
+                                   for="field_nomeFantasia">NomeFantasia</label>
+                            <input type="text" class="form-control" name="nomeFantasia" id="field_nomeFantasia"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.nomeFantasia">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label translate="nfseApp.dadosPessoais.email" for="field_email">Email</label>
+                            <input type="text" class="form-control" name="email" id="field_email"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.email">
+                        </div>
+                        <div class="col-md-3">
+                            <label translate="nfseApp.dadosPessoais.telefone" for="field_telefone">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" id="field_telefone"
+                                   ui-br-phone-number
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.telefone">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="field_celular">Celular</label>
+                            <input type="text" class="form-control" name="celular" id="field_celular"
+                                   ui-br-phone-number
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.celular">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Endereço</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label translate="nfseApp.endereco.cep" for="field_cep">Cep</label>
+                            <input type="text" class="form-control" name="id" id="field_cep"
+                                   ui-br-cep-mask
+                                   ng-blur="loadEnderecoByCEP(prestadorServicos.pessoa.dadosPessoais.cep)"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.endereco.cep"
+                                   required>
+
+                            <div ng-show="editForm.cep.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.cep.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="field_codigo_municipio">Município</label>
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="municioio"
+                                       id="field_codigo_municipio"
+                                       ng-blur="loadMunicipioByCodigo(prestadorServicos.pessoa.dadosPessoais.municipio.codigo)"
+                                       ng-model="prestadorServicos.pessoa.dadosPessoais.endereco.municipio.codigo"
+                                       required>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn" ng-click="searchMunicipio()">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                            </div>
+                            <div ng-show="editForm.municipio.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.municipio.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="field_nome_municipio">Nome</label>
+                            <input type="text" class="form-control" name="nome_municipio"
+                                   id="field_nome_municipio"
+                                   disabled
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.municipio.nome">
+
+                        </div>
+                        <div class="col-md-2">
+                            <label for="field_estado_municipio">Estado</label>
+                            <input type="text" class="form-control" name="estado_municipio"
+                                   id="field_estado_municipio"
+                                   disabled
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.municipio.estado">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label translate="nfseApp.logradouro"
+                                   for="field_logradouro">Logradouro</label>
+                            <input type="text" class="form-control" name="logradouro" id="field_logradouro"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.logradouro"
+                                   required>
+
+                            <div ng-show="editForm.logradouro.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.logradouro.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label translate="nfseApp.bairro" for="field_bairro">Bairro</label>
+                            <input type="text" class="form-control" name="bairro" id="field_bairro"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.bairro">
+
+                        </div>
+                        <div class="col-md-2">
+                            <label translate="nfseApp.numero" for="field_numero">Numero</label>
+                            <input type="text" class="form-control" name="numero" id="field_numero"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.numero"
+                                   required>
+
+                            <div ng-show="editForm.numero.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.numero.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label translate="nfseApp.complemento"
+                                   for="field_complemento">Complemento</label>
+                            <input type="text" class="form-control" name="complemento" id="field_complemento"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.complemento">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Socios</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label class="center-block">CPF/CNPJ</label>
+                        </div>
+                        <div class="col-md-7">
+                            <label class="center-block">Nome</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="center-block">Percentual</label>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-repeat="socio in prestadorServicos.socios"
+                         ng-form="socioForm"
+                         class="animated fadeInDown">
+                        <div class="col-md-2"
+                             ng-class="{'has-error' : socioForm.socio_cpfCnpj.$invalid
+                              && (socioForm.$submitted || socioForm.socio_cpfCnpj.$touched)}"
+                                >
+                            <input type="text" class="form-control" name="socio_cpfCnpj"
+                                   id="field_socio_cpfCnpj"
+                                   ui-br-cpfcnpj-mask=""
+                                   required
+                                   ng-disabled="socio.pessoa.id"
+                                   ng-blur="loadByCpfCnpjSocio(socio.pessoa.dadosPessoais.cpfCnpj, socio)"
+                                   ng-model="socio.pessoa.dadosPessoais.cpfCnpj">
+
+                            <div ng-show="socioForm.socio_cpfCnpj.$invalid">
+                                <p class="help-block"
+                                   ng-show="socioForm.socio_cpfCnpj.$error.required">
+                                    Informe o CPF ou CNPJ do sócio
+                                </p>
+
+                                <p class="help-block"
+                                   ng-show="socioForm.socio_cpfCnpj.$error.cpf || socioForm.socio_cpfCnpj.$error.cnpj">
+                                    CPF ou CNPJ inválido
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-7"
+                             ng-class="{'has-error' : socioForm.socio_nome.$invalid
+                              && (socioForm.$submitted || socioForm.socio_nome.$touched)}"
+                                >
+                            <input type="text" class="form-control" name="socio_nome"
+                                   id="field_socio_nome"
+                                   required
+                                   ng-disabled="socio.pessoa.id"
+                                   ng-model="socio.pessoa.dadosPessoais.nomeRazaoSocial">
+
+                            <div ng-show="socioForm.socio_nome.$invalid">
+                                <p class="help-block"
+                                   ng-show="socioForm.socio_nome.$error.required">
+                                    Informe o nome do sócio
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3"
+                             ng-class="{'has-error' : socioForm.socio_proporcao.$invalid
+                              && (socioForm.$submitted || socioForm.socio_proporcao.$touched)}">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="socio_proporcao"
+                                       ui-percentage-mask ui-percentage-value
+                                       required
+                                       id="field_socio_proporcao"
+                                       ng-model="socio.proporcao">
+                                    <span class="input-group-btn">
+                                         <button
+                                                 type="button" class="btn btn-info"
+                                                 ng-show="$index + 1 == prestadorServicos.socios.length"
+                                                 ng-click="addSocio()" id="btn_add_socio">
+                                             <i class="fa fa-arrow-down"></i>
+                                         </button>
+                                         <button
+                                                 type="button" class="btn btn-danger"
+                                                 ng-click="removeSocio($index)"
+                                                 id="btn_remove_socio">
+                                             <i class="fa fa-trash"></i>
+                                         </button>
+                                    </span>
+                            </div>
+                            <div ng-show="socioForm.socio_proporcao.$invalid">
+                                <p class="help-block"
+                                   ng-show="socioForm.socio_proporcao.$error.required">
+                                    Informe o percentual do sócio
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Situação Tributária</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label for="dataCredenciamento" class="control-label">Data de Credenciamento</label>
+                            <date-input id="dataCredenciamento"
+                                        ng-model="prestadorServicos.credenciadoEm"></date-input>
+
+                        </div>
+                    </div>
+
+                    <div ng-show="mostraSituacao" class="animated fadeInDown">
+                        <div class="form-group">
+                            <div class="col-md-3"
+                                 ng-class="{'has-error' : !situacao.tipoISS && (editForm.$submitted || editForm.tipoISS.$touched)}">
+                                <label class="control-label"
+                                       for="field_tipoISS">Tipo de ISS</label>
+                                <select class="form-control" name="tipoISS"
+                                        ng-model="situacao.tipoISS" id="field_tipoISS">
+                                    <option value="HOMOLOGADO">Mensal (Homologado)</option>
+                                    <option value="FIXO">Fixo (Anual)</option>
+                                    <option value="ESTIMADO">Estimado</option>
+                                </select>
+
+                                <div ng-show="!situacao.tipoISS">
+                                    <p class="help-block"
+                                       translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="field_simplesNacional">Simples Nacional</label>
+
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" checked name="ativo"
+                                               ng-model="situacao.optanteSimplesNacional"
+                                               class="onoffswitch-checkbox" id="field_simplesNacional">
+                                        <label class="onoffswitch-label" for="field_simplesNacional">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <label for="field_imune">Imune</label>
+
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" checked name="ativo"
+                                               ng-model="situacao.imune"
+                                               class="onoffswitch-checkbox" id="field_imune">
+                                        <label class="onoffswitch-label" for="field_imune">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="field_Regime">Regime Especial de Tributação</label>
+                                <select class="form-control" name="regimeEspecial"
+                                        ng-model="situacao.regimeEspecialTributacao" id="field_Regime">
+                                    <option value="{{null}}"></option>
+                                    <option value="MICROEMPRESA_MUNICIPAL">Microempresa Municipal</option>
+                                    <option value="ESTIMATIVA">Estimativa</option>
+                                    <option value="SOCIEDADE_PROFISSIONAIS">Sociedade de Profissionais</option>
+                                    <option value="MICROEMPRESARIO_INDIVIDUAL">Microempresário Individual (MEI)</option>
+                                    <option value="MICROEMPRESÁRIO_EMPRESA_PEQUENO_PORTE">Microempresário e Empresa de
+                                        Pequeno Porte (ME EPP)
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3"
+                                 ng-class="{'has-error' : !situacao.inicioVigencia && (editForm.$submitted || editForm.inicioVigenciaSituacao.$touched)}">
+                                <label
+                                        class="control-label"
+                                        for="inicioVigenciaSituacao">Início</label>
+                                <date-input type="text"
+                                            ng-model="situacao.inicioVigencia"
+                                            id="inicioVigenciaSituacao"
+                                            name="inicioVigenciaSituacao">
+                                </date-input>
+
+                                <div ng-show="!situacao.inicioVigencia">
+                                    <p class="help-block"
+                                       translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label
+                                        for="field_finalVigencia">Fim</label>
+                                <date-input type="text"
+                                            ng-model="situacao.finalVigencia"
+                                            id="field_finalVigencia"
+                                            name="field_finalVigencia">
+                                </date-input>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="embasamentoLegal">Embasamento Legal</label>
+                                 <textarea type="text" class="form-control" name="embasamentoLegal"
+                                           id="embasamentoLegal"
+                                           ng-model="situacao.embasamentoLegal"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label
+                                        for="btn_addSituacao">&nbsp;</label>
+                                <button class="btn btn-info btn-block"
+                                        type="button"
+                                        ng-disabled="!situacao.tipoISS || !situacao.inicioVigencia"
+                                        ng-click="addSituacao()"
+                                        id="btn_addSituacao">
+                                    <i class="fa fa-save"></i>
+                                    Adicionar Situação
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <label
+                                        for="btn_LimpaCamposSituacao">&nbsp;</label>
+                                <button class="btn btn-danger btn-block"
+                                        type="button"
+                                        ng-click="limparSituacao()"
+                                        id="btn_LimpaCamposSituacao">
+                                    <i class="fa fa-trash-o"></i>
+                                    Cancelar Lançamento
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="!mostraSituacao">
+                        <button class="btn btn-info btn-block btn-outline"
+                                type="button"
+                                ng-click="mostraSituacao = true"
+                                id="btn_novaSituacao">
+                            <i class="fa fa-plus-circle"></i>
+                            Informar uma nova Situação
+                        </button>
+                    </div>
+                    <div class="form-group text-center" ng-show="prestadorServicos.situacoesTributaria.length == 0 ">
+                        <div class="text-danger">
+                            <strong>Atenção!</strong> Adicione ao menos uma Situação Tributária para salvar o prestador
+                        </div>
+                    </div>
+                    <div class="form-group animated fadeInUp"
+                         ng-show="prestadorServicos.situacoesTributaria.length > 0 ">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Tipo de ISS</th>
+                                <th>Simples</th>
+                                <th>Regime Especial</th>
+                                <th>Inicio</th>
+                                <th>Fim</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="situacao in prestadorServicos.situacoesTributaria">
+                                <td>{{TIPO_ISS[situacao.tipoISS].descricao}}</td>
+                                <td>{{situacao.optanteSimplesNacional == true ? 'Sim' : 'Não'}}</td>
+                                <td>{{REGIME_TRIBUTACAO[situacao.regimeEspecialTributacao].descricao}}</td>
+                                <td>{{situacao.inicioVigencia | date : 'dd/MM/yyyy'}}</td>
+                                <td>{{situacao.finalVigencia | date : 'dd/MM/yyyy'}}</td>
+                                <td>
+                                        <span ng-show="situacao.vigente == true">
+                                             <i class="fa fa-circle text-navy"></i>
+                                        </span>
+
+                                    <div class="pull-right">
+
+                                        <button type="button"
+                                                ng-click="removeSituacao(index)"
+                                                class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                        <button type="button"
+                                                ng-click="editarSituacao($index)"
+                                                class="btn btn-info btn-sm">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Serviços</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label class="center-block">Código</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="center-block">Aliquota</label>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="center-block">Descrição</label>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-repeat="servico in prestadorServicos.servicos"
+                         class="animated fadeInDown">
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control"
+                                       name="servico_codigo" id="field_servico_codigo"
+                                       ng-blur="loadServicoByCodigo(servico.servico.codigo, $index)"
+                                       ng-model="servico.servico.codigo">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn"
+                                                    ng-click="searchServico($index)">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                        </span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control"
+                                   name="servico_aliquota" id="field_servico_aliquota"
+                                   ng-model="servico.servico.aliquota" disabled>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="servico_descricao"
+                                       id="field_servico_descricao"
+                                       disabled
+                                       ng-model="servico.servico.descricao">
+                                                        <span class="input-group-btn">
+                                                             <button
+                                                                     type="button" class="btn btn-info"
+                                                                     ng-show="$index + 1 == prestadorServicos.servicos.length"
+                                                                     ng-click="addServico()" id="btn_add_servico">
+                                                                 <i class="fa fa-arrow-down"></i>
+                                                             </button>
+
+                                                             <button
+                                                                     type="button" class="btn btn-danger"
+                                                                     ng-click="removeServico($index)"
+                                                                     id="btn_remove_servico">
+                                                                 <i class="fa fa-trash"></i>
+                                                             </button>
+                                                        </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Isenções</h4>
+                </div>
+                <div class="ibox-content">
+                    <div ng-show="mostraIsencao" class="animated fadeInDown">
+                        <div class="form-group">
+                            <div class="col-md-12"
+                                 ng-class="{'has-error' : !isencao.servico && (editForm.$submitted || editForm.isencaoServico.$touched)}"
+                                    >
+                                <label
+                                        for="isencaoServico">Servico a ser isento</label>
+                                <select
+                                        class="form-control"
+                                        ng-options="serv.servico as serv.servico.descricao for serv in
+                                     prestadorServicos.servicos track by serv.servico.id"
+                                        id="isencaoServico" name="isencaoServico"
+                                        ng-model="isencao.servico">
+                                </select>
+
+                                <div ng-show="!isencao.servico">
+                                    <p class="help-block"
+                                       translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3"
+                                 ng-class="{'has-error' : !isencao.inicioVigencia && (editForm.$submitted || editForm.inicioVigenciaIsencao.$touched)}">
+                                <label
+                                        class="control-label"
+                                        for="inicioVigenciaSituacao">Inicio</label>
+                                <date-input type="text"
+                                            ng-model="isencao.inicioVigencia"
+                                            id="inicioVigenciaIsencao"
+                                            name="inicioVigenciaIsencao">
+                                </date-input>
+
+                                <div ng-show="!isencao.inicioVigencia">
+                                    <p class="help-block"
+                                       translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label
+                                        for="finalVigenciaIsencao">Fim</label>
+                                <date-input type="text"
+                                            ng-model="isencao.finalVigencia"
+                                            id="finalVigenciaIsencao"
+                                            name="finalVigenciaIsencao">
+                                </date-input>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="embasamentoLegalIsencao">Embasamento Legal</label>
+                                 <textarea type="text" class="form-control" name="embasamentoLegalIsencao"
+                                           id="embasamentoLegalIsencao"
+                                           ng-model="isencao.embasamentoLegal"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label
+                                        for="btn_addIsencao">&nbsp;</label>
+                                <button class="btn btn-info btn-block"
+                                        type="button"
+                                        ng-disabled="!isencao.inicioVigencia"
+                                        ng-click="addIsencao()"
+                                        id="btn_addIsencao">
+                                    <i class="fa fa-save"></i>
+                                    Adicionar Isenção
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <label
+                                        for="btn_LimpaCamposIsencao">&nbsp;</label>
+                                <button class="btn btn-danger btn-block"
+                                        type="button"
+                                        ng-click="limparIsencao()"
+                                        id="btn_LimpaCamposIsencao">
+                                    <i class="fa fa-trash-o"></i>
+                                    Cancelar Lançamento
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="!mostraIsencao">
+                        <button class="btn btn-info btn-block btn-outline"
+                                type="button"
+                                ng-click="mostraIsencao = true"
+                                id="btn_novaIsencao">
+                            <i class="fa fa-plus-circle"></i>
+                            Informar uma nova Isenção
+                        </button>
+                    </div>
+                    <div class="form-group" ng-show="prestadorServicos.isencoes.length > 0 ">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Serviço</th>
+                                <th>Inicio</th>
+                                <th>Fim</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="isencao in prestadorServicos.isencoes">
+                                <td>{{isencao.servico.descricao}}</td>
+                                <td>{{isencao.inicioVigencia | date : 'dd/MM/yyyy'}}</td>
+                                <td>{{isencao.finalVigencia | date : 'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <span ng-show="isencao.vigente == true">
+                                             <i class="fa fa-circle text-navy"></i>
+                                        </span>
+
+                                    <div class="pull-right">
+
+                                        <button type="button"
+                                                ng-click="removeIsencao(index)"
+                                                class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                        <button type="button"
+                                                ng-click="editarIsencao($index)"
+                                                class="btn btn-info btn-sm">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Suspensões</h4>
+                </div>
+                <div class="ibox-content">
+                    <div ng-show="mostraSuspensao" class="animated fadeInDown">
+                        <div class="form-group">
+                            <div class="col-md-12"
+                                 ng-class="{'has-error' : !suspensao.servico && (editForm.$submitted || editForm.suspensaoServico.$touched)}"
+                                    >
+                                <label
+                                        for="suspensaoServico">Serviço a ser suspenso</label>
+                                <select
+                                        class="form-control"
+                                        ng-options="serv.servico as serv.servico.descricao for serv in
+                                     prestadorServicos.servicos track by serv.servico.id"
+                                        id="suspensaoServico" name="suspensaoServico"
+                                        ng-model="suspensao.servico">
+                                </select>
+
+                                <div ng-show="!suspensao.servico">
+                                    <p class="help-block"
+                                       translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3"
+                                 ng-class="{'has-error' : !suspensao.inicioVigencia && (editForm.$submitted || editForm.inicioVigenciaSuspensao.$touched)}">
+                                <label
+                                        class="control-label"
+                                        for="inicioVigenciaSuspensao">Início</label>
+                                <date-input type="text"
+                                            ng-model="suspensao.inicioVigencia"
+                                            id="inicioVigenciaSuspensao"
+                                            name="inicioVigenciaSuspensao">
+                                </date-input>
+
+                                <div ng-show="!suspensao.inicioVigencia">
+                                    <p class="help-block"
+                                       translate="entity.validation.required">
+                                        This field is required.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label
+                                        for="finalVigenciaSuspensao">Fim</label>
+                                <date-input type="text"
+                                            ng-model="isencao.finalSuspensao"
+                                            id="finalVigenciaSuspensao"
+                                            name="finalVigenciaSuspensao">
+                                </date-input>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label"
+                                       for="field_tipoSuspensao">Tipo de Suspensao</label>
+                                <select class="form-control" name="tipoSuspensao"
+                                        ng-model="suspensao.tipo" id="field_tipoSuspensao">
+                                    <option value="PROCESSO_ADMINISTRATIVO">Processo Administrativo</option>
+                                    <option value="DECISAO_JUDICIAL">Decisão Judicial</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label"
+                                       for="field_numeroProcessoSuspensao">Número do Processo</label>
+
+                                <input type="text" class="form-control" name="numeroProcessoSuspensao"
+                                       id="field_numeroProcessoSuspensao"
+                                       ng-model="suspensao.numeroProcesso">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="embasamentoLegalSuspensao">Embasamento Legal</label>
+                                 <textarea type="text" class="form-control" name="embasamentoLegalSuspensao"
+                                           id="embasamentoLegalSuspensao"
+                                           ng-model="suspensao.embasamentoLegal"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label
+                                        for="btn_addSuspensao">&nbsp;</label>
+                                <button class="btn btn-info btn-block"
+                                        type="button"
+                                        ng-disabled="!suspensao.inicioVigencia"
+                                        ng-click="addSuspensao()"
+                                        id="btn_addSuspensao">
+                                    <i class="fa fa-save"></i>
+                                    Adicionar Suspensao
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <label
+                                        for="btn_LimpaCamposSuspensao">&nbsp;</label>
+                                <button class="btn btn-danger btn-block"
+                                        type="button"
+                                        ng-click="limparSuspensao()"
+                                        id="btn_LimpaCamposSuspensao">
+                                    <i class="fa fa-trash-o"></i>
+                                    Cancelar Lançamento
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="!mostraSuspensao">
+                        <button class="btn btn-info btn-block btn-outline"
+                                type="button"
+                                ng-click="mostraSuspensao = true"
+                                id="btn_novaSuspensao">
+                            <i class="fa fa-plus-circle"></i>
+                            Informar uma nova Suspensão
+                        </button>
+                    </div>
+                    <div class="form-group" ng-show="prestadorServicos.suspensoes.length > 0 ">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Serviço</th>
+                                <th>Tipo</th>
+                                <th>Numero do Processo</th>
+                                <th>Inicio</th>
+                                <th>Fim</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="suspensao in prestadorServicos.suspensoes">
+                                <td>{{suspensao.servico.descricao}}</td>
+                                <td>{{TIPO_PROCESSO[suspensao.tipo].descricao}}</td>
+                                <td>{{suspensao.numeroProcesso}}</td>
+                                <td>{{suspensao.inicioVigencia | date : 'dd/MM/yyyy'}}</td>
+                                <td>{{suspensao.finalVigencia | date : 'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <span ng-show="suspensao.vigente == true">
+                                             <i class="fa fa-circle text-navy"></i>
+                                        </span>
+
+                                    <div class="pull-right">
+
+                                        <button type="button"
+                                                ng-click="removeSuspensao(index)"
+                                                class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                        <button type="button"
+                                                ng-click="editarSuspensao($index)"
+                                                class="btn btn-info btn-sm">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Usuários</h4>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <button class="btn btn-info btn-block btn-outline"
+                                type="button"
+                                ng-click="searchUser()"
+                                id="btn_novoUser">
+                            <i class="fa fa-plus-circle"></i>
+                            Informar um novo Usuário
+                        </button>
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Login</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="usuario in prestadorServicos.usuarios">
+                            <td>{{usuario.usuario.nomeRazao ? usuario.usuario.nomeRazao : usuario.usuario.login}}</td>
+                            <td>
+                                <button type="button"
+                                        ng-click="removeUsuario(index)"
+                                        class="btn btn-danger btn-sm pull-right">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-default" ui-sref="prestadorServicos">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                        translate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit"
+                        not-has-role="ROLE_ADMIN"
+                        ng-disabled="editForm.$invalid
+                        || !$scope.prestadorServicos.situacoesTributaria && $scope.prestadorServicos.situacoesTributaria == 0"
+                        class="btn btn-primary">
+                    <span class="glyphicon glyphicon-save"></span>
+                    &nbsp;
+                    <span translate="entity.action.save">Save</span>
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+</div>

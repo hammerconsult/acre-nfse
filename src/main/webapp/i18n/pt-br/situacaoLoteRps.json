@@ -1,0 +1,10 @@
+{
+  "nfseApp": {
+    "SituacaoLoteRps": {
+      "null": "",
+      "PROCESSADO": "Processado",
+      "AGUARDANDO": "Aguardando",
+      "INCONSISTENTE": "Inconsistênte"
+    }
+  }
+}

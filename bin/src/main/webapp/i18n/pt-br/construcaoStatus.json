@@ -1,0 +1,12 @@
+{
+    "nfseApp": {
+        "ConstrucaoCivilStatus": {
+            "null": "",
+            "APROVADA": "Aprovado",
+            "NAO_INICIADA": "Não Iniciada",
+            "EM_ANDAMENTO": "Em andamento",
+            "CONCLUIDA": "Concluída",
+            "PARALIZADA": "Paralizada"
+        }
+    }
+}

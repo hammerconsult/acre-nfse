@@ -1,0 +1,51 @@
+<div>
+    <div class="row">
+        <div class="col-md-4 col-lg-offset-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-warning" ng-hide="success">
+                                <p>Informe o seu CPF ou CPNJ do usuário.</p>
+                            </div>
+                            <form ng-show="!success" name="form" role="form" novalidate ng-submit="requestReset()"
+                                  show-validation>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="cpfCnpj" id="field_cpfCnpj"
+                                           ui-br-cpfcnpj-mask=""
+                                           placeholder="CPF ou CNPJ"
+                                           ng-model="resetAccount.cpfCnpj">
+
+                                    <div ng-show="form.cpfCnpj.$invalid" class="has-error">
+                                        <p class="help-block"
+                                           ng-show="form.cpfCnpj.$error.cpf || form.cpfCnpj.$error.cnpj">
+                                            CPF ou CPNJ inválido
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <button type="submit"
+                                            ui-sref="login"
+                                            class="btn btn-info">
+                                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;
+                                        Voltar
+                                    </button>
+
+                                    <button type="submit" ng-disabled="form.$invalid"
+                                            class="btn btn-primary pull-right">
+                                        <span class="glyphicon glyphicon-arrow-right"></span>&nbsp;
+                                        Continuar
+                                    </button>
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

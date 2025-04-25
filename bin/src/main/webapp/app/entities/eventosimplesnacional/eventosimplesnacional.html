@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-8">
+                        <search-box ng-model="searchQuery" search-method="loadAll()"></search-box>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-lg-2">Data do Efeito</th>
+                            <th class="col-lg-10">Evento</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="evento in eventos">
+                            <td class="col-lg-2">{{evento.dataEfeito | date: 'dd/MM/yyyy': '+0000'}}</td>
+                            <td class="col-lg-10">{{evento.tipoEventoSimplesNacionalNfseDTO.nome}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul class="pager">
+                            <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a href="#">&lt;&lt;</a>
+                            </li>
+                            <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a href="#">&lt;</a></li>
+                            <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a href="#">&gt;</a></li>
+                            <li ng-show="links['last']" ng-click="loadPage(links['last'])"><a href="#">&gt;&gt;</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

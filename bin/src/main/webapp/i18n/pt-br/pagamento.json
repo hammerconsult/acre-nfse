@@ -1,0 +1,20 @@
+{
+    "nfseApp": {
+        "pagamento" : {
+            "home": {
+                "title": "Pagamentos",
+                "createLabel": "Create a new Pagamento",
+                "createOrEditLabel": "Create or edit a Pagamento"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Pagamento {{ id }}?"
+            },
+            "detail": {
+                "title": "Pagamento"
+            },
+            "tipoPagamento": "TipoPagamento",
+            "quantidadeParcelas": "QuantidadeParcelas",
+            "valor": "Valor"
+        }
+    }
+}

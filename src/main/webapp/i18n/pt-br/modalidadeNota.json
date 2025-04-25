@@ -1,0 +1,10 @@
+{
+    "nfseApp": {
+        "ModalidadeNota" : {
+            "null": "",
+            "IDENTIFICADO": "Tomador Identificado",
+            "SEM_CPF": "Tomador Sem CPF/CNPJ ou Estabelecido Fora do País",
+            "NAO_IDENTIFICADO": "Tomador Não Identificado (Consumidor)"
+        }
+    }
+}

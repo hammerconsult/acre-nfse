@@ -1,0 +1,25 @@
+<div class="modal-body">
+    <div ng-if="webReport == null || !webReport.fim">
+        <div class="text-center">
+            O relatório está sendo gerado. Por favor aguarde... <br/>
+            <img ng-src="/content/images/ajaxloading.gif" width="50" height="50"/>
+        </div>
+    </div>
+    <div ng-if="webReport != null && webReport.fim">
+        <div class="text-center">
+            Relatório pronto. Clique em <strong>Imprimir</strong> para visualizar o relatório.
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button"
+            class="btn btn-default"
+            ng-click="cancel()">Cancelar
+    </button>
+    <button type="button"
+            class="btn btn-success"
+            ng-disabled="webReport == null || !webReport.fim"
+            ng-click="imprimir()">Imprimir
+    </button>
+</div>

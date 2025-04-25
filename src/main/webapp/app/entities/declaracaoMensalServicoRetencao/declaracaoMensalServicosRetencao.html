@@ -1,0 +1,152 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="field_final">Exercício</label>
+                        <input type="text"
+                               id="field_final"
+                               name="ano"
+                               class="form-control"
+                               ng-model="exercicio">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="field_mes_inicial" class="control-label"> Mês Inicial</label>
+                        <select class="form-control"
+                                id="field_mes_inicial"
+                                name="mesInicial"
+                                ng-model="mesInicial"
+                                ng-options="mes as mes.descricao for mes in meses track by mes.numeroMes"></select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="field_mes_final" class="control-label"> Mês Final</label>
+                        <select class="form-control"
+                                id="field_mes_final"
+                                name="mesFinal"
+                                ng-model="mesFinal"
+                                ng-options="mes as mes.descricao for mes in meses track by mes.numeroMes"></select>
+                    </div>
+                    <div class="form-group col-md-3 ">
+                        <label>&ensp;</label>
+                        <button class="btn btn-info btn-block" ng-click="loadAll()">
+                            <span class="fa fa-search"></span> <span>Filtrar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-repeat="exericicoDeclarado in exerciciosDeclarados">
+    <div class="ibox animated fadeInDown" ng-repeat="mesDeclarado in exericicoDeclarado.mesesDeclarados">
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th colspan="9">
+                                    {{'nfseApp.Mes.' + mesDeclarado.mes | translate}}/{{exericicoDeclarado.ano}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>Código</th>
+                                <th>Tipo</th>
+                                <th>Movimento</th>
+                                <th>Situacao</th>
+                                <th>Abertura</th>
+                                <th>Encerramento</th>
+                                <th>Débitos</th>
+                                <th>Vencimento</th>
+                                <th>Qtde Doc</th>
+                                <th>Serviços</th>
+                                <th>ISS</th>
+                                <th>Valor Total</th>
+                                <th class="text-center">Opções</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-show="mesDeclarado.declaracoes.length == 0">
+                                <td colspan="12" class="text-center warning">
+                                    A competência {{'nfseApp.Mes.' + mesDeclarado.mes |
+                                translate}}/{{exericicoDeclarado.ano}} não possúi declaração realizada.
+                                    <br>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="declaracaoMensalServico in mesDeclarado.declaracoes | orderBy: '-codigo'"
+                                ng-class="declaracaoMensalServico.situacao == 'CANCELADO' ? 'text-danger' : ''">
+                                <td>
+                                    <a ui-sref="declaracaoMensalServicoRetencao.detail({id:declaracaoMensalServico.id})">
+                                        {{declaracaoMensalServico.codigo}}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{'nfseApp.TipoDeclaracaoMensal.' + declaracaoMensalServico.tipo | translate}}
+                                </td>
+                                <td>
+                                    {{'nfseApp.TipoMovimentoMensal.' + declaracaoMensalServico.tipoMovimento |
+                                    translate}}
+                                </td>
+                                <td>
+                                    {{'nfseApp.SituacaoDeclaracaoMensal.' + declaracaoMensalServico.situacao |
+                                    translate}}
+                                </td>
+                                <td>
+                                    {{declaracaoMensalServico.abertura | date:'dd/MM/yyyy': '+0000'}}
+                                </td>
+                                <td>
+                                    {{declaracaoMensalServico.encerramento | date:'dd/MM/yyyy': '+0000'}}
+                                </td>
+                                <td>
+                                    {{'nfseApp.SituacaoParcela.' + declaracaoMensalServico.situacaoDebito |
+                                translate}}
+                                </td>
+                                <td>
+                                    {{declaracaoMensalServico.vencimento | date:'dd/MM/yyyy': '+0000'}}
+                                </td>
+                                <td>{{declaracaoMensalServico.qtdNotas}}</td>
+                                <td>{{declaracaoMensalServico.totalServicos | number:2}}</td>
+                                <td>{{declaracaoMensalServico.totalIss | number:2}}</td>
+                                <td>{{declaracaoMensalServico.totalDebito | number:2}}
+                                </td>
+                                <td class="text-center">
+                                    <a title="Imprimir Guia"
+                                       ng-if="declaracaoMensalServico.situacaoDebito === 'EM_ABERTO'"
+                                       ng-click="imprimirDam(declaracaoMensalServico.id)">
+                                        <span class="glyphicon glyphicon-print"></span>
+                                    </a>
+                                    <a title="Cancelar Declaração"
+                                       ng-if="declaracaoMensalServico.situacao != 'CANCELADO'"
+                                       ng-click="cancelar(declaracaoMensalServico.id)">
+                                        <span style="color: red" class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="13" class="text-center warning">
+                                    <a ui-sref="declaracaoMensalServicoRetencao.new({mes:mesDeclarado.mes, ano:exericicoDeclarado.ano})">
+                                        <span class="fa fa-plus"></span>
+                                        Declarar
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <button type="submit"
+                            ng-show="mesDeclarado.declaracoes.length > 0"
+                            ng-click="imprimeRelatorioDMS(exericicoDeclarado.ano, mesDeclarado.mes)"
+                            class="btn btn-info btn-sm pull-right">
+                        <span class="glyphicon glyphicon-print"></span>
+                        Declarações ({{'nfseApp.Mes.' + mesDeclarado.mes |
+                        translate}}/{{exericicoDeclarado.ano}})
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

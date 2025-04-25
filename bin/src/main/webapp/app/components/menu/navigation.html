@@ -1,0 +1,438 @@
+<nav class="navbar-default navbar-static-side" role="navigation" ng-switch="isAuthenticated()">
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav metismenu" id="side-menu">
+
+            <li class="nav-header">
+                <div class="profile-element" ng-switch-when="true">
+                    <div style="text-align: center" class="m-t-md">
+                        <span>
+                            <img ng-show="account.fotoAjustada" alt="image"
+                                 class="{{account.pessoaFisica ? 'img-circle': 'img-thumbnail'}}  m-b-sm"
+                                 ng-src="{{account.fotoAjustada}}" width="50">
+
+                            <img ng-show="!account.fotoAjustada" alt="image"
+                                 class="img-circle m-b-sm"
+                                 ng-src="/content/images/user-default.jpg" width="50">
+                        </span>
+                        <div class="dropdown small">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="clear">
+                                    <span class="block">
+                                        <strong>
+                                            {{account.nome}}
+                                            <b class="caret"></b>
+                                        </strong>
+                                    </span>
+                                    <span class="text-muted">
+                                        {{account.login | brCpfCnpj}}
+                                        <small ng-if="prestadorPrincipal.contador">
+                                            (Contador)
+                                        </small>
+                                        <small ng-if="hasRole('ROLE_ADMIN')">
+                                            (Fiscal)
+                                        </small>
+                                    </span>
+                                </span>
+                            </a>
+
+                            <ul class="dropdown-menu">
+
+                                <li ng-show="account.pessoaFisica">
+                                    <a ui-sref="perfilUsuario">
+                                        <i class="fa fa-gear"></i>
+                                        &#xA0;<span>Perfil</span>
+                                    </a>
+                                </li>
+
+                                <li ng-show="!account.pessoaFisica">
+                                    <a ui-sref="perfilEmpresa">
+                                        <i class="fa fa-gear"></i>
+                                        &#xA0;<span>Perfil</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a ui-sref="password">
+                                        <i class="fa fa-lock"></i>
+                                        &#xA0;<span>Senha</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="" ng-click="logout()">
+                                        <span class="fa fa-sign-out"></span>
+                                        &#xA0;<span>Sair</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <a ng-click="abrirTrocarEmpresa()"
+                           ng-if="account.pessoaFisica || hasRole('ROLE_ADMIN')"
+                           class="text-small m-t-sm">
+                            <i class="fa fa-refresh"></i>
+                            {{prestadorPrincipal && prestadorPrincipal.prestador ? 'Trocar de Empresa' : 'Selecionar
+                        Empresa
+                        '}}
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="#" ui-sref="home">
+                    <i class="fa fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li has-any-role="ROLE_AIDFE_SOLICITAR,ROLE_AIDFE_CONSULTAR"
+                ng-if="prestadorPrincipal && prestadorPrincipal.permitido && prestadorPrincipal.prestador.emiteNfs && configuracao.verificaAidfe">
+                <a href="">
+                    <i class="fa fa-check-square-o"></i>
+                    <span>AIDF-e</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li has-role="ROLE_AIDFE_SOLICITAR">
+                        <a ui-sref="aidfe.new">
+                            Solicitar
+                        </a>
+                    </li>
+                    <li has-role="ROLE_AIDFE_CONSULTAR">
+                        <a ui-sref="aidfe">
+                            Consultar
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li has-role="ROLE_PLANO_GERAL_CONTAS_COMENTADO_CONSULTAR"
+                ng-if="isInstituicaoFinanceira()">
+                <a href="">
+                    <i class="fa fa-list-ol"></i>
+                    <span>Plano Geral de Contas Comentado</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li has-role="ROLE_PLANO_GERAL_CONTAS_COMENTADO_CONSULTAR">
+                        <a ui-sref="planoGeralContasComentado">
+                            Consultar
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li ng-if="account.pessoaFisica && !prestadorPrincipal">
+                <a ui-sref="notas-recebidas">
+                    <i class="fa fa-newspaper-o"></i>
+                    Notas Recebidas
+                </a>
+            </li>
+            <li has-any-role="ROLE_NFS_AVULSA, ROLE_DOCUMENTOS_FISCAIS_EMITIR_NFSE, ROLE_DOCUMENTOS_FISCAIS_DECLARAR_SERVICO, ROLE_DOCUMENTOS_FISCAIS_EXPORTAR_XML"
+                ng-if="isPrestadorPermitido()">
+                <a href="">
+                    <i class="fa fa-newspaper-o"></i>
+                    <span>Documentos Fiscais</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li has-role="ROLE_DOCUMENTOS_FISCAIS_EMITIR_NFSE"
+                        ng-if="isPrestadorPermitido()">
+                        <a ui-sref="notaFiscal.new">
+                            Emitir Nfs-e
+                        </a>
+                    </li>
+                    <li has-role=" "
+                        ng-if="isPrestadorPermitido()">
+                        <a ui-sref="exportarXml">
+                            Exportar XML de Nfs-e
+                        </a>
+                    </li>
+                    <li ng-if="isPrestadorPermitido()" has-role="ROLE_DOCUMENTOS_FISCAIS_DECLARAR_SERVICO">
+                        <a ui-sref="servicoDeclarado.new">
+                            Declarar Serviço
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li has-any-role="ROLE_RPS_IMPORTAR,ROLE_RPS_CONSULTAR,ROLE_RPS_LOG_LOTES"
+                ng-if="isPrestadorPermitido()">
+                <a href="">
+                    <i class="fa fa-clipboard"></i>
+                    <span>RPS</span>
+                    <span class="fa arrow"></span>
+                </a>
+
+                <ul class="nav nav-second-level">
+                    <li has-role="ROLE_RPS_MANUAL" ng-if="prestadorPrincipal.prestador.emiteNfs">
+                        <a ui-sref="notaFiscal.newRpsManual">
+                            Rps Manual
+                        </a>
+                    </li>
+                    <li has-role="ROLE_RPS_IMPORTAR" ng-if="prestadorPrincipal.prestador.emiteNfs">
+                        <a ui-sref="rPS.import">
+                            Importar
+                        </a>
+                    </li>
+                    <li has-role="ROLE_RPS_CONSULTAR">
+                        <a ui-sref="rPS">
+                            Consultar
+                        </a>
+                    </li>
+                    <li has-role="ROLE_RPS_LOG_LOTES">
+                        <a ui-sref="loteRPS">
+                            Log dos Lotes
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li ng-switch-when="true"
+                has-any-role="ROLE_ENCERRAMENTO_MENSAL_SERVICOS_PRESTADOS,ROLE_ENCERRAMENTO_MENSAL_SERVICOS_TOMADOS,ROLE_ENCERRAMENTO_MENSAL_INSTITUICAO_FINANCEIRA"
+                ng-if="isPrestadorPermitido()">
+                <a href="">
+                    <i class="fa fa-calendar"></i>
+                    <span>Encerramento Mensal</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li has-role="ROLE_ENCERRAMENTO_MENSAL_SERVICOS_PRESTADOS">
+                        <a ui-sref="declaracaoMensalServico">Serviços Prestados</a>
+                    </li>
+                    <li has-role="ROLE_ENCERRAMENTO_MENSAL_SERVICOS_TOMADOS">
+                        <a ui-sref="declaracaoMensalServicoRetencao">Serviços Tomados</a>
+                    </li>
+                    <li has-role="ROLE_ENCERRAMENTO_MENSAL_INSTITUICAO_FINANCEIRA"
+                        ng-if="isInstituicaoFinanceira() && isVersaoDesifAbrasf32()">
+                        <a ui-sref="arquivoDesif">Arquivo DES-IF</a>
+                    </li>
+                    <li has-role="ROLE_ENCERRAMENTO_MENSAL_INSTITUICAO_FINANCEIRA"
+                        ng-if="isInstituicaoFinanceira()">
+                        <a ui-sref="declaracaoMensalServicoInstituicaoFinanceira">DESIF</a>
+                    </li>
+                    <!--                    <li ng-if="prestadorPrincipal.prestador.emiteNfs">-->
+                    <!--                        <a ui-sref="declaracaoMensalServicoIssRetido">ISSQN Retido</a>-->
+                    <!--                    </li>-->
+                </ul>
+            </li>
+
+            <li ng-switch-when="true"
+                has-any-role="ROLE_CONTA_CORRENTE_EXTRATO,ROLE_CONTA_CORRENTE_DEBITOS,ROLE_CONTA_CORRENTE_GERAR_GUIA,ROLE_CONTA_CORRENTE_LIVRO_FISCAL"
+                ng-if="isPrestadorPermitido()">
+                <a href="">
+                    <i class="fa fa-money"></i>
+                    <span>Conta Corrente</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li has-role="ROLE_CONTA_CORRENTE_DEBITOS">
+                        <a ui-sref="debitos">Débitos</a>
+                    </li>
+                    <li has-role="ROLE_CONTA_CORRENTE_GERAR_GUIA">
+                        <a ui-sref="guia">Gerar Guia</a>
+                    </li>
+                    <li has-role="ROLE_CONTA_CORRENTE_LIVRO_FISCAL">
+                        <a ui-sref="livroFiscal">Livro Fiscal</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li ng-switch-when="true" has-any-role="ROLE_TOMADORES_CONSULTAR,ROLE_TOMADORES_INCLUIR"
+                ng-if="isPrestadorPermitido() && prestadorPrincipal.prestador.emiteNfs">
+                <a href="">
+                    <i class="fa fa-user"></i>
+                    <span>Tomadores</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li has-role="ROLE_TOMADORES_CONSULTAR">
+                        <a ui-sref="tomador">Consultar</a>
+                    </li>
+                    <li has-role="ROLE_TOMADORES_INCLUIR">
+                        <a ui-sref="tomador.new">Incluir</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li has-any-role="ROLE_CONSTRUCAO_CIVIL_CONSULTAR,ROLE_CONSTRUCAO_CIVIL_INCLUIR"
+                ng-if="isPrestadorPermitido()">
+                <a href="">
+                    <i class="fa fa-building-o"></i>
+                    <span>Construção Civil</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a ui-sref="construcaoCivil">
+                            Consultar
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="construcaoCivil.incluir">
+                            Incluir
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li ng-switch-when="false">
+                <a ui-sref="perguntas-respostas">
+                    <i class="fa fa-comments"></i>
+                    <span class="nav-label">Perguntas e Respostas</span>
+                </a>
+            </li>
+            <li ng-switch-when="false">
+                <a ui-sref="legislacao">
+                    <i class="fa fa-newspaper-o"></i>
+                    <span class="nav-label">Legislação</span>
+                </a>
+            </li>
+            <li>
+                <a ui-sref="nota-premiada" class="hidden">
+                    <i class="fa fa-newspaper-o"></i>
+                    <span class="nav-label">Nota Premiada</span>
+                </a>
+            </li>
+            <li ng-switch-when="false">
+                <a ui-sref="manual">
+                    <i class="fa fa-television"></i>
+                    <span class="nav-label">Manuais</span>
+                </a>
+            </li>
+            <li ng-switch-when="false">
+                <a ui-sref="notaFiscal.autenticar">
+                    <i class="fa fa-check-circle-o"></i>
+                    <span class="nav-label">Autênticidade da Nota</span>
+                </a>
+            </li>
+            <li ng-switch-when="false">
+                <a ui-sref="rPS.autenticar">
+                    <i class="fa fa-refresh"></i>
+                    <span class="nav-label">Consulta de RPS</span>
+                </a>
+            </li>
+            <li ng-switch-when="false">
+                <a ui-sref="faleconosco">
+                    <i class="fa fa-envelope"></i>
+                    <span class="nav-label">Fale Conosco</span>
+                </a>
+            </li>
+            <li ng-switch-when="false">
+                <a ui-sref="substitutostributarios">
+                    <i class="fa fa-envelope"></i>
+                    <span class="nav-label">Consulta Substitutos Tributarios</span>
+                </a>
+            </li>
+            <li has-any-role="ROLE_RELATORIOS_CONSULTAR_DOCUMENTOS">
+                <a href="">
+                    <i class="fa fa-building-o"></i>
+                    <span>Relatórios</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li has-role="ROLE_RELATORIOS_CONSULTAR_DOCUMENTOS">
+                        <a ui-sref="notaFiscal">
+                            Consultar Documentos
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-second-level">
+                    <li has-role="ROLE_RELATORIOS_CONSULTAR_DOCUMENTOS">
+                        <a ui-sref="cancelamento-nota-fiscal">
+                            Consultar Cancelamentos
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!--<li>-->
+            <!--<a ui-sref="pesquisa-cnae">-->
+            <!--<i class="fa fa-search"></i>-->
+            <!--<span class="nav-label">Pesquisar CNAE/Serviço</span>-->
+            <!--</a>-->
+            <!--</li>-->
+
+            <!--<li ng-switch-when="false">-->
+            <!--<a ui-sref="register">-->
+            <!--<i class="fa fa-user"></i>-->
+            <!--<span class="nav-label">Cadastre-se</span>-->
+            <!--</a>-->
+            <!--</li>-->
+            <li has-role="ROLE_ADMIN">
+                <a href="">
+                    <span>
+                        <span class="glyphicon glyphicon-tower"></span>
+                        <span class="hidden-tablet" translate="global.menu.admin.main">Administration</span>
+                        <span class="fa arrow"></span>
+                    </span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li ui-sref-active="active">
+                        <a href="#" ui-sref="notaFiscal.testeData">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                            <span>Teste Data</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="cache">
+                            <span class="glyphicon glyphicon-ban-circle"></span>
+                            <span>Cache do Sistema</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="loteRpsGeral">
+                            <span class="glyphicon glyphicon-dashboard"></span>
+                            <span>Lote Rps Geral</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="integracaoNotaNacional">
+                            <span class="glyphicon glyphicon-dashboard"></span>
+                            <span>Integração Nota Nacional</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="metrics">
+                            <span class="glyphicon glyphicon-dashboard"></span>
+                            <span translate="global.menu.admin.metrics">Metrics</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="health">
+                            <span class="glyphicon glyphicon-heart"></span>
+                            <span translate="global.menu.admin.health">Health</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="configuration">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                            <span translate="global.menu.admin.configuration">Configuration</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="audits">
+                            <span class="glyphicon glyphicon-bell"></span>
+                            <span translate="global.menu.admin.audits">Audits</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="logs">
+                            <span class="glyphicon glyphicon-tasks"></span>
+                            <span translate="global.menu.admin.logs">Logs</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="docs">
+                            <span class="glyphicon glyphicon-book"></span>
+                            <span translate="global.menu.admin.apidocs">API</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="sync-data-base">
+                            <span class="fa fa-refresh"></span>
+                            <span>Sincronização</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+

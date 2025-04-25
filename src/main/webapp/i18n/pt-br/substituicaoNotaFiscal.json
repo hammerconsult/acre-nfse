@@ -1,0 +1,19 @@
+{
+    "nfseApp": {
+        "substituicaoNotaFiscal" : {
+            "home": {
+                "title": "SubstituicaoNotaFiscals",
+                "createLabel": "Create a new SubstituicaoNotaFiscal",
+                "createOrEditLabel": "Create or edit a SubstituicaoNotaFiscal"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete SubstituicaoNotaFiscal {{ id }}?"
+            },
+            "detail": {
+                "title": "SubstituicaoNotaFiscal"
+            },
+            "de": "de",
+            "para": "para"
+        }
+    }
+}

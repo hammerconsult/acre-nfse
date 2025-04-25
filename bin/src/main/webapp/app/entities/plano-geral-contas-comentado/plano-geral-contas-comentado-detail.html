@@ -1,0 +1,222 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins animated fadeInDown">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h3>Detalhe da Conta do PGCC</h3>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label>Início de Vigência</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.inicioVigencia | date: 'dd/MM/yyyy' : '+0000'}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Fim de Vigência</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.fimVigencia | date: 'dd/MM/yyyy' : '+0000'}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Conta</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.conta}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-1" ng-show="isVersaoDesifAbrasf32()">
+                            <label>Desdobramento</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.desdobramento}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-5">
+                            <label>Nome</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.nome}}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12 m-t-sm">
+                            <label>Descrição Detalhada</label>
+                            <textarea type="text" class="form-control"
+                                      required
+                                      disabled
+                                      rows="7"
+                                      maxlength="3000" minlength="3"
+                                      name="descricaoDetalhada"
+                                      ng-model="entity.descricaoDetalhada">
+                                </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12 m-t-md">
+                            <h4>COSIF</h4>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label class="center-block">Conta</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.cosif.conta}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-10">
+                            <label class="center-block">Descrição</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.cosif.descricao}}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group"
+                         ng-show="isVersaoDesif10()">
+                        <div class="col-md-12 m-t-md">
+                            <h4>Serviço</h4>
+                        </div>
+                    </div>
+                    <div class="form-group"
+                         ng-show="isVersaoDesif10()">
+                        <div class="col-md-2">
+                            <label class="center-block">Código</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.servico.codigo}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-10">
+                            <label class="center-block">Descrição</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.servico.descricao}}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="isVersaoDesifAbrasf32()">
+                        <div class="col-md-12 m-t-md">
+                            <h4>Código de Tributação</h4>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="isVersaoDesifAbrasf32()">
+                        <div class="col-md-2">
+                            <label class="center-block">Código</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.codigoTributacao.codigo}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-10">
+                            <label class="center-block">Descrição</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.codigoTributacao.descricao}}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group"
+                         ng-show="isVersaoDesifAbrasf32() && entity.tarifaBancaria && entity.tarifaBancaria.id">
+                        <div class="col-md-12 m-t-md">
+                            <h4>Tarifa Bancária</h4>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="center-block">Código</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.tarifaBancaria.tarifaBancaria.codigo}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="center-block">Descrição</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.tarifaBancaria.tarifaBancaria.descricao}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="center-block">Início de Vigência</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.tarifaBancaria.inicioVigencia | date: 'dd/MM/yyyy' : '+0000'}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="center-block">Valor Unitário</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.tarifaBancaria.valorUnitario | currency: 'R$ '}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="center-block">Valor Percentual</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.tarifaBancaria.valorPercentual | currency: '% '}}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group"
+                         ng-show="isVersaoDesifAbrasf32() && entity.produtoServico && entity.produtoServico.id">
+                        <div class="col-md-12 m-t-md">
+                            <h4>Produto/Servico</h4>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="center-block">Código</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.produtoServico.produtoServico.codigo}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-5">
+                            <label class="center-block">Descrição</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.produtoServico.produtoServico.descricao}}"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-5">
+                            <label class="center-block">Descrição Complementar</label>
+                            <input type="text"
+                                   disabled="true"
+                                   value="{{entity.produtoServico.descricaoComplementar}}"
+                                   class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 m-t-lg">
+                        <button class="btn btn-success"
+                                title="Clique para editar os dados do registro."
+                                has-any-role="ROLE_PLANO_GERAL_CONTAS_COMENTADO_EDITAR"
+                                ui-sref="planoGeralContasComentado.edit({id:entity.id})">
+                            <span class="fa fa-edit"></span>
+                            Editar
+                        </button>
+                        <button class="btn btn-danger"
+                                title="Clique para excluir esse registro."
+                                has-any-role="ROLE_PLANO_GERAL_CONTAS_COMENTADO_EDITAR"
+                                ng-click="remove()">
+                            <span class="fa fa-trash"></span>
+                            Excluir
+                        </button>
+                        <button type="button"
+                                ui-sref="planoGeralContasComentado"
+                                class="btn btn-default">
+                            <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;
+                            Voltar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

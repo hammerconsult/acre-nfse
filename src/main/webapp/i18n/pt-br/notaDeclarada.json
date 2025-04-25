@@ -1,0 +1,19 @@
+{
+    "nfseApp": {
+        "notaDeclarada" : {
+            "home": {
+                "title": "NotaDeclaradas",
+                "createLabel": "Create a new NotaDeclarada",
+                "createOrEditLabel": "Create or edit a NotaDeclarada"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete NotaDeclarada {{ id }}?"
+            },
+            "detail": {
+                "title": "NotaDeclarada"
+            },
+            "notaFiscal": "notaFiscal",
+            "declaracaoMensalServico": "declaracaoMensalServico"
+        }
+    }
+}

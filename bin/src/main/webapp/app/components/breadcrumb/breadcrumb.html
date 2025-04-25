@@ -1,0 +1,33 @@
+<div class="header-page m-b-md">
+    <div class="row m-t-sm">
+        <div class="col-md-8 hidden-sm hidden-xs">
+            <div class="col-md-10 col-sm-8 col-xs-8 m-t-md">
+                <div ncy-breadcrumb></div>
+                <h3>
+                    {{$state.current.data.pageTitle}}
+                </h3>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12 col-xs-12 text-right">
+            <div class="col-md-10 col-sm-8 col-xs-8 text-right m-t-md">
+                Prefeitura Municipal de
+                <h3>
+                    {{localizacao.nome}}
+                </h3>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-4 text-center">
+                <img ng-src="/content/images/logo-rb.png" class="img-responsive" width="50" height="50">
+            </div>
+
+        </div>
+    </div>
+    <div class="row no-margins no-padding">
+        <div class="col-md-12 col-sm-8 col-xs-8 text-center hidden-sm hidden-xs no-padding">
+                <h2 ng-show="!configuracao.producao" class="text-danger">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    Atenção, você está em um ambiente de testes e homologação
+                </h2>
+        </div>
+    </div>
+</div>

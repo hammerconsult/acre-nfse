@@ -1,0 +1,140 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h4 class="modal-title" id="myPessoaLabel">
+                    <span translate="nfseApp.pessoa.detail.title">Pessoa</span> {{pessoa.id}}
+                </h4>
+
+            </div>
+            <div class="ibox-content">
+                <form name="editForm" class="form-horizontal" role="form" novalidate ng-submit="save()">
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label translate="nfseApp.dadosPessoais.cpfCnpj" for="field_cpfCnpj">CpfCnpj</label>
+
+                            <input type="text" class="form-control" name="cpfCnpj" id="field_cpfCnpj"
+                                   ui-br-cpfcnpj-mask
+                                   readonly
+                                   ng-blur="loadInPessoaRepoByCpfCnpj()"
+                                   ng-model="pessoa.dadosPessoais.cpfCnpj" required>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label translate="nfseApp.dadosPessoais.inscricaoMunicipal"
+                                   for="field_inscricaoMunicipal">InscricaoMunicipal</label>
+
+                            <input type="text" class="form-control" name="inscricaoMunicipal"
+                                   id="field_inscricaoMunicipal" readonly
+                                   ng-model="pessoa.dadosPessoais.inscricaoMunicipal">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label translate="nfseApp.dadosPessoais.inscricaoEstadualRg"
+                                   for="field_inscricaoEstadualRg">InscricaoEstadualRg</label>
+
+                            <input type="text" class="form-control" name="inscricaoEstadualRg"
+                                   id="field_inscricaoEstadualRg" readonly
+                                   ng-model="pessoa.dadosPessoais.inscricaoEstadualRg" required>
+
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-6">
+                            <label translate="nfseApp.dadosPessoais.nomeRazaoSocial"
+                                   for="field_nomeRazaoSocial">NomeRazaoSocial</label>
+
+                            <input type="text" class="form-control" name="nomeRazaoSocial" id="field_nomeRazaoSocial"
+                                   ng-model="pessoa.dadosPessoais.nomeRazaoSocial" readonly required>
+
+                        </div>
+                        <div class="col-md-6">
+                            <label translate="nfseApp.dadosPessoais.nomeFantasia"
+                                   for="field_nomeFantasia">NomeFantasia</label>
+                            <input type="text" class="form-control" name="nomeFantasia" id="field_nomeFantasia"
+                                   readonly
+                                   ng-model="pessoa.dadosPessoais.nomeFantasia">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label translate="nfseApp.dadosPessoais.email" for="field_email">Email</label>
+                            <input type="text" class="form-control" name="email" id="field_email"
+                                   ng-model="pessoa.dadosPessoais.email" readonly>
+
+                        </div>
+
+                        <div class="col-md-3">
+                            <label translate="nfseApp.dadosPessoais.telefone" for="field_telefone">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" id="field_telefone"
+                                   ui-br-phone-number
+                                   ng-model="pessoa.dadosPessoais.telefone" readonly>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="field_celular">Celular</label>
+                            <input type="text" class="form-control" name="celular" id="field_celular"
+                                   ui-br-phone-number
+                                   ng-model="pessoa.dadosPessoais.celular" readonly>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label translate="nfseApp.endereco.cep" for="field_cep">Cep</label>
+                            <input type="text" class="form-control" name="id" id="field_cep"
+                                   ui-br-cep-mask="" readonly
+                                   ng-model="pessoa.dadosPessoais.cep" required>
+                        </div>
+
+                        <div class="col-md-9">
+                            <label translate="nfseApp.endereco.logradouro" for="field_logradouro">Logradouro</label>
+                            <input type="text" class="form-control" name="logradouro" id="field_logradouro"
+                                   ng-model="pessoa.dadosPessoais.logradouro" readonly required>
+
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label translate="nfseApp.endereco.bairro" for="field_bairro">Bairro</label>
+                            <input type="text" class="form-control" name="bairro" id="field_bairro"
+                                   readonly
+                                   ng-model="pessoa.dadosPessoais.bairro">
+
+                        </div>
+
+                        <div class="col-md-2">
+                            <label translate="nfseApp.endereco.numero" for="field_numero">Numero</label>
+                            <input type="text" class="form-control" name="numero" id="field_numero"
+                                   readonly
+                                   ng-model="pessoa.dadosPessoais.numero" required>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <label translate="nfseApp.endereco.complemento" for="field_complemento">Complemento</label>
+                            <input type="text" class="form-control" name="complemento" id="field_complemento"
+                                   readonly
+                                   ng-model="pessoa.dadosPessoais.complemento">
+
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-actions">
+                        <button type="submit"
+                                ui-sref="pessoa"
+                                class="btn btn-info">
+                            <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span
+                                translate="entity.action.back"> Back</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+{
+    "nfseApp": {
+        "SituacaoDeclaracaoMensal" : {
+            "null": "",
+            "ABERTO": "Aberto",
+            "ENCERRADO": "Encerrado",
+            "CANCELADO": "Cancelado"
+        }
+    }
+}

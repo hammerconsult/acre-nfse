@@ -1,0 +1,18 @@
+{
+  "nfseApp": {
+    "NaturezaOperacao": {
+      "null": "",
+      "TRIBUTACAO_MUNICIPAL": "ISSQN a Recolher",
+      "EXPORTACAO": "Exportação",
+      "NAO_INCIDENCIA": "Não incidência",
+      "EXIGIBILIDADE_SUSPENSA_PROCESSO_ADMINISTRATIVO": "Exigibilidade suspensa por processo administrativo",
+      "EXIGIBILIDADE_SUSPENSA_DECISAO_JUDICIAL": "exigibilidade suspensa por decisão judicial",
+      "IMUNIDADE": "Imunidade",
+      "ISENCAO": "Isenção",
+      "RETENCAO": "Retenção do ISSQN",
+      "SIMPLES_NACIONAL": "Simples Nacional",
+      "RETENCAO_SIMPLES_NACIONAL": "Retenção Simples",
+      "TRIBUTACAO_FORA_MUNICIPIO": "Tributação fora do município"
+    }
+  }
+}

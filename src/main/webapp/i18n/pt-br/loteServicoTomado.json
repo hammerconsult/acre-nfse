@@ -1,0 +1,19 @@
+{
+    "nfseApp": {
+        "loteServicoTomado" : {
+            "home": {
+                "title": "Lote de Servicos Tomados",
+                "createLabel": "Create a new LoteServicoTomado",
+                "createOrEditLabel": "Create or edit a LoteServicoTomado"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete LoteServicoTomado {{ id }}?"
+            },
+            "detail": {
+                "title": "LoteServicoTomado"
+            },
+            "codigo": "Codigo",
+            "rps": "rps"
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "nfseApp": {
+        "NotaNacional": {
+            "StatusProcessamento": {
+                "PROCESSADO_COM_ERROS": "Processado com erros",
+                "PROCESSADO_COM_SUCESSO": "Processado com sucesso"
+            }
+        }
+    }
+}

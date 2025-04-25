@@ -1,0 +1,18 @@
+{
+    "nfseApp": {
+        "configuracao" : {
+            "home": {
+                "title": "Configuracaos",
+                "createLabel": "Create a new Configuracao",
+                "createOrEditLabel": "Create or edit a Configuracao"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Configuracao {{ id }}?"
+            },
+            "detail": {
+                "title": "Configuracao"
+            },
+            "municipio": "municipio"
+        }
+    }
+}

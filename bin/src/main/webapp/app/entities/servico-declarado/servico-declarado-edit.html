@@ -1,0 +1,618 @@
+<div class="row">
+    <div class="col-lg-12">
+        <form name="editForm" role="form" novalidate>
+            <div class="ibox animated fadeInDown" ng-if="configuracao.permiteServicoDeclaradoPrestado">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Qual o tipo de serviço será declarado? </h3>
+                        </div>
+                    </div>
+                    <div class="row m-md text-center">
+
+                        <div class="col-md-6">
+                            <button class="btn btn-primary btn-block"
+                                    ng-class="{'btn-outline': servicoDeclarado.tipoServicoDeclarado != 'SERVICO_TOMADO'}"
+                                    ng-click="seleciouTipoServicoDeclarado('SERVICO_TOMADO')"
+                                    type="button">
+                                <i class="fa {{servicoDeclarado.tipoServicoDeclarado == 'SERVICO_TOMADO'? 'fa-check-circle-o':'fa-circle-o'}}"></i>
+                                Serviço Tomado
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-primary btn-block"
+                                    ng-class="{'btn-outline': servicoDeclarado.tipoServicoDeclarado != 'SERVICO_PRESTADO'}"
+                                    ng-click="seleciouTipoServicoDeclarado('SERVICO_PRESTADO')"
+                                    type="button">
+                                <i class="fa {{servicoDeclarado.tipoServicoDeclarado == 'SERVICO_PRESTADO'? 'fa-check-circle-o':'fa-circle-o'}}"></i>
+                                Serviço Prestado
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ibox float-e-margins animated fadeInDown" ng-if="servicoDeclarado.tipoServicoDeclarado">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Dados do Documento </h3>
+                        </div>
+                    </div>
+                    <div class="row m-t-sm">
+
+                        <div class="form-group col-md-3"
+                             ng-if="servicoDeclarado.tipoServicoDeclarado == 'SERVICO_TOMADO'">
+                            <label for="field_numero_nota">Número</label>
+                            <input enter-as-tab type="number" class="form-control" name="numeroNota"
+                                   id="field_numero_nota"
+                                   required
+                                   ng-maxlength="7"
+                                   ng-model="servicoDeclarado.numero">
+
+                            <div ng-show="editForm.numeroNota.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.numeroNota.$error">
+                                    Informe o número do documento com o máximo de 7 caracteres
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3"
+                             ng-if="servicoDeclarado.tipoServicoDeclarado == 'SERVICO_TOMADO'">
+                            <label for="field_tipo_documento">Tipo de Documento</label>
+                            <select class="form-control" name="tipoDocumento"
+                                    required=""
+                                    ng-model="servicoDeclarado.tipoDocumentoServicoDeclarado"
+                                    ng-options="tipoDocumento as tipoDocumento.descricao for tipoDocumento in tiposServicosDeclarados"
+                                    id="field_tipo_documento">
+                            </select>
+                            <div ng-show="editForm.tipoDocumento.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.tipoDocumento.$error">
+                                    Informe o Tipo de Documento
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label>Emissão</label>
+                            <input class="form-control"
+                                   name="emissao"
+                                   ng-model="servicoDeclarado.emissaoString"
+                                   required
+                                   onkeypress="exec(this, mdata)">
+                            <p class="help-block"
+                               ng-show="editForm.emissao.$error.required">
+                                Informe a Emissão
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins animated fadeInDown"
+                 ng-if="servicoDeclarado.tipoServicoDeclarado == 'SERVICO_TOMADO'">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>
+                                {{servicoDeclarado.tipoServicoDeclarado == 'SERVICO_TOMADO' ?
+                                'Quem prestou o serviço?' :
+                                'Quem tomou o serviço'}}
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-sm">
+                        <div class="col-md-12">
+                            <div class="row animated fadeInDown">
+                                <div class="form-group col-md-4"
+                                     ng-class="{'has-error' : editForm.cpfCnpj.$invalid && (editForm.$submitted || editForm.cpfCnpj.$touched)}">
+                                    <label
+                                            class="control-label"
+                                            for="field_cpfCnpj">CPF ou CNPJ</label>
+
+                                    <div class="input-group">
+                                        <input enter-as-tab type="text" class="form-control" name="cpfCnpj"
+                                               id="field_cpfCnpj"
+                                               ui-br-cpfcnpj-mask
+                                               ng-model="servicoDeclarado.dadosPessoais.cpfCnpj"
+                                               required>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-success"
+                                                    ng-click="searchPrestadorServico()">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                                    </div>
+                                    <div ng-show="editForm.cpfCnpj.$invalid">
+                                        <p class="help-block"
+                                           ng-show="editForm.cpfCnpj.$error.required">
+                                            Informe o CPF ou CNPJ
+                                        </p>
+
+                                        <p class="help-block"
+                                           ng-show="editForm.cpfCnpj.$error.cpf || editForm.cpfCnpj.$error.cnpj">
+                                            CPF ou CNPJ inválido
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="editForm.cpfCnpj.$valid"
+                                 class="fadeInDown animated">
+                                <div class="row" ng-show="!isFisica()">
+                                    <div class="form-group col-md-4">
+                                        <label
+                                                for="field_inscricaoMunicipal">Inscrição Municipal</label>
+
+                                        <input enter-as-tab type="text" class="form-control" name="inscricaoMunicipal"
+                                               id="field_inscricaoMunicipal"
+                                               ng-model="servicoDeclarado.dadosPessoais.inscricaoMunicipal">
+                                    </div>
+
+                                    <div class="form-group col-md-8">
+                                        <label
+                                                class="control-label"
+                                                for="field_nomeFantasia">Nome Fantasia</label>
+                                        <input enter-as-tab type="text" class="form-control" name="nomeFantasia"
+                                               id="field_nomeFantasia"
+                                               ng-model="servicoDeclarado.dadosPessoais.nomeFantasia">
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-4"
+                                         ng-if="!isFisica()"
+                                         ng-class="{'has-error' : editForm.inscricaoEstadual.$invalid && (editForm.$submitted || editForm.inscricaoEstadual.$touched)}">
+                                        <label
+                                                class="control-label"
+                                                for="field_inscricaoEstadual">
+                                            Inscrição Estadual
+                                        </label>
+
+                                        <input enter-as-tab type="text" class="form-control" name="inscricaoEstadual"
+                                               id="field_inscricaoEstadual"
+                                               ng-model="servicoDeclarado.dadosPessoais.inscricaoEstadualRg">
+
+
+                                    </div>
+
+                                    <div class="form-group col-md-4"
+                                         ng-if="isFisica()"
+                                         ng-class="{'has-error' : editForm.rg.$invalid  && (editForm.$submitted || editForm.rg.$touched)}">
+                                        <label
+                                                class="control-label"
+                                                for="field_rg">
+                                            RG
+                                        </label>
+                                        <input enter-as-tab type="text" class="form-control" name="rg"
+                                               id="field_rg"
+                                               ng-model="servicoDeclarado.dadosPessoais.inscricaoEstadualRg">
+                                    </div>
+
+                                    <div
+                                            class="form-group {{isFisica() ? 'col-md-8': 'col-md-8'}}"
+                                            ng-class="{'has-error' : editForm.nomeRazaoSocial.$invalid && (editForm.$submitted || editForm.nomeRazaoSocial.$touched)}">
+                                        <label
+                                                class="control-label"
+                                                for="field_nomeRazaoSocial"> {{isFisica() ? 'Nome ':'Razão
+                                            Social'}}</label>
+
+                                        <input enter-as-tab type="text" class="form-control" name="nomeRazaoSocial"
+                                               id="field_nomeRazaoSocial"
+                                               ng-model="servicoDeclarado.dadosPessoais.nomeRazaoSocial"
+                                               required>
+
+                                        <div ng-show="editForm.nomeRazaoSocial.$invalid">
+                                            <p class="help-block"
+                                               ng-show="editForm.nomeRazaoSocial.$error.required">
+                                                Informe o Nome ou a Razão Social
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-9">
+                                        <label for="field_email">e-Mail</label>
+                                        <input enter-as-tab type="text" class="form-control" name="email"
+                                               id="field_email"
+                                               ng-model="servicoDeclarado.dadosPessoais.email">
+
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <label
+                                                for="field_telefone">Telefone</label>
+                                        <input enter-as-tab type="text" class="form-control" name="telefone"
+                                               id="field_telefone"
+                                               ui-br-phone-number
+                                               ng-model="servicoDeclarado.dadosPessoais.telefone">
+                                    </div>
+                                </div>
+
+                                <div class="row fadeInDown animated">
+
+                                    <div class="form-group col-md-2">
+                                        <label for="field_cep">Cep</label>
+                                        <input enter-as-tab type="text" class="form-control" name="id" id="field_cep"
+                                               ui-br-cep-mask
+                                               ng-blur="loadEnderecoByCEP(servicoDeclarado.dadosPessoais.cep)"
+                                               ng-model="servicoDeclarado.dadosPessoais.cep">
+                                    </div>
+
+                                    <div class="form-group col-md-8">
+                                        <label for="field_nome_municipio">Município</label>
+                                        <div class="input-group">
+                                            <input enter-as-tab type="text" class="form-control" name="nome_municipio"
+                                                   id="field_nome_municipio"
+                                                   disabled
+                                                   ng-model="servicoDeclarado.dadosPessoais.municipio.nome">
+                                            <span class="input-group-btn">
+                                            <button type="button" class="btn  btn-info"
+                                                    ng-click="searchMunicipio(servicoDeclarado.dadosPessoais)">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label for="field_estado_municipio">Estado</label>
+                                        <input enter-as-tab type="text" class="form-control" name="estado_municipio"
+                                               id="field_estado_municipio"
+                                               disabled
+                                               ng-model="servicoDeclarado.dadosPessoais.municipio.estado">
+
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label
+                                                for="field_logradouro">Logradouro</label>
+                                        <input enter-as-tab type="text" class="form-control" name="logradouro"
+                                               id="field_logradouro"
+                                               ng-model="servicoDeclarado.dadosPessoais.logradouro"
+                                        >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="field_bairro">Bairro</label>
+                                        <input enter-as-tab type="text" class="form-control" name="bairro"
+                                               id="field_bairro"
+                                               ng-model="servicoDeclarado.dadosPessoais.bairro">
+
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="field_numero">Número</label>
+                                        <input enter-as-tab type="text" class="form-control" name="numero"
+                                               id="field_numero"
+                                               ng-model="servicoDeclarado.dadosPessoais.numero">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label
+                                                for="field_complemento">Complemento</label>
+                                        <input enter-as-tab type="text" class="form-control" name="complemento"
+                                               id="field_complemento"
+                                               ng-model="servicoDeclarado.dadosPessoais.complemento">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins animated fadeInDown"
+                 ng-show="servicoDeclarado.tipoServicoDeclarado == 'SERVICO_PRESTADO' || servicoDeclarado.dadosPessoais.nomeRazaoSocial">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Qual o serviço prestado? </h3>
+                        </div>
+                    </div>
+                    <div class="row m-t-md">
+                        <div ng-if="servico.prestadoNoPais" class="form-group col-md-4">
+                            <label for="field_servico_nome_municipio">Município</label>
+                            <input enter-as-tab type="text" class="form-control" name="nome_servico_municipio"
+                                   id="field_servico_nome_municipio"
+                                   disabled
+                                   value="{{servico.municipio.nome}}/{{servico.municipio.estado}}">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label translate="nfseApp.declaracaoPrestacaoServico.naturezaOperacao"
+                                   for="field_naturezaOperacao">NaturezaOperacao</label>
+                            <select class="form-control" name="naturezaOperacao"
+                                    ng-model="servicoDeclarado.declaracaoPrestacaoServico.naturezaOperacao"
+                                    ng-disabled="!permiteExigibilidade"
+                                    ng-change="selecionouServico()"
+                                    id="field_naturezaOperacao">
+                                <option value="RETENCAO"
+                                        ng-if="servicoDeclarado.tipoServicoDeclarado == 'SERVICO_TOMADO'">Retenção do
+                                    ISSQN
+                                </option>
+                                <option value="RETENCAO_SIMPLES_NACIONAL"
+                                        ng-if="servicoDeclarado.tipoServicoDeclarado == 'SERVICO_TOMADO'">Retenção
+                                    Simples
+                                </option>
+                                <option value="TRIBUTACAO_MUNICIPAL"
+                                        ng-if="servicoDeclarado.tipoServicoDeclarado == 'SERVICO_PRESTADO'"> ISSQN a
+                                    Recolher
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2"
+                             collapse="mostrarValoresFinais"
+                             ng-if="servicoDeclarado.tipoServicoDeclarado == 'SERVICO_PRESTADO'">
+                            <label class="center-block">Aliquota</label>
+
+                            <input enter-as-tab type="text" class="form-control"
+                                   ui-number-mask=""
+                                   ng-disabled="bloqueiaAliquota"
+                                   ng-blur="calculaValoresServico(servico)"
+                                   name="field_servico_aliquota" id="servico_aliquota"
+                                   ng-model="servico.aliquotaServico">
+
+                        </div>
+                    </div>
+                    <div class="row" ng-if="exigibilidadeSuspensa()">
+                        <div class="form-group col-md-8">
+                            <label class="control-label">Número do Processo de Suspensão da Exigibilidade do
+                                ISSQN</label>
+                            <input enter-as-tab type="text" class="form-control"
+                                   required
+                                   name="processoSuspensa" id="field_processoSuspensa"
+                                   ng-model="servico.processoSuspensao">
+
+                            <div class="margin">
+                                <p class="help-block"
+                                   ng-show="exigibilidadeSuspensa() && editForm.processoSuspensa.$error.required">
+                                    Informe o número do processo de suspensão da exigibilidade do ISSQN
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12"
+                             ng-show="servicoDeclarado.declaracaoPrestacaoServico.itens.length > 0">
+                            <div class="row">
+                                <div class="col-md-12 m-t-md">
+                                    <h3>Serviço</h3>
+                                </div>
+                            </div>
+                            <div ng-repeat="serv in servicoDeclarado.declaracaoPrestacaoServico.itens">
+                                <div class="form-group"
+                                     ng-if="servicoDeclarado.tipoServicoDeclarado == 'SERVICO_TOMADO'">
+                                    <div class="col-md-2">
+                                        <small>Código</small>
+                                        <br>
+                                        <strong>{{serv.servico.codigo}}</strong>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <small>Descrição</small>
+                                        <br>
+                                        <strong>{{serv.servico.descricao}}</strong>
+                                    </div>
+                                </div>
+                                <div class="form-group m-t-md">
+                                    <div class="col-md-2">
+                                        <small>Alíquota</small>
+                                        <br>
+                                        <strong>{{serv.aliquota ? serv.aliquota: serv.aliquotaServico ?
+                                            serv.aliquotaServico :0}}%</strong>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <small>Base de Cálculo</small>
+                                        <br>
+                                        <strong>{{serv.baseCalculo | currency : 'R$ '}}</strong>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <small>Valor ISS</small>
+                                        <br>
+                                        <strong>{{serv.iss | currency : 'R$ '}}</strong>
+                                    </div>
+                                </div>
+                                <div class="form-group m-t-md">
+                                    <div class="col-md-12">
+                                        <small>Descriminação</small>
+                                        <br>
+                                        <strong>{{serv.descricao}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div collapse="mostrarValoresFinais" class="fadeIn">
+                        <div class="row" ng-if="servicoDeclarado.tipoServicoDeclarado == 'SERVICO_TOMADO'">
+
+                            <div class="form-group col-md-2">
+                                <label class="center-block">Serviço</label>
+                                <div class="input-group">
+                                    <input enter-as-tab type="text" class="form-control" name="codigo_servico"
+                                           id="field_codigo_servico"
+                                           ng-blur="selecionarServicoPorCodigo(codigoServico)"
+                                           ng-model="codigoServico">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-info" ng-click="searchServico()">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                     </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <label class="center-block">&ensp;</label>
+                                <input enter-as-tab class="form-control"
+                                       id="field_servico_descricao" name="servico_descricao"
+                                       disabled
+                                       ng-model="servico.servico.descricao">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label class="center-block">Aliquota</label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       ui-number-mask=""
+                                       ng-disabled="bloqueiaAliquota"
+                                       ng-blur="calculaValoresServico(servico)"
+                                       name="field_servico_aliquota" id="servico_aliquota"
+                                       ng-model="servico.aliquotaServico">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="center-block">Discriminação do serviço</label>
+
+                                <textarea type="text" class="form-control"
+                                          name="servico_aliquota" id="field_descriminacao_servico"
+                                          ng-model="servico.descricao">
+                                        </textarea>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="form-group col-md-2"
+                                 ng-class="{'has-error' : servico.valorServico <= 0 && (editForm.$submitted || editForm.servico_aliquota.$touched)}">
+                                <label class="control-label">Valor do Serviço</label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       ui-money-mask="R$"
+                                       ng-change="calculaValoresServico(servico)"
+                                       name="servico_aliquota" id="field_servico_valor_servico"
+                                       ng-model="servico.valorServico">
+
+                                <div class="margin">
+                                    <p class="help-block"
+                                       ng-show="servico.valorServico <= 0">
+                                        O valor deve ser maior que ZERO (R$ 0,00)
+                                    </p>
+                                </div>
+
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label class="center-block">Quantidade</label>
+                                <input enter-as-tab type="number" class="form-control"
+                                       ng-class="{'has-error' : servico.quantidade <= 0 && (editForm.$submitted || editForm.servico_quantidade.$touched)}"
+                                       ng-blur="calculaValoresServico(servico)"
+                                       name="servico_quantidade" id="field_servico_quantidade"
+                                       ng-model="servico.quantidade">
+
+                                <div class="margin">
+                                    <p class="help-block"
+                                       ng-show="servico.quantidade <= 0">
+                                        O valor deve ser maior que ZERO (0)
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2"
+                                 ng-if="servicoDeclarado.tipoServicoDeclarado == 'SERVICO_TOMADO'">
+                                <label class="center-block">Deducoes</label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       ui-money-mask=""
+                                       ng-disabled="!servico.servico.percentualDeducao"
+                                       ng-blur="calculaValoresServico(servico)"
+                                       name="servico_deducoes" id="field_servico_deducoes"
+                                       ng-model="servico.deducoes">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label class="center-block">Total do Serviço</label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       ui-money-mask=""
+                                       disabled
+                                       name="servico_total_servico" id="field_servico_total_servico"
+                                       ng-model="servico.total">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label class="center-block">Base de Calculo</label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       ui-money-mask=""
+                                       disabled
+                                       name="servico_base_calculo" id="field_servico_base_calculo"
+                                       ng-model="servico.baseCalculo">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label class="center-block">Valor do ISS</label>
+                                <input enter-as-tab type="text" class="form-control"
+                                       ui-money-mask=""
+                                       disabled
+                                       name="servico_ISS" id="field_servico_ISS"
+                                       ng-model="servico.iss">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins" ng-if="servicoDeclarado.tipoServicoDeclarado">
+                <div class="ibox-content animated fadeIn text-center" ng-show="!mostrarValoresFinais">
+                    <div class="row">
+                        <button class="btn btn-success"
+                                ng-disabled="(servicoDeclarado.tipoServicoDeclarado == 'SERVICO_TOMADO' && !servico.servico) || !servico.baseCalculo"
+                                ng-click="addServico(true)"
+                                type="button">
+                            <i class="fa fa-plus-circle"></i>
+                            Adicionar Serviço e Continuar
+                        </button>
+                    </div>
+                </div>
+                <div class="ibox-content animated fadeIn" ng-show="mostrarValoresFinais">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <small>Total dos Serviços</small>
+                                <br>
+                                <input enter-as-tab type="text" readonly class="form-control"
+                                       value="{{servicoDeclarado.declaracaoPrestacaoServico.totalServicos | finance:'R$ '}}">
+                            </div>
+                            <div class="col-md-3">
+                                <small>Deduções</small>
+                                <br>
+                                <input enter-as-tab type="text" readonly class="form-control"
+                                       value="{{servicoDeclarado.declaracaoPrestacaoServico.deducoesLegais | finance:'R$ '}}">
+                            </div>
+                            <div class="col-md-3">
+                                <small>Base de Cálculo</small>
+                                <br>
+                                <input enter-as-tab type="text" readonly class="form-control"
+                                       value="{{servicoDeclarado.declaracaoPrestacaoServico.baseCalculo | finance:'R$ '}}">
+                            </div>
+                            <div class="col-md-3">
+                                <small>ISS</small>
+                                <br>
+                                <input enter-as-tab type="text" readonly class="form-control"
+                                       value="{{servicoDeclarado.declaracaoPrestacaoServico.issCalculado | finance:'R$ '}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-md">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    ui-sref="notaFiscal">
+                                <span class="glyphicon glyphicon-ban-circle"></span> Voltar
+                            </button>
+
+                            <button type="submit"
+                                    not-has-role="ROLE_ADMIN"
+                                    ng-click="saveAndFinalize()"
+                                    class="btn btn-success">
+                                <span class="glyphicon glyphicon-check"></span>&nbsp;
+                                <span>Salvar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

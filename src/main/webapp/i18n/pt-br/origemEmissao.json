@@ -1,0 +1,10 @@
+{
+    "nfseApp": {
+        "OrigemEmissao" : {
+            "null": "",
+            "WEB": "Web",
+            "RPS": "Rps",
+            "APP": "App"
+        }
+    }
+}

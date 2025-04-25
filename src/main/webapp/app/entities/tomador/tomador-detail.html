@@ -1,0 +1,157 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h4 class="modal-title" id="myTomadorLabel">
+                    <span translate="nfseApp.tomador.detail.title">Tomador</span> {{tomador.id}}
+                </h4>
+
+            </div>
+            <div class="ibox-content">
+                <form name="editForm" class="form-horizontal" role="form" novalidate ng-submit="save()">
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label for="field_cpfCnpj">CPF ou CNPJ</label>
+
+                            <input type="text" class="form-control" name="cpfCnpj" id="field_cpfCnpj"
+                                   ui-br-cpfcnpj-mask
+                                   readonly
+                                   ng-blur="loadInPessoaRepoByCpfCnpj()"
+                                   ng-model="tomador.dadosPessoais.cpfCnpj" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="field_nomeRazaoSocial">Nome ou Razão Social</label>
+
+                            <input type="text" class="form-control" name="nomeRazaoSocial" id="field_nomeRazaoSocial"
+                                   ng-model="tomador.dadosPessoais.nomeRazaoSocial" readonly required>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="field_inscricaoEstadualRg">Inscricao Estadual ou RG</label>
+
+                            <input type="text" class="form-control" name="inscricaoEstadualRg"
+                                   id="field_inscricaoEstadualRg" readonly
+                                   ng-model="tomador.dadosPessoais.inscricaoEstadualRg" required>
+
+                        </div>
+                    </div>
+                    <div class="form-group ">
+
+                        <div class="col-md-3">
+                            <label for="field_inscricaoMunicipal">Inscrição Municipal</label>
+
+                            <input type="text" class="form-control" name="inscricaoMunicipal"
+                                   id="field_inscricaoMunicipal" readonly
+                                   ng-model="tomador.dadosPessoais.inscricaoMunicipal">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="field_nomeFantasia">Nome Fantasia</label>
+                            <input type="text" class="form-control" name="nomeFantasia" id="field_nomeFantasia"
+                                   readonly
+                                   ng-model="tomador.dadosPessoais.nomeFantasia">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="field_apelido">Apelido</label>
+                            <input type="text" class="form-control" name="apelido" id="field_apelido"
+                                   readonly
+                                   ng-model="tomador.dadosPessoais.apelido">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label for="field_email">e-Mail</label>
+                            <input type="text" class="form-control" name="email" id="field_email"
+                                   ng-model="tomador.dadosPessoais.email" readonly>
+
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="field_telefone">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" id="field_telefone"
+                                   ui-br-phone-number
+                                   ng-model="tomador.dadosPessoais.telefone" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="field_celular">Celular</label>
+                            <input type="text" class="form-control" name="celular"
+                                   id="field_celular"
+                                   disabled
+                                   ui-br-phone-number
+                                   ng-model="tomador.dadosPessoais.celular">
+                        </div>
+
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label for="field_cep">Cep</label>
+                            <input type="text" class="form-control" name="cep" id="field_cep"
+                                   ui-br-cep-mask readonly
+                                   ng-model="tomador.dadosPessoais.cep" required>
+                        </div>
+
+                        <div class="col-md-9">
+                            <label for="field_logradouro">Logradouro</label>
+                            <input type="text" class="form-control" name="logradouro" id="field_logradouro"
+                                   ng-model="tomador.dadosPessoais.logradouro" readonly required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-9">
+                            <label for="field_municipio">Município</label>
+                            <input type="text" class="form-control" name="municipio" id="field_municipio"
+                                   ng-model="tomador.dadosPessoais.municipio.nome" readonly required>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="field_estado">Estado</label>
+                            <input type="text" class="form-control" name="estado" id="field_estado"
+                                   readonly
+                                   ng-model="tomador.dadosPessoais.municipio.estado" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label for="field_bairro">Bairro</label>
+                            <input type="text" class="form-control" name="bairro" id="field_bairro"
+                                   readonly
+                                   ng-model="tomador.dadosPessoais.bairro">
+
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="field_numero">Número</label>
+                            <input type="text" class="form-control" name="numero" id="field_numero"
+                                   readonly
+                                   ng-model="tomador.dadosPessoais.numero" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="field_complemento">Complemento</label>
+                            <input type="text" class="form-control" name="complemento" id="field_complemento"
+                                   readonly
+                                   ng-model="tomador.dadosPessoais.complemento">
+
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-actions">
+                        <button type="submit"
+                                ui-sref="tomador"
+                                class="btn btn-info">
+                            <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span
+                            translate="entity.action.back"> Back</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

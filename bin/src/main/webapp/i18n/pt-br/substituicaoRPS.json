@@ -1,0 +1,19 @@
+{
+    "nfseApp": {
+        "substituicaoRPS" : {
+            "home": {
+                "title": "SubstituicaoRPSs",
+                "createLabel": "Create a new SubstituicaoRPS",
+                "createOrEditLabel": "Create or edit a SubstituicaoRPS"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete SubstituicaoRPS {{ id }}?"
+            },
+            "detail": {
+                "title": "SubstituicaoRPS"
+            },
+            "de": "de",
+            "para": "para"
+        }
+    }
+}

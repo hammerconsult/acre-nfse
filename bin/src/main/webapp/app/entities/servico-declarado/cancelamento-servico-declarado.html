@@ -1,0 +1,114 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cancel()">&times;
+    </button>
+    <h4 class="modal-title" id="myServicoLabel">
+        Cancelamento de Serviço Declarado</h4>
+</div>
+<div class="modal-body">
+    <div class="row" ng-show="servicoDeclarado.declaracaoPrestacaoServico.cancelamento">
+        <div class="col-md-12 text-center">
+            <h3> Já existe uma solicitação de cancelamento para esse documento.</h3>
+        </div>
+        <div class="col-md-12">
+            <table class="table">
+                <tr>
+                    <th>Data do Cancelamento</th>
+                    <th>Solicitante</th>
+                    <th>Motivo</th>
+                    <th>Observações</th>
+                    <th>Situação</th>
+                </tr>
+                <tr>
+                    <td>
+                        {{servicoDeclarado.declaracaoPrestacaoServico.cancelamento.dataCancelamento | date: 'dd/MM/yyyy': '+0000'}}
+                    </td>
+                    <td>
+                        {{servicoDeclarado.declaracaoPrestacaoServico.cancelamento.solicitante}}
+                    </td>
+                    <td>
+                        {{'nfseApp.MotivoCancelamento.'+servicoDeclarado.declaracaoPrestacaoServico.cancelamento.motivoCancelamento | translate}}
+                    </td>
+                    <td>
+                        {{servicoDeclarado.declaracaoPrestacaoServico.cancelamento.observacoesCancelamento}}
+                    </td>
+                    <td>
+                        {{'nfseApp.SituacaoDeferimento.'+servicoDeclarado.declaracaoPrestacaoServico.cancelamento.situacaoFiscal | translate}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" ng-show="podeSolicitar">
+        <form name="editForm" role="form" novalidate>
+
+            <div class="form-group col-md-12">
+                <div class="col-md-2">
+                    <small>N° do Documento</small>
+                    <br>
+                    <strong>{{cancelamento.servicoDeclarado.numero}}</strong>
+                </div>
+                <div class="col-md-8">
+                    <small>Prestador do Serviço</small>
+                    <br>
+                    <strong ng-show="cancelamento.servicoDeclarado.declaracaoPrestacaoServico.dadosPessoaisPrestador">
+                        {{cancelamento.servicoDeclarado.declaracaoPrestacaoServico.dadosPessoaisPrestador.cpfCnpj}} -
+                        {{cancelamento.servicoDeclarado.declaracaoPrestacaoServico.dadosPessoaisPrestador.nomeRazaoSocial}}
+                    </strong>
+                </div>
+                <div class="col-md-2">
+                    <small>Total do Serviço</small>
+                    <br>
+                    <strong>{{cancelamento.servicoDeclarado.declaracaoPrestacaoServico.totalServicos | currency:'R$ '}}</strong>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                <div class="col-md-12">
+                    <label for="field_motivo">Motivo do cancelamento</label>
+                    <select class="form-control" name="motivo"
+                            required
+                            ng-model="cancelamento.motivoCancelamento"
+                            id="field_motivo">
+                        <option value="ERRO_EMISSAO">Erro de emissão</option>
+                        <option value="SERVICO_NAO_PRESTADO">Serviço não prestado</option>
+                        <option value="DUPLICIDADE">Duplicidade de nota</option>
+                        <option value="ERRO_ASSINATURA">Erro de assinatura</option>
+                        <option value="ERRO_DADOS">Erro de dados na Emissão</option>
+                    </select>
+                    <div ng-show="editForm.motivo.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.motivo.$error.required">
+                            Informe o Motivo
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                <div class="col-md-12">
+                    <label for="field_observacap">Observações do cancelamento</label>
+                    <textarea type="text" class="form-control"
+                              ng-maxlength="3000"
+                              name="observacao" id="field_observacap"
+                              ng-model="cancelamento.observacoesCancelamento">
+                    </textarea>
+                </div>
+            </div>
+            <div ng-show="erroAoCancelar" class="col-md-12 alert alert-danger text-center">
+                {{erroAoCancelar}}
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer" ng-show="podeSolicitar">
+    <button type="submit"
+            ng-click="cancelarServicoDeclarado()"
+            ng-disabled="editForm.$invalid"
+            class="btn btn-danger">
+        <span class="glyphicon glyphicon-check"></span>&nbsp;
+        <span>Cancelar Serviço Declarado</span>
+    </button>
+</div>

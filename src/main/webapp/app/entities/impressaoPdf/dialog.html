@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.cancel()">&times;
+    </button>
+    <h4 class="modal-title">Visualizar Arquivo</h4>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12 text-muted text-center">
+            <small>Não consegue visualizar o arquivo? <a ng-click="vm.baixarAnexo()"> Clique aqui</a> para fazer
+                download
+            </small>
+        </div>
+    </div>
+    <div class="row m-t-md">
+        <div class="col-md-12 text-center">
+            <embed ng-show="vm.conteudo" ng-src="{{vm.conteudo}}"
+                   style="min-width: 100%; min-height: 500px;">
+        </div>
+    </div>
+</div>

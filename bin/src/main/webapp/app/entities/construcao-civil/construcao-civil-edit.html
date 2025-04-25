@@ -1,0 +1,479 @@
+<div class="row">
+    <div class="col-lg-12">
+        <form name="editForm" class="form-horizontal" role="form" novalidate ng-submit="save()">
+            <div class="ibox float-e-margins animated fadeInDown">
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <h3>Dados da Obra</h3>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label>Código da Obra</label>
+                            <input type="text"
+                                   id="codigo_bra"
+                                   name="field_codigo_obra"
+                                   ng-value="obra.codigoObra"
+                                   ng-disabled="true"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label>ART</label>
+                            <input type="text"
+                                   id="art"
+                                   name="field_art"
+                                   ng-model="obra.art"
+                                   class="form-control"
+                                   required>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Data de Aprovação</label>
+                            <input type="date"
+                                   id="data_aprovacao"
+                                   required
+                                   name="field_data_aprovacao"
+                                   ng-model="obra.dataAprovacaoProjeto"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Data de Início</label>
+                            <input type="date"
+                                   id="data_inicio"
+                                   required
+                                   name="field_data_inicio"
+                                   ng-model="obra.dataInicio"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Data de Conclusão</label>
+                            <input type="date"
+                                   id="data_conclusao"
+                                   name="field_data_conclusao"
+                                   ng-model="obra.dataConclusao"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label>N° Alvará</label>
+                            <input type="text"
+                                   id="numero_alvara"
+                                   required
+                                   name="field_numero_alvara"
+                                   ng-model="obra.numeroAlvara"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Incorporação</label>
+
+                            <div class="switch">
+                                <div class="onoffswitch">
+                                    <input type="checkbox"
+                                           checked
+                                           id="incorporacao"
+                                           name="field_incorporacao"
+                                           ng-model="obra.incorporacao"
+                                           class="onoffswitch-checkbox">
+                                    <label class="onoffswitch-label" for="incorporacao">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Matrícula Imóvel</label>
+                            <input type="text"
+                                   id="matricula_imovel"
+                                   name="field_matricula_imovel"
+                                   ng-model="obra.matriculaImovel"
+                                   class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label>N° Habite-se</label>
+                            <input type="text"
+                                   id="numero_habitese"
+                                   name="field_numero_habitese"
+                                   ng-model="obra.numeroHabitese"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label>Status da Obra</label>
+                            <select class="form-control"
+                                    id="status_obra"
+                                    name="field_status_obra"
+                                    required
+                                    ng-model="obra.status">
+                                <option value="NAO_INICIADA">Não Iniciada</option>
+                                <option value="EM_ANDAMENTO">Em Andamento</option>
+                                <option value="CONCLUIDA">Concluída</option>
+                                <option value="APROVADA">Aprovada</option>
+                                <option value="PARALIZADA">Paralizada</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins animated fadeInDown">
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h3>Responsável da Obra</h3>
+                        </div>
+                    </div>
+
+                    <pessoa-edit form-reference="editForm" pessoa="obra.responsavel"></pessoa-edit>
+                </div>
+            </div>
+
+
+            <div class="ibox float-e-margins animated fadeInDown">
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h3>Localização da Obra</h3>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class=" col-md-2">
+                            <label for="field_cep">Cep</label>
+                            <input type="text" class="form-control" name="id" id="field_cep"
+                                   ui-br-cep-mask
+                                   required
+                                   ng-blur="loadEnderecoByCEP(obra.localizacao.cep)"
+                                   ng-model="obra.localizacao.cep">
+                        </div>
+
+                        <div class="col-md-8">
+                            <label for="field_nome_municipio">Município</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="nome_municipio"
+                                       id="field_nome_municipio"
+                                       disabled
+                                       required
+                                       ng-model="obra.localizacao.municipio.nome">
+                                <span class="input-group-btn">
+                                        <button type="button" class="btn  btn-info"
+                                                ng-click="searchMunicipio(obra.localizacao)">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="field_estado_municipio">Estado</label>
+                            <input type="text" class="form-control" name="estado_municipio"
+                                   id="field_estado_municipio"
+                                   disabled
+                                   ng-model="obra.localizacao.municipio.estado">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label
+                                    for="field_logradouro">Logradouro</label>
+                            <input type="text" class="form-control" name="logradouro"
+                                   id="field_logradouro"
+                                   required
+                                   ng-model="obra.localizacao.logradouro"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label for="field_bairro">Bairro</label>
+                            <input type="text" class="form-control" name="bairro" id="field_bairro"
+                                   required
+                                   ng-model="obra.localizacao.bairro">
+
+                        </div>
+                        <div class="col-md-2">
+                            <label for="field_numero">Número</label>
+                            <input type="text" class="form-control" name="numero" id="field_numero"
+                                   required
+                                   ng-model="obra.localizacao.numero">
+                        </div>
+                        <div class="col-md-4">
+                            <label
+                                    for="field_complemento">Complemento</label>
+                            <input type="text" class="form-control" name="complemento"
+                                   id="field_complemento"
+                                   ng-model="obra.localizacao.complemento">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label>Imóvel (Município)</label>
+                            <div class="input-group">
+                                <input type="text"
+                                       id="imovel"
+                                       name="field_imovel"
+                                       class="form-control"
+                                       ng-disabled="!habilitaImovel()"
+                                       ng-blur="buscarImovel()"
+                                       ng-model="inscricaoImovel">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-info"
+                                            ng-disabled="!habilitaImovel()"
+                                            ng-click="searchImovel()">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="col-md-9" ng-show="obra.imovel">
+                            <div class="col-md-12">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Proprietário(s)</th>
+                                        <th>Bairro</th>
+                                        <th>Logradouro</th>
+                                        <th>Número</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>{{obra.imovel.proprietarios}}</td>
+                                        <td>{{obra.imovel.bairro}}</td>
+                                        <td>{{obra.imovel.logradouro}}</td>
+                                        <td>{{obra.imovel.numero}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins animated fadeInDown" ng-form="editFormProfissional">
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h3>Profissionais Ligados a Obra</h3>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-show="!profissional">
+                        <div class="col-md-12">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    ng-click="novoProfissional()">
+                                <span class="glyphicon glyphicon-check"></span>&nbsp;
+                                <span>Inserir</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div ng-if="profissional">
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <label
+                                        class="control-label"
+                                        for="profissionalCpfCnpj">CPF ou CNPJ</label>
+
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="profissionalCpfCnpj"
+                                           name="profissionalCpfCnpj"
+                                           ui-br-cpfcnpj-mask
+                                           ng-change="preLoadProfissional()"
+                                           ng-model="profissional.profissional.dadosPessoais.cpfCnpj"
+                                           required>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-info"
+                                                ng-click="searchPessoa()">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div ng-show="editFormProfissional.profissionalCpfCnpj.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editFormProfissional.profissionalCpfCnpj.$error.required">
+                                        Informe o CPF ou CNPJ
+                                    </p>
+
+                                    <p class="help-block"
+                                       ng-show="editFormProfissional.profissionalCpfCnpj.$error.cpf || editFormProfissional.profissionalCpfCnpj.$error.cnpj">
+                                        CPF ou CNPJ inválido
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-show="editFormProfissional.profissionalCpfCnpj.$valid">
+                            <div class="form-group" ng-if="!isFisica(profissional.profissional)">
+                                <div class="col-md-4">
+                                    <label for="field_inscricaoMunicipal">Inscrição Municipal</label>
+
+                                    <input type="text" class="form-control"
+                                           name="profissionalInscricaoMunicipal"
+                                           id="field_inscricaoMunicipal"
+                                           ng-disabled="profissional.profissional.id"
+                                           ng-model="profissional.profissional.dadosPessoais.inscricaoMunicipal">
+                                </div>
+
+                                <div class="col-md-8">
+                                    <label
+                                            class="control-label"
+                                            for="field_nomeFantasia">Nome Fantasia</label>
+                                    <input type="text" class="form-control"
+                                           name="profissionalNomeFantasia"
+                                           id="field_nomeFantasia"
+                                           ng-disabled="profissional.profissional.id"
+                                           ng-model="profissional.profissional.dadosPessoais.nomeFantasia">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class=" col-md-4"
+                                     ng-if="!isFisica(profissional.profissional)"
+                                     ng-class="{'has-error' : editFormProfissional.profissionalInscricaoEstadual.$invalid && (editFormProfissional.$submitted || editFormProfissional.profissionalInscricaoEstadual.$touched)}">
+                                    <label
+                                            class="control-label"
+                                            for="field_inscricaoEstadual">
+                                        Inscrição Estadual
+                                    </label>
+
+                                    <input type="text" class="form-control"
+                                           name="profissionalInscricaoEstadual"
+                                           id="field_inscricaoEstadual"
+                                           ng-disabled="profissional.profissional.id"
+                                           ng-model="profissional.profissional.dadosPessoais.inscricaoEstadualRg">
+
+
+                                </div>
+
+                                <div class="col-md-4"
+                                     ng-if="isFisica(profissional.profissional)"
+                                     ng-class="{'has-error' : editFormProfissional.profissionalRg.$invalid  && (editFormProfissional.$submitted || editFormProfissional.profissionalRg.$touched)}">
+                                    <label
+                                            class="control-label"
+                                            for="field_rg">
+                                        RG
+                                    </label>
+
+                                    <input type="text" class="form-control"
+                                           name="profissionalRg"
+                                           id="field_rg"
+                                           ng-disabled="profissional.profissional.id"
+                                           ng-model="profissional.profissional.dadosPessoais.inscricaoEstadualRg">
+
+                                </div>
+
+                                <div
+                                        class="col-md-8"
+                                        ng-class="{'has-error' : editFormProfissional.profissionalNomeRazaoSocial.$invalid && (editFormProfissional.$submitted || editFormProfissional.profissionalNomeRazaoSocial.$touched)}">
+                                    <label
+                                            class="control-label"
+                                            for="field_nomeRazaoSocial"> {{isFisica(profissional.profissional) ?
+                                        'Nome':'Razão Social'}}</label>
+
+                                    <input type="text" class="form-control"
+                                           name="profissionalNomeRazaoSocial"
+                                           id="field_nomeRazaoSocial"
+                                           ng-disabled="profissional.profissional.id"
+                                           ng-model="profissional.profissional.dadosPessoais.nomeRazaoSocial"
+                                           required>
+
+                                    <div ng-show="editFormProfissional.profissionalNomeRazaoSocial.$invalid">
+                                        <p class="help-block"
+                                           ng-show="editFormProfissional.profissionalNomeRazaoSocial.$error.required">
+                                            Informe o Nome ou a Razão Social
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label>Tipo de Profissional</label>
+                                    <select class="form-control"
+                                            id="tipoProfissional"
+                                            name="tipoProfissional"
+                                            required
+                                            ng-model="profissional.tipoProfissional">
+                                        <option value=""></option>
+                                        <option value="ENGENHEIRO">Engenheiro</option>
+                                        <option value="ARQUITETO">Arquiteto</option>
+                                        <option value="OUTRO">Outro</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button"
+                                class="btn btn-primary"
+                                ng-disabled="editFormProfissional.$invalid"
+                                ng-click="adicionarProfissional()">
+                            <span class="glyphicon glyphicon-check"></span>&nbsp;
+                            <span>Adicionar</span>
+                        </button>
+                        <button type="button"
+                                class="btn btn-danger"
+                                ng-click="cancelarProfissional()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+                            <span>Cancelar</span>
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped small">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-md-2 text-center">Opções</th>
+                                        <th>Profissional</th>
+                                        <th class="col-md-2 text-center">Tipo</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="profissional in obra.profissionais">
+                                        <td class="col-md-2 text-center">
+                                            <button class="btn btn-sm btn-danger"
+                                                    title="Clique para remover o registro."
+                                                    ng-click="removerProfissional($index)">
+                                                <span class="fa fa-trash"></span>
+                                            </button>
+                                        </td>
+                                        <td>{{profissional.profissional.dadosPessoais.cpfCnpj}} -
+                                            {{profissional.profissional.dadosPessoais.nomeRazaoSocial}}
+                                        </td>
+                                        <td class="col-md-2 text-center">
+                                            <span>{{profissional.tipoProfissional}}</span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox animated fadeInDown">
+                <div class="ibox-content">
+                    <button type="submit"
+                            not-has-role="ROLE_ADMIN"
+                            class="btn btn-primary">
+                        <span class="glyphicon glyphicon-check"></span>&nbsp;
+                        <span>Salvar</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="ibox">
+        <div class="ibox-content">
+            <div class="row">
+
+                <div class="col-lg-4 p-lg">
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <i class="fa fa-tag"></i>
+                            Clique no nome do arquivo para ver o conteúdo
+                        </li>
+                        <li class="list-group-item"
+                            ng-repeat="tipo in tipos">
+                            <div style="display: flex; justify-content: space-between;"
+                                 ng-click="exibirManuais(tipo)">
+                                <div>
+                                    <i class="fa fa-paste"></i>
+                                    <span>{{tipo.descricao}}</span>
+                                </div>
+                                <i class="fa {{tipo.exibir ? 'fa-arrow-up' : 'fa-arrow-down'}}"
+                                   aria-hidden="true"></i>
+                            </div>
+                            <div ng-show="tipo.exibir" style="padding: 10px 0 0 5px">
+                                <table class="table">
+                                    <tr class="{{manualSelecionado.id == manual.id ? 'info' : ''}}"
+                                        ng-repeat="manual in manuaisPorTipo[tipo.id]">
+                                        <td ng-click="buscarArquivo(manual)">
+                                            {{manual.nome}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-8 p-lg">
+                    <div ng-show="manualSelecionado">
+                        <div style="text-align: center; padding: 10px;">
+                            <h2>{{manualSelecionado.nome}}</h2>
+                        </div>
+                        <div ng-show="manualSelecionado.arquivo && manualSelecionado.arquivo.id"
+                             style="text-align: center;">
+                            <div ng-show="isPdf()">
+                                <div class="row">
+                                    <div class="col-md-12 text-muted text-center">
+                                        <small>Não consegue visualizar o arquivo? <a ng-click="baixarAnexo()"> Clique
+                                            aqui</a>
+                                            para
+                                            fazer
+                                            download
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="row m-t-md">
+                                    <div class="col-md-12 text-center">
+                                        <embed ng-show="conteudo" ng-src="{{conteudo}}"
+                                               style="min-width: 100%; min-height: 500px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="!isPdf()" style="padding: 20px; text-align: center;">
+                                <a class="btn btn-xs btn-success" style="color: white"
+                                   href="/api/arquivo/{{manualSelecionado.arquivo.id}}" target="_blank">
+                                    <i class="fa fa-download"></i>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+
+                        <div ng-show="!manualSelecionado.arquivo || !manualSelecionado.arquivo.id"
+                             style="text-align: center;">
+                            <span>Nenhum arquivo informado.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

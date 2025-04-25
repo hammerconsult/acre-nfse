@@ -1,0 +1,9 @@
+{
+    "nfseApp": {
+        "TipoDeclaracaoMensal" : {
+            "null": "",
+            "PRINCIPAL": "Principal",
+            "COMPLEMENTAR": "Complementar"
+        }
+    }
+}

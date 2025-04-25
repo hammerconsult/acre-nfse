@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cancel()">&times;
+    </button>
+    <h4 class="modal-title" id="myServicoLabel">
+        Deseja notificar mais alguém por e-mail?
+    </h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <form name="editForm">
+                <div class="form-group">
+                    <div class="form-group col-md-12">
+
+                        <input type="text" class="form-control"
+                               multiple-emails
+                               name="recipientEmail"
+                               ng-model="agrupador.emails">
+
+                        <div ng-show="editForm.recipientEmail.$invalid">
+                            <p class="help-block">
+                                E-mail informado inválido
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                                 <span class="help-block m-b-none">
+                                    Informe todos os e-mails a serem notificados separados por virgula. Ex. jose@gmail.com, maria@gmail.com
+                                </span>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <button ng-click="ok()" class="btn btn-success pull-right">
+                        <i class="fa fa-send"></i>
+                        Enviar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

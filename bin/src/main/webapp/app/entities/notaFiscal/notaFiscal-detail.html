@@ -1,0 +1,89 @@
+<form class="form-horizontal" name="editForm" role="form" novalidate>
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div ng-include="'app/entities/notaFiscal/notaFiscal-ver.html'"></div>
+
+            <div class="row">
+                <div class="col-md-12 text-center m-t-lg">
+                    <button type="submit"
+                            ui-sref="notaFiscal"
+                            class="btn btn-info">
+                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;
+                        Voltar
+                    </button>
+                    <button type="button"
+                            title="clique para visualizar os dados deste documento"
+                            ng-click="baixarXMlNotaFiscal(notaFiscal.id)"
+                            class="btn btn-primary">
+                        <span class="fa fa-eye"></span>&nbsp;<span>Baixar XML</span>
+                    </button>
+                    <button type="button"
+                            ng-if="notaFiscal.prestador.id === prestador.id"
+                            title="Clique para emitir um novo documento fiscal com os mesmos dados deste documento"
+                            ng-click="copiarNota(notaFiscal)"
+                            class="btn btn-primary">
+                        <span class="fa fa-copy"></span>&nbsp;<span>Copiar</span>
+                    </button>
+                    <button type="button"
+                            title="Clique para imprimir o documento"
+                            ng-click="imprimirNota(notaFiscal.id)"
+                            class="btn btn-primary">
+                        <span class="fa fa-print"></span>&nbsp;<span>Imprimir</span>
+                    </button>
+                    <button type="button"
+                            title="Clique para enviar o documento via e-mail"
+                            ng-if="notaFiscal.situacao != 'CANCELADA'"
+                            ng-click="enviarNota(notaFiscal)"
+                            class="btn btn-primary">
+                        <span class="fa fa-envelope"></span>&nbsp;<span>Enviar</span>
+                    </button>
+                    <button type="button"
+                            title="Clique para remover a nota fiscal"
+                            not-has-role="ROLE_ADMIN"
+                            ng-if="notaFiscal.prestador.id === prestador.id && notaFiscal.situacao == 'ABERTA'"
+                            ng-click="delete(notaFiscal.id)"
+                            class="btn btn-primary">
+                        <span class="fa fa-trash"></span>&nbsp;<span>Remover</span>
+                    </button>
+                    <button type="button"
+                            ng-if="notaFiscal.prestador.id === prestador.id && notaFiscal.situacao == 'EMITIDA' && !cancelamentoEmAnalise"
+                            title="Clique para solicitar o cancelamento do documento"
+                            ng-click="cancelarNota(notaFiscal)"
+                            class="btn btn-primary">
+                        <span class="fa fa-ban"></span>&nbsp;
+                        <span>
+                 Cancelar
+                </span>
+                    </button>
+                    <button type="button"
+                            title="Clique para enviar a carta de correção do documento"
+                            ng-click="cartaCorrecaoNota(notaFiscal)"
+                            ng-if="notaFiscal.prestador.id === prestador.id && (notaFiscal.situacao == 'EMITIDA' || notaFiscal.situacao == 'PAGA')"
+                            class="btn btn-primary">
+                        <i class="fa fa-edit"></i>&nbsp;
+                        <span>Carta de Correção</span>
+                    </button>
+                    <button type="button"
+                            title="Clique para remover o documento do mongodb"
+                            ng-click="removerDoMongo(notaFiscal)"
+                            has-role="ROLE_ADMIN"
+                            class="btn btn-default">
+                        <i class="fa fa-refresh"></i>&nbsp;
+                        <span>Clear mongo cache</span>
+                    </button>
+
+                    <button type="button"
+                            ng-show="podeIntegrarNotaNacional"
+                            ng-click="integrarNotaNacional()"
+                            has-role="ROLE_ADMIN"
+                            class="btn btn-primary">
+                        <i class="fa fa-send"></i>&nbsp;
+                        <span>Integrar Nota Nacional</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

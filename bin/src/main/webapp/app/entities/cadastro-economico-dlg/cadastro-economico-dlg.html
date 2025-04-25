@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h4 class="modal-title"> Existe mais de um Cadastro Econômico ativo para esse CPF ou CNPJ</h4>
+</div>
+<div class="modal-body">
+    <div class="table-responsive">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Inscrição Municipal</th>
+                <th>CNPJ</th>
+                <th>Nome</th>
+                <th>Substituto Tributário</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="cadastroEconomico in cadastrosEconomico">
+                <td>{{cadastroEconomico.inscricaoMunicipal}}</td>
+                <td>{{cadastroEconomico.pessoa.dadosPessoais.cpfCnpj}}</td>
+                <td>{{cadastroEconomico.pessoa.dadosPessoais.nomeRazaoSocial}}</td>
+                <td>{{cadastroEconomico.enquadramentoFiscal.substitutoTributario ? 'Sim': 'Não'}}</td>
+                <td class="pull-right">
+                    <button type="submit"
+                            ng-click="ok(cadastroEconomico)"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-check"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <span nfse-app-pagination></span>
+</div>

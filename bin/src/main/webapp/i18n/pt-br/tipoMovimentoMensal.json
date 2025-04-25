@@ -1,0 +1,11 @@
+{
+    "nfseApp": {
+        "TipoMovimentoMensal" : {
+            "null": "",
+            "NORMAL": "Normal",
+            "RETENCAO": "Retenção",
+            "INSTITUICAO_FINANCEIRA": "DESIF",
+            "ISS_RETIDO": "ISSQN Retido"
+        }
+    }
+}

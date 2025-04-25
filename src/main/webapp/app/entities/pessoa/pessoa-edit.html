@@ -1,0 +1,237 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h4 class="modal-title" id="myPessoaLabel" translate="nfseApp.pessoa.home.createOrEditLabel">Create or
+                    edit a Pessoa</h4>
+
+            </div>
+            <div class="ibox-content">
+                <form name="editForm" class="form-horizontal" role="form" novalidate ng-submit="save()">
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label translate="nfseApp.dadosPessoais.cpfCnpj" for="field_cpfCnpj">CpfCnpj</label>
+
+                            <input type="text" class="form-control" name="cpfCnpj" id="field_cpfCnpj"
+                                   ui-br-cpfcnpj-mask
+                                   ng-disabled="pessoa.id"
+                                   ng-blur="loadByCpfCnpj()"
+                                   ng-model="pessoa.dadosPessoais.cpfCnpj" required>
+
+                            <div ng-show="editForm.cpfCnpj.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.cpfCnpj.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+
+                                <p class="help-block"
+                                   ng-show="editForm.cpfCnpj.$error.exists"
+                                   translate="nfseApp.dadosPessoais.validation.cpfCnpj.exists">
+                                    Já existe
+                                </p>
+
+                                <p class="help-block"
+                                   ng-show="editForm.cpfCnpj.$error.cpf || editForm.cpfCnpj.$error.cnpj">
+                                    CPF ou CNPJ inválido
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label translate="nfseApp.dadosPessoais.inscricaoMunicipal"
+                                   for="field_inscricaoMunicipal">InscricaoMunicipal</label>
+
+                            <input type="text" class="form-control" name="inscricaoMunicipal"
+                                   id="field_inscricaoMunicipal"
+                                   ng-model="pessoa.dadosPessoais.inscricaoMunicipal">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label translate="nfseApp.dadosPessoais.inscricaoEstadualRg"
+                                   for="field_inscricaoEstadualRg">InscricaoEstadualRg</label>
+
+                            <input type="text" class="form-control" name="inscricaoEstadualRg"
+                                   id="field_inscricaoEstadualRg"
+                                   ng-model="pessoa.dadosPessoais.inscricaoEstadualRg" required>
+
+                            <div ng-show="editForm.inscricaoEstadualRg.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.inscricaoEstadualRg.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-6">
+                            <label translate="nfseApp.dadosPessoais.nomeRazaoSocial"
+                                   for="field_nomeRazaoSocial">NomeRazaoSocial</label>
+
+                            <input type="text" class="form-control" name="nomeRazaoSocial" id="field_nomeRazaoSocial"
+                                   ng-model="pessoa.dadosPessoais.nomeRazaoSocial" required>
+
+                            <div ng-show="editForm.nomeRazaoSocial.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.nomeRazaoSocial.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label translate="nfseApp.dadosPessoais.nomeFantasia"
+                                   for="field_nomeFantasia">NomeFantasia</label>
+                            <input type="text" class="form-control" name="nomeFantasia" id="field_nomeFantasia"
+                                   ng-model="pessoa.dadosPessoais.nomeFantasia">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label translate="nfseApp.dadosPessoais.email" for="field_email">Email</label>
+                            <input type="text" class="form-control" name="email" id="field_email"
+                                   ng-model="pessoa.dadosPessoais.email">
+
+                        </div>
+                        <div class="col-md-3">
+                            <label translate="nfseApp.dadosPessoais.telefone" for="field_telefone">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" id="field_telefone"
+                                   ui-br-phone-number
+                                   ng-model="pessoa.dadosPessoais.telefone">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="field_celular">Celular</label>
+                            <input type="text" class="form-control" name="celular" id="field_celular"
+                                   ui-br-phone-number
+                                   ng-model="pessoa.dadosPessoais.celular">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label translate="nfseApp.endereco.cep" for="field_cep">Cep</label>
+                            <input type="text" class="form-control" name="id" id="field_cep"
+                                   ui-br-cep-mask
+                                   ng-blur="loadEnderecoByCEP(pessoa.dadosPessoais.endereco.cep)"
+                                   ng-model="pessoa.dadosPessoais.endereco.cep"
+                                   required>
+
+                            <div ng-show="editForm.cep.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.cep.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="field_codigo_municipio">Município</label>
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="municioio"
+                                       id="field_codigo_municipio"
+                                       ng-blur="loadMunicipioByCodigo(pessoa.dadosPessoais.endereco.municipio.codigo)"
+                                       ng-model="pessoa.dadosPessoais.endereco.municipio.codigo"
+                                       required>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn" ng-click="searchMunicipio()">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                            </div>
+                            <div ng-show="editForm.municipio.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.municipio.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="field_nome_municipio">Nome</label>
+                            <input type="text" class="form-control" name="nome_municipio"
+                                   id="field_nome_municipio"
+                                   disabled
+                                   ng-model="pessoa.dadosPessoais.endereco.municipio.nome">
+
+                        </div>
+                        <div class="col-md-2">
+                            <label for="field_estado_municipio">Estado</label>
+                            <input type="text" class="form-control" name="estado_municipio"
+                                   id="field_estado_municipio"
+                                   disabled
+                                   ng-model="pessoa.dadosPessoais.endereco.municipio.estado">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label translate="nfseApp.endereco.logradouro"
+                                   for="field_logradouro">Logradouro</label>
+                            <input type="text" class="form-control" name="logradouro" id="field_logradouro"
+                                   ng-model="pessoa.dadosPessoais.endereco.logradouro"
+                                   required>
+
+                            <div ng-show="editForm.logradouro.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.logradouro.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label translate="nfseApp.endereco.bairro" for="field_bairro">Bairro</label>
+                            <input type="text" class="form-control" name="bairro" id="field_bairro"
+                                   ng-model="pessoa.dadosPessoais.endereco.bairro">
+
+                        </div>
+                        <div class="col-md-2">
+                            <label translate="nfseApp.endereco.numero" for="field_numero">Numero</label>
+                            <input type="text" class="form-control" name="numero" id="field_numero"
+                                   ng-model="pessoa.dadosPessoais.endereco.numero"
+                                   required>
+
+                            <div ng-show="editForm.numero.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.numero.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label translate="nfseApp.endereco.complemento"
+                                   for="field_complemento">Complemento</label>
+                            <input type="text" class="form-control" name="complemento" id="field_complemento"
+                                   ng-model="pessoa.dadosPessoais.endereco.complemento">
+
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-default" ui-sref="pessoa">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                            translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit"
+                                not-has-role="ROLE_ADMIN"
+                                ng-disabled="editForm.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

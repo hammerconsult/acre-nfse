@@ -1,0 +1,70 @@
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h3>{{mensagemContribuinteUsuario.mensagem.titulo}}</h3>
+    </div>
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-md-12 m-t-md">
+                <div ng-bind-html="trustAsHtml(mensagemContribuinteUsuario.mensagem.conteudo)"></div>
+            </div>
+
+            <div class="col-md-12 m-t-md" ng-if="mensagemContribuinteUsuario.mensagem.tipo == 'QUESTIONAMENTO'">
+                <div class="form-group">
+                    <label>Resposta</label>
+                    <p>{{mensagemContribuinteUsuario.resposta}}</p>
+                </div>
+            </div>
+
+            <div class="col-md-12 m-t-md" ng-if="mensagemContribuinteUsuario.mensagem.tipo == 'QUESTIONAMENTO'">
+                <h5>Documento(s)</h5>
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-md-10">Descrição do Documento</th>
+                            <th class="col-md-1"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="documento in mensagemContribuinteUsuario.documentos">
+                            <td>{{documento.documento.descricaoDocumento}}</td>
+                            <td>
+                                <a class="btn btn-xs btn-success" style="color: white"
+                                   ng-show="documento.arquivo"
+                                   href="/api/arquivo/{{documento.arquivo.id}}" target="_blank">
+                                    <i class="fa fa-download"></i>
+                                    Baixar
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-12 m-t-md"
+                 ng-if="mensagemContribuinteUsuario.mensagem.detentorArquivoComposicao && mensagemContribuinteUsuario.mensagem.detentorArquivoComposicao.arquivos.length > 0">
+                <h5>Anexo(s)</h5>
+                <div ng-repeat="arquivo in mensagemContribuinteUsuario.mensagem.detentorArquivoComposicao.arquivos">
+                    <a class="btn btn-xs btn-success" style="color: white"
+                       href="/api/arquivo/{{arquivo.arquivoNfseDTO.id}}" target="_blank">
+                        <i class="fa fa-download"></i>
+                        {{arquivo.arquivoNfseDTO.nome}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ibox-footer">
+        <div class="row">
+            <div class="col-md-12 m-t-md">
+                <button type="button"
+                        ui-sref="mensagemContribuinteUsuario"
+                        class="btn btn-default">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+                    <span>Voltar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

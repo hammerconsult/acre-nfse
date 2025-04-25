@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cancel()">&times;
+    </button>
+    <h4 class="modal-title" id="myPaisesLabel">
+        Buscar Países</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <search-box ng-model="searchQuery" search-method="search()"></search-box>
+        </div>
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Nome</th>
+                        <th>Sigla</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="pais in paises">
+                        <td>{{pais.codigo}}</td>
+                        <td>{{pais.nome}}</td>
+                        <td>{{pais.sigla}}</td>
+                        <td class="pull-right">
+                            <button type="submit"
+                                    ng-click="ok(pais)"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-check"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

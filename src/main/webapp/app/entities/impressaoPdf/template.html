@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <!-- Font awesome -->
+    <link href="content/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!-- Main Inspinia CSS files -->
+    <link href="content/css/animate.css" rel="stylesheet">
+    <link id="loadBefore" href="content/css/style.css" rel="stylesheet">
+    <link href="content/styles/documentation.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="text-center" style="border-bottom: 1px solid #E7EAEC;">
+    <button class="btn btn-default" type="button" ng-click="goPrevious()">
+        <i class="fa fa-arrow-circle-left"></i>
+    </button>
+    <button class="btn btn-white" type="button" ng-click="zoomIn()">
+        <i class="fa fa-plus-circle"></i>
+    </button>
+    <button class="btn btn-success" type="button" ng-click="print()">
+        <i class="fa fa-print"></i>
+    </button>
+    <button class="btn btn-white" type="button" ng-click="zoomOut()">
+        <i class="fa fa-minus-circle"></i>
+    </button>
+    <button class="btn btn-default" type="button" ng-click="goNext()">
+        <i class="fa fa-arrow-circle-right"></i>
+    </button>
+</div>
+<div style="overflow: auto; max-height: 400px; max-width: 100%;">
+    <canvas id="pdf" class="rotate0"></canvas>
+</div>
+</body>
+</html>

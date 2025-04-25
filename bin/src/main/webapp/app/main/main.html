@@ -1,0 +1,356 @@
+<div>
+
+    <div class="row">
+        <div class="col-lg-3 no-padding">
+            <div class="widget-head-color-box navy-bg p-lg text-center" ng-show="account.pessoaFisica">
+                <i class="fa fa-user fa-3x"></i>
+                <div class="m-b-md">
+                    <h3 class="font-bold no-margins">
+                        Bem vindo, <br> <b>{{account.nome}}</b>
+                    </h3>
+                </div>
+                <div class="text-right">
+                    <a ui-sref="perfilUsuario" class="small text-white">
+                        <i class="fa fa-user"></i>
+                        Acessar perfil usuário
+                    </a>
+                </div>
+            </div>
+            <div class="widget-text-box">
+                <div ng-if="!prestadorPrincipal || !prestadorPrincipal.prestador">
+                    <small>Você está acessando apenas com o perfil de <b>Pessoa Física</b></small>
+                    <div class="text-center p-md">
+                        <a ng-click="abrirTrocarEmpresa()">
+                            <i class="fa fa-refresh"></i>
+                            Selecionar uma empresa
+                        </a>
+                    </div>
+                </div>
+                <div ng-if="prestadorPrincipal && prestadorPrincipal.prestador">
+                    <small>Você está acessando a empresa:</small>
+                    <h4 class="media-heading">{{prestadorPrincipal.prestador.pessoa.dadosPessoais.nomeRazaoSocial}}</h4>
+
+                    <div class="text-right" has-role="ROLE_EMPRESA_ADM">
+                        <a ui-sref="perfilEmpresa" class="small text-navy">
+                            <i class="fa fa-gear"></i>
+                            Perfil Empresa
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <button ui-sref="notaFiscal.new"
+                    has-role="ROLE_DOCUMENTOS_FISCAIS_EMITIR_NFSE"
+                    ng-if="isPrestadorPermitido()"
+                    class="btn btn-primary btn-block m-t-md">
+                <i class="fa fa-plus-circle"></i>
+                Emitir Nota
+            </button>
+            <button ui-sref="debitos"
+                    has-role="ROLE_DOCUMENTOS_FISCAIS_EMITIR_NFSE"
+                    ng-if="isPrestadorPermitido()"
+                    class="btn btn-success btn-block m-t-md">
+                <i class="fa fa-money"></i>
+                Conta Corrente
+            </button>
+            <button ui-sref="notaFiscal"
+                    has-role="ROLE_DOCUMENTOS_FISCAIS_EMITIR_NFSE"
+                    ng-if="isPrestadorPermitido()"
+                    class="btn btn-warning btn-block m-t-md">
+                <i class="fa fa-search"></i>
+                Consultar Documentos
+            </button>
+        </div>
+        <div class="col-lg-9 no-padding">
+            <div class="col-md-12" ng-if="cancelamentosNaoVisualizados && cancelamentosNaoVisualizados.length >0">
+                <div class="widget-text-box m-b-md">
+
+                    <table class="table">
+                        <tr>
+                            <th colspan="6" class="text-center">
+                                <strong class="text-danger">Atenção! Existem Solitações de cancelamento de Nfs-e com
+                                    novo parecer do
+                                    Fiscal</strong>
+                            </th>
+                        </tr>
+                        <tr c>
+                            <th>Data</th>
+                            <th>Solicitante</th>
+                            <th>Nota</th>
+                            <th>Emissão</th>
+                            <th>Situação</th>
+                            <th>Observações do Fiscal</th>
+                        </tr>
+                        <tr ng-repeat="cancelamento in cancelamentosNaoVisualizados"
+                            style="cursor: pointer"
+                            ng-click="visualizarCancelamento(cancelamento)">
+                            <td>{{cancelamento.dataCancelamento | date:'dd/MM/yyyy': '+0000'}}</td>
+                            <td>{{cancelamento.solicitante}}</td>
+                            <td>
+                                {{cancelamento.notaFiscal.numero}}
+                            </td>
+                            <td>{{cancelamento.notaFiscal.emissao | date}}</td>
+                            <td>
+                                {{'nfseApp.SituacaoDeferimento.'+cancelamento.situacaoFiscal | translate}}
+                            </td>
+                            <td>{{cancelamento.observacoesFiscal}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12" ng-if="usuariosInativos && usuariosInativos.length >0">
+                <div class="widget-text-box m-b-md text-center">
+                    <strong class="text-danger">Atenção! Existem Usuário aguardando confirmação de acesso à
+                        empresa</strong>
+                    <table class="table m-t-md">
+                        <tr ng-repeat="usuario in usuariosInativos">
+                            <td>
+                                {{usuario.nome}}
+                            </td>
+                            <td>
+                                {{usuario.email}}
+                            </td>
+                            <td>
+                                <a ng-click="deferirAcessoUsuario(usuario)" class="text-info">
+                                    <i class="fa fa-check-circle-o"></i>
+                                    Deferir
+                                </a>
+                            </td>
+                            <td>
+                                <a ng-click="indeferirAcessoUsuario(usuario)" class="text-danger">
+                                    <i class="fa fa-times-circle-o"></i>
+                                    Indeferir
+                                </a>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li ng-if="prestadorPrincipal && isPrestadorPermitido()">
+                        <a class="nav-link {{activeTab == 1 ? 'active' : ''}}" data-toggle="tab"
+                           ng-click="verNotasEmitidas()">
+                            Nfs-e Emitidas
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link {{activeTab == 2 ? 'active' : ''}}" data-toggle="tab"
+                           ng-click="verNotasRecebidas()">
+                            Nfs-e Recebidas
+                        </a>
+                    </li>
+                    <li ng-if="prestadorPrincipal && isPrestadorPermitido()">
+                        <a class="nav-link {{activeTab == 3 ? 'active' : ''}}" data-toggle="tab"
+                           ng-click="verServicos()">
+                            Serviços Declarados
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tabs-container">
+                    <div class="tab-content">
+                        <div role="tabpanel" id="tab-0" class="tab-pane {{activeTab == 0 ? 'active' : ''}}">
+                            <div class="panel-body">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-content text-center">
+                                        <div class="row">
+                                            <div class="col-md-12 m-t-lg">
+                                                <p>Selecione uma de suas empresas pressionando o botão
+                                                    <b> Selecionar uma empresa que já tenho acesso.</b>
+                                                </p>
+                                                <button ng-click="abrirTrocarEmpresa()"
+                                                        class="btn btn-info m-t-sm">
+                                                    <i class="fa fa-refresh"></i>
+                                                    Selecionar uma empresa que já tenho acesso
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 m-t-lg">
+                                                <p>
+                                                    Caso não tenha acesso a uma empresa, um usuário administrador pode convida-lo
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" id="tab-1" class="tab-pane {{activeTab == 1 ? 'active' : ''}}">
+                            <div class="panel-body">
+                                <div class="table-responsive" ng-show="notas && notas.length > 0">
+                                    <table class="table table-striped table-hover small">
+                                        <thead>
+                                        <tr>
+                                            <th>Número</th>
+                                            <th>Emissão</th>
+                                            <th>Tomador</th>
+                                            <th class="text-center">ISS Retido?</th>
+                                            <th class="text-right">Valor Serviços</th>
+                                            <th class="text-right">Base de Calculo</th>
+                                            <th class="text-right">Valor ISS</th>
+                                            <th class="text-center">Situação</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="notaFiscal in notas">
+                                            <td>
+                                                <a ui-sref="notaFiscal.detail({id:notaFiscal.id})">{{notaFiscal.numero}}</a>
+                                            </td>
+                                            <td>{{notaFiscal.emissao | date: 'dd/MM/yyyy': '+0000'}}</td>
+                                            <td>
+                                                <span ng-if="notaFiscal.modalidade == 'NAO_IDENTIFICADO'">{{'nfseApp.ModalidadeNota.' + notaFiscal.modalidade | translate}}</span>
+                                                <span ng-if="notaFiscal.cpfCnpjTomador">({{notaFiscal.cpfCnpjTomador | brCpfCnpj}})&ensp;</span>
+                                                {{notaFiscal.nomeTomador}}
+                                            </td>
+                                            <td class="text-center">{{notaFiscal.issRetido ? 'Sim' :
+                                                    'Não'}}
+                                            </td>
+                                            <td class="text-right">{{notaFiscal.totalServicos | currency:
+                                                    'R$ '}}
+                                            </td>
+                                            <td class="text-right">{{notaFiscal.baseCalculo | currency: 'R$
+                                                    '}}
+                                            </td>
+                                            <td class="text-right">{{notaFiscal.issCalculado | currency: 'R$ '}}
+                                            </td>
+                                            <td class="text-center">
+                        <span class="label {{notaFiscal.situacao === 'CANCELADA' || notaFiscal.situacao === 'NAO_EMITIDA' ? 'label-danger': 'label-primary'}}">
+                        {{'nfseApp.SituacaoNota.' + notaFiscal.situacao | translate}}
+                        </span>
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="p-md text-center">
+                                        <a ui-sref="notaFiscal">
+                                            <i class="fa fa-search small"></i>
+                                            Ver mais ...
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div role="tabpanel" id="tab-2" class="tab-pane {{activeTab == 2 ? 'active' : ''}}">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover small">
+                                        <thead>
+                                        <tr>
+                                            <th>Número</th>
+                                            <th>Emissão</th>
+                                            <th>Prestador</th>
+                                            <th class="text-right">Valor Serviços</th>
+                                            <th class="text-right">Base de Calculo</th>
+                                            <th class="text-right">Valor ISS</th>
+                                            <th class="text-center">Situação</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="recebida in recebidas">
+                                            <td>
+                                                <a ui-sref="notaFiscal.detail({id:recebida.id})">{{recebida.numero}}</a>
+                                            </td>
+                                            <td>{{recebida.emissao | date: 'dd/MM/yyyy': '+0000'}}</td>
+                                            <td>
+                                                <span ng-if="recebida.modalidade == 'NAO_IDENTIFICADO'">
+                                                    {{'nfseApp.ModalidadeNota.' + notaFiscal.modalidade | translate}}</span>
+                                                <span ng-if="recebida.cpfCnpjPrestador">({{recebida.cpfCnpjPrestador | brCpfCnpj}})&ensp;</span>
+                                                {{recebida.nomePrestador}}
+                                            </td>
+                                            <td class="text-right">{{recebida.totalServicos | currency:
+                                                    'R$ '}}
+                                            </td>
+                                            <td class="text-right">{{recebida.baseCalculo | currency: 'R$
+                                                    '}}
+                                            </td>
+                                            <td class="text-right">{{recebida.issCalculado | currency: 'R$ '}}
+                                            </td>
+                                            <td class="text-center">
+                                                    <span class="label {{recebida.situacao === 'CANCELADA' ? 'label-danger': 'label-primary'}}">
+                                                    {{'nfseApp.SituacaoNota.' + recebida.situacao | translate}}
+                                                    </span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="p-md text-center">
+                                        <a ui-sref="notas-recebidas">
+                                            <i class="fa fa-search"></i>
+                                            Ver mais ...
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" id="tab-3" class="tab-pane {{activeTab == 3 ? 'active' : ''}}">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped small">
+                                        <thead>
+                                        <tr>
+                                            <th class="issue-info">
+                                                Número
+                                                <small>Emissão</small>
+                                            </th>
+                                            <th class="issue-info">
+                                                Tipo de Documento
+                                            </th>
+                                            <th>Prestador</th>
+                                            <th class="text-right issue-info">
+                                                Valor Serviços
+                                                <small>Base de Calculo</small>
+                                            </th>
+                                            <th class="text-right issue-info">
+                                                Valor ISS
+                                                <small>Retido?</small>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="servicoDeclarado in servicos">
+                                            <td class="issue-info">
+                                                <a ui-sref="servicoDeclarado.detail({id:servicoDeclarado.id})">
+                                                    {{servicoDeclarado.numero}}
+                                                </a>
+                                                <small>
+                                                    {{servicoDeclarado.emissao | date: 'dd/MM/yyyy': '+0000'}}
+                                                </small>
+                                            </td>
+                                            <td class="issue-info">
+                                                {{servicoDeclarado.tipoDocumentoDescricao}}
+                                            </td>
+                                            <td class="issue-info">
+                                                <span>({{servicoDeclarado.prestadorCpfCnpj | brCpfCnpj}})&ensp;</span>
+                                                {{servicoDeclarado.prestadorNomeRazaoSocial}}
+                                            </td>
+                                            <td class="text-right issue-info">
+                                                {{servicoDeclarado.totalServicos | currency: 'R$ '}}
+                                                <small>{{servicoDeclarado.baseCalculo | currency: 'R$ '}}</small>
+                                            </td>
+                                            <td class="text-right issue-info">
+                                                {{servicoDeclarado.issCalculado | currency: 'R$ '}}
+                                                <small>{{servicoDeclarado.issRetido ? 'Sim' : 'Não'}}</small>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="p-md text-center">
+                                        <a ui-sref="servicoDeclarado">
+                                            <i class="fa fa-search small"></i>
+                                            Ver mais ...
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span translate="nfseApp.aidfe.home.title"> Form </span>
+            </div>
+            <div class="ibox-content">
+
+                <tabset>
+                    <tab ng-repeat="situacao in situacoes" ng-click="loadAll(situacao)">
+                        <tab-heading ng-class="classTab(situacao)">
+                            <span>{{situacao}}</span>
+                        </tab-heading>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <search-box ng-model="searchQuery"
+                                            search-method="search(searchQuery,situacao)"></search-box>
+                            </div>
+
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Número</th>
+                                    <th>Solicitado Em</th>
+                                    <th>Qtde Solicitada</th>
+                                    <th>Qtde Deferida</th>
+                                    <th>Deferido Em</th>
+                                    <th>NFS-e Inicial</th>
+                                    <th>NFS-e Final</th>
+                                    <th>Empresa</th>
+                                    <th>CPF/CNPJ</th>
+                                    <th ng-if="situacao == 'AGUARDANDO'">Opções</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="aidfe in aidfes">
+                                    <td>{{aidfe.numero}}</td>
+                                    <td>{{aidfe.solicitadoEm | date: 'dd/MM/yyyy': '+0000'}}</td>
+                                    <td>{{aidfe.quantidade}}</td>
+                                    <td>{{aidfe.quantidadeDeferida}}</td>
+                                    <td>{{aidfe.deferidoEm | date: 'dd/MM/yyyy': '+0000'}}</td>
+                                    <td>{{aidfe.numeroInicial}}</td>
+                                    <td>{{aidfe.numeroFinal}}</td>
+                                    <td>{{aidfe.prestadorServicos.pessoa.dadosPessoais.nomeRazaoSocial}}</td>
+                                    <td>{{aidfe.prestadorServicos.pessoa.dadosPessoais.cpfCnpj}}</td>
+                                    <td ng-if="!aidfe.deferidoEm">
+                                        <div class="pull-right">
+                                            <button type="submit"
+                                                    ui-sref="aidfe.analise({id:aidfe.id})"
+                                                    class="btn btn-info btn-sm">
+                                                <span class="glyphicon glyphicon glyphicon-check"></span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <span nfse-app-pagination></span>
+                        </div>
+
+                    </tab>
+                </tabset>
+
+
+            </div>
+        </div>
+    </div>
+</div>

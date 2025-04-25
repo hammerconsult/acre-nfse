@@ -1,0 +1,29 @@
+{
+    "nfseApp": {
+        "itemDeclaracaoServico" : {
+            "home": {
+                "title": "ItemDeclaracaoServicos",
+                "createLabel": "Create a new ItemDeclaracaoServico",
+                "createOrEditLabel": "Create or edit a ItemDeclaracaoServico"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete ItemDeclaracaoServico {{ id }}?"
+            },
+            "detail": {
+                "title": "ItemDeclaracaoServico"
+            },
+            "iss": "Iss",
+            "baseCalculo": "BaseCalculo",
+            "deducoes": "Deducoes",
+            "descontosIncondicionados": "DescontosIncondicionados",
+            "descontosCondicionados": "DescontosCondicionados",
+            "quantidade": "Quantidade",
+            "valorServico": "ValorServico",
+            "descricao": "Descricao",
+            "prestadoNoPais": "PrestadoNoPais",
+            "observacoes": "Observacoes",
+            "servico": "servico",
+            "municipio": "municipio"
+        }
+    }
+}

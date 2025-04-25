@@ -1,0 +1,45 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="row">
+
+                    <div class="col-md-offset-8 col-md-4">
+                        <button class="btn btn-primary pull-right" ui-sref="solicitacaorps.new">
+                            <span class="fa fa-plus"></span> <span
+                                translate="nfseApp.solicitacaorps.home.createLabel">Create a new Solicitação RPS</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped small">
+                        <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Solicitado em</th>
+                            <th>Quantidade</th>
+                            <th>Situação</th>
+                            <th>Analisada em</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="sol in solicitacoes">
+                            <td>{{sol.id}}</td>
+                            <td>{{sol.solicitadaEm |date:'dd/MM/yyyy HH:mm' : '+0000'}}</td>
+                            <td>{{sol.quantidadeSolicitada}}</td>
+                            <td>{{sol.situacao}}</td>
+                            <td>{{sol.analisadaEm |date:'dd/MM/yyyy HH:mm': '+0000'}}</td>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                    <span nfse-app-pagination></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+{
+    "nfseApp": {
+        "TipoPorte": {
+            "null": "",
+            "INDUSTRIA": "Indústria",
+            "COMERCIO": "Comércio",
+            "PRESTACAO_DE_SERVICO": "Prestação de Serviço",
+            "AGROPECUARIA": "Agropecuária",
+            "DIVERSAO_PUBLICA": "Diversão Pública",
+            "OUTROS": "Outros",
+            "SUPERMERCADO": "Supermercado",
+            "PROFISSIONAL_AUTONOMO": "Profissional Autônomo",
+            "FEIRANTE": "Feirante",
+            "ENTIDADE": "Entidade",
+            "ASSOCIACAO_CIVIL_DESPORTIVA_RELIGIOSA": "Sociedade/Associação Civil/Desportiva/Religiosa",
+            "HOTEL_MOTEL": "Hotéis e Motéis",
+            "DEPOSITO_FECHADO": "Depósito Fechado"
+        }
+    }
+}

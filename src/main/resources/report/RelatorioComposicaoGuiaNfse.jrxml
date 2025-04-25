@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioNotasFiscais" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.100000000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="FILTROS" class="java.lang.String"/>
+	<parameter name="USUARIO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IMAGEM" class="java.io.InputStream"/>
+	<parameter name="MUNICIPIO" class="java.lang.String"/>
+	<parameter name="TITULO" class="java.lang.String"/>
+	<parameter name="CPFCNPJ" class="java.lang.String"/>
+	<parameter name="NOMERAZAOSOCIAL" class="java.lang.String"/>
+	<parameter name="SUBREPORT_NOTAS" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<field name="numeroDam" class="java.lang.String"/>
+	<field name="referencia" class="java.lang.String"/>
+	<field name="vencimentoDebito" class="java.util.Date"/>
+	<field name="vencimentoDam" class="java.util.Date"/>
+	<field name="emissaoDam" class="java.util.Date"/>
+	<field name="valorDam" class="java.math.BigDecimal"/>
+	<field name="situacaoDam" class="java.lang.String"/>
+	<field name="notasFiscais" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="69" y="40" width="504" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false" isItalic="true" isUnderline="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE GUIA EMITIDA E COMPOSIÇÃO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="572" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="69" y="10" width="504" height="15"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{MUNICIPIO}]]></textFieldExpression>
+			</textField>
+			<image isUsingCache="true">
+				<reportElement x="20" y="10" width="43" height="44"/>
+				<imageExpression><![CDATA[$P{IMAGEM}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="1" y="69" width="62" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contribuinte:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="63" y="69" width="313" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NOMERAZAOSOCIAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="376" y="69" width="60" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CPF/CNPJ:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="436" y="69" width="136" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CPFCNPJ}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="9" width="99" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Guia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="9" width="95" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Referência]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="496" y="9" width="76" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Situação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="196" y="9" width="74" height="10"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vencimento ISS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="9" width="76" height="10"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vencimento Guia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="9" width="76" height="10"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Emissão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="9" width="74" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="19" width="572" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="100" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroDam}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="101" y="0" width="95" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{referencia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="496" y="0" width="76" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{situacaoDam}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="196" y="0" width="74" height="11"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vencimentoDebito}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="270" y="0" width="76" height="11"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vencimentoDam}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="346" y="0" width="76" height="11"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emissaoDam}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="422" y="0" width="74" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorDam}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="19" width="572" height="16"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{notasFiscais})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_NOTAS}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement positionType="Float" x="287" y="1" width="259" height="11"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Usuário: " + $P{USUARIO} + " - Emitido em " + new SimpleDateFormat("dd/MM/yyyy").format(new Date()) + " às " + new SimpleDateFormat("HH").format(new Date()) + "h" + new SimpleDateFormat("mm").format(new Date()) + " - Página: " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="0" width="260" height="11"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["WebPúblico - Módulo: Tributário"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="572" height="1"/>
+			</line>
+			<textField evaluationTime="Report">
+				<reportElement x="546" y="1" width="26" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="33" splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="115">
+			<line>
+				<reportElement x="1" y="60" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="69" y="13" width="503" height="14"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{MUNICIPIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="69" y="39" width="418" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false" isItalic="true" isUnderline="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE GUIA EMITIDA E COMPOSIÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="79" width="146" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nenhum registro encontrado]]></text>
+			</staticText>
+			<image isUsingCache="true">
+				<reportElement x="20" y="13" width="43" height="44"/>
+				<imageExpression><![CDATA[$P{IMAGEM}]]></imageExpression>
+			</image>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,19 @@
+{
+    "nfseApp": {
+        "construcaoCivil" : {
+            "home": {
+                "title": "ConstrucaoCivils",
+                "createLabel": "Create a new ConstrucaoCivil",
+                "createOrEditLabel": "Create or edit a ConstrucaoCivil"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete ConstrucaoCivil {{ id }}?"
+            },
+            "detail": {
+                "title": "ConstrucaoCivil"
+            },
+            "codigoObra": "CodigoObra",
+            "art": "Art"
+        }
+    }
+}

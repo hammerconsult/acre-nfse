@@ -1,0 +1,181 @@
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" name="form" role="form" ng-submit="save()">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Fale Conosco</h4>
+                </div>
+
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p><strong>Telefones de atendimento</strong>: (68) 3212-7119<br></p>
+                            <p><strong>Endereço</strong>: Rua Rui Barbosa, 285 – Centro - Rio Branco/AC - CEP: 69.900-901</p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox-content hidden">
+                    <div class="row m-t-md">
+                        <div class="col-md-12 text-center">
+                            <a ng-click="atribuirTipo('DENUNCIA')">
+                                <div class="col-md-2">
+                                    <div ng-class="faleConosco.tipo == 'DENUNCIA' ? 'widget p-lg text-center red-bg ' : 'widget silver-bg  p-lg text-center'">
+                                        <div class="m-b-md">
+                                            <i class="fa fa-bullhorn fa-2x"></i>
+                                        </div>
+                                        <div class="m-t-xs">
+                                            <h3 class="font-bold no-margins ">
+                                                DENÚNCIA
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a ng-click="atribuirTipo('RECLAMACAO')">
+                                <div class="col-md-2">
+                                    <div ng-class="faleConosco.tipo == 'RECLAMACAO' ? 'widget p-lg text-center orange-bg' : 'widget silver-bg p-lg text-center'">
+                                        <div class="m-b-md">
+                                            <i class="fa fa-thumbs-o-down fa-2x"></i>
+                                        </div>
+                                        <div class="m-t-xs">
+                                            <h3 class="font-bold no-margins ">
+                                                RECLAMAÇÃO
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a ng-click="atribuirTipo('SOLICITACAO')">
+                                <div class="col-md-2">
+                                    <div ng-class="faleConosco.tipo == 'SOLICITACAO' ? 'widget p-lg text-center green-bg' : 'widget silver-bg p-lg text-center'">
+                                        <div class="m-b-md">
+                                            <i class="fa fa-file-text-o fa-2x"></i>
+                                        </div>
+                                        <div class="m-t-xs">
+                                            <h3 class="font-bold no-margins ">
+                                                SOLICITAÇÃO
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a ng-click="atribuirTipo('SUGESTAO')">
+                                <div class="col-md-2">
+                                    <div ng-class="faleConosco.tipo == 'SUGESTAO' ? 'widget p-lg text-center yellow-bg' : 'widget silver-bg p-lg text-center'">
+                                        <div class="m-b-md">
+                                            <i class="fa fa-commenting fa-2x"></i>
+                                        </div>
+                                        <div class="m-t-xs">
+                                            <h3 class="font-bold no-margins ">
+                                                SUGESTÃO
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a ng-click="atribuirTipo('ELOGIO')">
+                                <div class="col-md-2">
+                                    <div ng-class="faleConosco.tipo == 'ELOGIO' ? 'widget p-lg text-center blue-bg' : 'widget silver-bg p-lg text-center'">
+                                        <div class="m-b-md">
+                                            <i class="fa fa-thumbs-o-up fa-2x"></i>
+                                        </div>
+                                        <div class="m-t-xs">
+                                            <h3 class="font-bold no-margins ">
+                                                ELOGIO
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-md" ng-show="faleConosco.tipo">
+                        <div class="col-md-12">
+                            <div class="form-group">
+
+                                <div class="col-md-12">
+                                    <label for="field_assunto">Assunto <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="assunto" id="field_assunto"
+                                           placeholder="Informe o Assunto"
+                                           required
+                                           ng-model="faleConosco.assunto">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label for="nome">Nome Completo<span
+                                            class="text-danger">*</span></label>
+
+                                    <input type="text" class="form-control" name="nome" id="nome"
+                                           placeholder="Informe seu nome completo"
+                                           required
+                                           ng-model="faleConosco.nome">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label>E-mail <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" name="email"
+                                           placeholder="informe o seu E-mail"
+                                           required
+                                           ng-model="faleConosco.email" minlength="5"
+                                           maxlength="100">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="field_telefone">Telefone <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="telefone" id="field_telefone"
+                                           placeholder="Informe o Telefone"
+                                           required
+                                           ui-br-phone-number
+                                           ng-model="faleConosco.telefone">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label for="field_mensagem">Mensagem <span class="text-danger">*</span></label>
+                                    <textarea
+                                            type="text"
+                                            ng-model="faleConosco.mensagem"
+                                            class="form-control"
+                                            id="field_mensagem"
+                                            required
+                                            name="telefone"
+                                            maxlength="3000">
+                                </textarea>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <button type="submit"
+                                            ui-sref="login"
+                                            class="btn btn-danger btn-block">
+                                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>Voltar</span>
+                                    </button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit"
+                                            ng-disabled="form.$invalid"
+                                            class="btn btn-primary btn-block">
+                                        <span class="glyphicon glyphicon-arrow-right"></span>&nbsp;
+                                        Enviar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Opções de Filtros</div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label>Conta</label>
+                                            <input class="form-control"
+                                                   ng-model="filtro.conta"/>
+                                        </div>
+                                        <div class="col-md-2" ng-if="isVersaoDesifAbrasf32()">
+                                            <label>Desdobramento</label>
+                                            <input class="form-control"
+                                                   ng-model="filtro.desdobramento"/>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <label>Nome</label>
+                                            <input class="form-control"
+                                                   ng-model="filtro.nome"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-t-md">
+                                    <div class="col-md-4">
+                                        <button class="btn btn-primary" ng-click="loadAll()">
+                                            <span class="fa fa-search"></span> <span>Pesquisar</span>
+                                        </button>
+                                        <button class="btn btn-default" ng-click="filtro = {}">
+                                            <span class="fa fa-close"></span> <span>Limpar Filtros</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-offset-5 col-md-3">
+                                        <button class="btn btn-primary btn-block"
+                                                ui-sref="planoGeralContasComentado.insert">
+                                            <span class="fa fa-plus"></span> <span>Nova Conta</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox-content">
+                <span nfse-app-pagination></span>
+
+                <div class="table-responsive">
+                    <table class="table table-striped small">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1 text-center">Opções</th>
+                            <th class="col-md-2">Início de Vigência</th>
+                            <th class="col-md-2">Fim de Vigência</th>
+                            <th class="col-md-2">Conta</th>
+                            <th class="col-md-1" ng-if="isVersaoDesifAbrasf32()">Desdobramento</th>
+                            <th>Nome</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="conta in contas">
+                            <td class="col-md-2 text-center">
+                                <button class="btn btn-sm btn-info"
+                                        title="Clique para visualizar os dados do registro."
+                                        ui-sref="planoGeralContasComentado.detail({id:conta.id})">
+                                    <span class="fa fa-eye"></span>
+                                </button>
+                                <button class="btn btn-sm btn-success"
+                                        has-role="ROLE_PLANO_GERAL_CONTAS_COMENTADO_EDITAR"
+                                        title="Clique para editar os dados do registro."
+                                        ui-sref="planoGeralContasComentado.edit({id:conta.id})">
+                                    <span class="fa fa-edit"></span>
+                                </button>
+                                <button class="btn btn-sm btn-danger"
+                                        has-role="ROLE_PLANO_GERAL_CONTAS_COMENTADO_EDITAR"
+                                        title="Clique para excluir esse registro."
+                                        ng-click="remove(conta)">
+                                    <span class="fa fa-trash"></span>
+                                </button>
+                            </td>
+                            <td class="col-md-2">{{conta.inicioVigencia | date: 'dd/MM/yyyy' : '+0000'}}</td>
+                            <td class="col-md-2">{{conta.fimVigencia | date: 'dd/MM/yyyy': '+0000'}}</td>
+                            <td class="col-md-2">{{conta.conta}}</td>
+                            <td class="col-md-1" ng-if="isVersaoDesifAbrasf32()">{{conta.desdobramento}}</td>
+                            <td>{{conta.nome}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <span nfse-app-pagination></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

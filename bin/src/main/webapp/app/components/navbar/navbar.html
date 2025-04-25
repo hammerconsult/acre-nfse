@@ -1,0 +1,70 @@
+<div class="row border-bottom" style="margin-bottom: 49px">
+    <nav class="navbar navbar-fixed-top " role="navigation" style="margin-bottom: 0" ng-switch="isAuthenticated()">
+
+        <div id="navbar-header" class="navbar-header">
+            <minimaliza-sidebar></minimaliza-sidebar>
+        </div>
+        <ul class="nav navbar-top-links navbar-left hidden-sm hidden-xs">
+            <li>
+                <a ui-sref="home">
+                    <span>
+                        <i class="fa fa-globe"></i>
+                        <strong>Nota On-line</strong>
+                    </span>
+                </a>
+            </li>
+            <li ng-if="mensagemLogin">
+                <a ng-click="limparComunicado()" style="color: #a94442 !important;">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    Atenção! você tem um comunicado
+                </a>
+            </li>
+        </ul>
+        <ul class="nav navbar-top-links navbar-right" ng-switch-when="true">
+            <li
+                    class="dropdown m-t-sm small"
+                    ng-show="prestadorPrincipal && prestadorPrincipal.prestador">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <small>Empresa:</small>
+                    <strong>
+                        {{nomePrestador()}}
+                    </strong>
+                    ({{prestadorPrincipal.prestador.pessoa.dadosPessoais.cpfCnpj | brCpfCnpj}})
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a ui-sref="perfilEmpresa" has-role="ROLE_EMPRESA_ADM">
+                            <i class="fa fa-gear"></i>
+                            &#xA0;<span>Configurações</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="abrirTrocarEmpresa()"
+                           ng-if="hasRole('ROLE_ADMIN')"
+                           class="text-small">
+                            <i class="fa fa-refresh"></i>
+                            &#xA0;<span>Trocar de Empresa</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li has-role="ROLE_CONTRIBUINTE"
+                ng-show="prestadorPrincipal && prestadorPrincipal.prestador">
+                <a class="link-mensagem" ui-sref="mensagemContribuinteUsuario" title="Mensagens">
+                    <i class="link-mensagem-icon fa fa-bell"></i>
+                    <span class="link-mensagem-count label label-primary">{{msgNaoLidas}}</span>
+                    <span class="link-mensagem-label">Mensagens Recebidas</span>
+                </a>
+            </li>
+            <li>
+                <a class="small">v.{{versaoSistema}}</a>
+            </li>
+            <li>
+                <a ng-click="logout()" ui-sref="login" ng-if="isAuthenticated()">
+                    <i class="fa fa-sign-out"></i>Sair
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

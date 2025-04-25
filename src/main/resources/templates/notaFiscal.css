@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+.corpo {
+    /*width: 748px;*/
+    margin: 10px;
+    border: #000000 solid 1px;
+}
+
+.pdLeft10 {
+    padding-left: 10px;
+}
+
+.pd10 {
+    padding: 10px;
+}
+
+.pdRight10 {
+    padding-right: 10px;
+}
+
+.borderBlack {
+    border: #000000 solid 1px;
+}
+.tpBlack {
+    border-top: #000000 solid 1px;
+}
+
+.btBlack {
+    border-bottom: #000000 solid 1px;
+}
+
+.lfBlack {
+    border-left: #000000 solid 1px;
+}
+
+.rgBlack {
+    border-right: #000000 solid 1px;
+}
+
+.larguraTotal {
+    width: 100%;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+.textLeft {
+    text-align: left;
+}
+
+.textRight {
+    text-align: right;
+}

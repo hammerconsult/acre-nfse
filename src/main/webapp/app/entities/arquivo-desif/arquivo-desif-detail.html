@@ -1,0 +1,530 @@
+<div class="ibox float-e-margins animated fadeInDown">
+    <div class="ibox-content">
+        <div class="alert alert-success text-center" ng-show="arquivo.situacao == 'PROCESSADO'">
+            <strong>Informação</strong><br>
+            O Arquivo foi processado com sucesso.
+        </div>
+        <div class="alert alert-info text-center" ng-show="arquivo.situacao == 'EM_PROCESSAMENTO'">
+            <strong>Informação</strong><br>
+            O Arquivo está sendo processado e a tela será atualizada automaticamente.
+        </div>
+        <div class="alert alert-danger text-center" ng-show="arquivo.situacao == 'INCONSISTENTE'">
+            <strong>Erro</strong><br>
+            Ocorreu um erro no processamento do arquivo. Por favor entre em contato com o suporte.
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Enviado em</label>
+                <input class="form-control"
+                       value="{{arquivo.enviadoEm | date: 'dd/MM/yyyy HH:mm'}}"
+                       disabled>
+            </div>
+            <div class="col-md-4">
+                <label>Módulo</label>
+                <input class="form-control"
+                       value="{{'nfseApp.ModuloArquivoDesif.' + arquivo.modulo | translate}}"
+                       disabled>
+            </div>
+            <div class="col-md-2">
+                <label>Tipo</label>
+                <input class="form-control"
+                       value="{{'nfseApp.TipoArquivoDesif.' + arquivo.tipo | translate}}"
+                       disabled>
+            </div>
+            <div class="col-md-2">
+                <label>Situação</label>
+                <input class="form-control"
+                       value="{{'nfseApp.SituacaoArquivoDesif.' + arquivo.situacao | translate}}"
+                       disabled>
+            </div>
+            <div class="col-md-2">
+                <label>Protocolo</label>
+                <input class="form-control"
+                       value="{{arquivo.protocolo}}"
+                       disabled>
+            </div>
+        </div>
+        <div class="row m-t-md">
+            <div class="col-md-2">
+                <label>Competência</label>
+                <input class="form-control"
+                       value="{{arquivo.inicioCompetencia | date: 'MM/yyyy' : '+0000'}} - {{arquivo.fimCompetencia | date: 'MM/yyyy': '+0000'}}"
+                       disabled>
+            </div>
+            <div class="col-md-4">
+                <label>Tipo de Instituição</label>
+                <input class="form-control"
+                       value="{{arquivo.tipoInstituicaoFinanceira.codigo}} - {{arquivo.tipoInstituicaoFinanceira.descricao}}"
+                       disabled>
+            </div>
+            <div class="col-md-2">
+                <label>Tipo de Consolidação</label>
+                <input class="form-control"
+                       value="{{'nfseApp.TipoConsolidacaoArquivoDesif.' + arquivo.tipoConsolidacao | translate}}"
+                       disabled>
+            </div>
+            <div class="col-md-2">
+                <label>Tipo de Arredondamento</label>
+                <input class="form-control"
+                       value="{{'nfseApp.TipoArredondamentoArquivoDesif.' + arquivo.tipoArredondamento | translate}}"
+                       disabled>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs m-t-md">
+            <li ng-if="arquivo.modulo == 'MODULO_3'">
+                <a class="nav-link {{activeTab == 0 ? 'active' : ''}}"
+                   ng-click="mudarActiveTab(0)">
+                    Plano Geral de Contas Comentado – PGCC
+                </a>
+            </li>
+            <li ng-if="arquivo.modulo == 'MODULO_3'">
+                <a class="nav-link {{activeTab == 1 ? 'active' : ''}}"
+                   ng-click="mudarActiveTab(1)">
+                    Tarifas Bancárias
+                </a>
+            </li>
+            <li ng-if="arquivo.modulo == 'MODULO_3'">
+                <a class="nav-link {{activeTab == 2 ? 'active' : ''}}"
+                   ng-click="mudarActiveTab(2)">
+                    Identificação de Outros Produtos e Serviços
+                </a>
+            </li>
+            <li ng-if="arquivo.modulo == 'MODULO_1' || arquivo.modulo == 'MODULO_2'">
+                <a class="nav-link {{activeTab == 3 ? 'active' : ''}}"
+                   ng-click="mudarActiveTab(3)">
+                    Identificação da Dependência
+                </a>
+            </li>
+            <li ng-if="arquivo.modulo == 'MODULO_1'">
+                <a class="nav-link {{activeTab == 4 ? 'active' : ''}}"
+                   ng-click="mudarActiveTab(4)">
+                    Balancete Analítico Mensal
+                </a>
+            </li>
+            <li ng-if="arquivo.modulo == 'MODULO_2'">
+                <a class="nav-link {{activeTab == 5 ? 'active' : ''}}"
+                   ng-click="mudarActiveTab(5)">
+                    Demonstrativo da apuração da receita tributável e
+                    do ISSQN mensal por Subtítulo
+                </a>
+            </li>
+            <li ng-if="arquivo.modulo == 'MODULO_2'">
+                <a class="nav-link {{activeTab == 6 ? 'active' : ''}}"
+                   ng-click="mudarActiveTab(6)">
+                    Demonstrativo do ISSQN mensal a recolher
+                </a>
+            </li>
+            <li ng-if="arquivo.modulo == 'MODULO_1' || arquivo.modulo == 'MODULO_4'">
+                <a class="nav-link {{activeTab == 7 ? 'active' : ''}}"
+                   ng-click="mudarActiveTab(7)">
+                    Demonstrativo das Partidas dos Lançamentos Contábeis
+                </a>
+            </li>
+        </ul>
+
+        <div class="tabs-container">
+            <div class="tab-content">
+                <div role="tabpanel" id="tab-0" class="tab-pane {{activeTab == 0 ? 'active' : ''}}"
+                     ng-if="arquivo.modulo == 'MODULO_3'">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Conta</th>
+                                    <th>Desdobramento</th>
+                                    <th>Nome</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="registro0100 in consultaRegistro0100.list">
+                                    <td>{{registro0100.conta}}</td>
+                                    <td>{{registro0100.desdobramento}}</td>
+                                    <td>{{registro0100.nome}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <pagination boundary-links="true"
+                                            total-items="consultaRegistro0100.per_page * consultaRegistro0100.links.last"
+                                            ng-model="consultaRegistro0100.page"
+                                            max-size="consultaRegistro0100.per_page"
+                                            items-per-page="consultaRegistro0100.per_page"
+                                            ng-change="loadPageRegistros0100(consultaRegistro0100.page)"
+                                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;"
+                                            last-text="&raquo;"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" id="tab-1" class="tab-pane {{activeTab == 1 ? 'active' : ''}}"
+                     ng-if="arquivo.modulo == 'MODULO_3'">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Conta</th>
+                                    <th>Desdobramento</th>
+                                    <th>Tarifa Bancária</th>
+                                    <th>Início de Vigência</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="registro0200 in consultaRegistro0200.list">
+                                    <td>{{registro0200.conta}}</td>
+                                    <td>{{registro0200.desdobramento}}</td>
+                                    <td>{{registro0200.tarifaBancaria.codigo}} -
+                                        {{registro0200.tarifaBancaria.descricao}}
+                                    </td>
+                                    <td>{{registro0200.inicioVigencia | date: 'dd/MM/yyyy': '+0000'}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <pagination boundary-links="true"
+                                            total-items="consultaRegistro0200.per_page * consultaRegistro0200.links.last"
+                                            ng-model="consultaRegistro0200.page"
+                                            max-size="consultaRegistro0200.per_page"
+                                            items-per-page="consultaRegistro0200.per_page"
+                                            ng-change="loadPageRegistros0200(consultaRegistro0200.page)"
+                                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;"
+                                            last-text="&raquo;"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" id="tab-2" class="tab-pane {{activeTab == 2 ? 'active' : ''}}"
+                     ng-if="arquivo.modulo == 'MODULO_3'">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Conta</th>
+                                    <th>Desdobramento</th>
+                                    <th>Produto/Serviço</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="registro0300 in consultaRegistro0300.list">
+                                    <td>{{registro0300.conta}}</td>
+                                    <td>{{registro0300.desdobramento}}</td>
+                                    <td>{{registro0300.produtoServicoBancario.codigo}} -
+                                        {{registro0300.produtoServicoBancario.descricao}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <pagination boundary-links="true"
+                                            total-items="consultaRegistro0300.per_page * consultaRegistro0300.links.last"
+                                            ng-model="consultaRegistro0300.page"
+                                            max-size="consultaRegistro0300.per_page"
+                                            items-per-page="consultaRegistro0300.per_page"
+                                            ng-change="loadPageRegistros0300(consultaRegistro0300.page)"
+                                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;"
+                                            last-text="&raquo;"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" id="tab-3" class="tab-pane {{activeTab == 3 ? 'active' : ''}}"
+                     ng-if="arquivo.modulo == 'MODULO_1' || arquivo.modulo == 'MODULO_2'">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Código Dependência</th>
+                                    <th>Identificação</th>
+                                    <th>CNPJ Próprio</th>
+                                    <th>Tipo Dependência</th>
+                                    <th>CNPJ Responsável</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="registro0400 in consultaRegistro0400.list">
+                                    <td>{{registro0400.codigoDependencia}}</td>
+                                    <td>
+                                        {{'nfseApp.IdentificacaoDependenciaDesif.' + registro0400.identificacaoDependencia | translate}}
+                                    </td>
+                                    <td>{{registro0400.cnpjProprio}}</td>
+                                    <td>{{registro0400.tipoDependencia.codigo}} -
+                                        {{registro0400.tipoDependencia.descricao}}
+                                    </td>
+                                    <td>{{registro0400.cnpjResponsavel}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <pagination boundary-links="true"
+                                            total-items="consultaRegistro0400.per_page * consultaRegistro0400.links.last"
+                                            ng-model="consultaRegistro0400.page"
+                                            max-size="consultaRegistro0400.per_page"
+                                            items-per-page="consultaRegistro0400.per_page"
+                                            ng-change="loadPageRegistros0400(consultaRegistro0400.page)"
+                                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;"
+                                            last-text="&raquo;"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" id="tab-4" class="tab-pane {{activeTab == 4 ? 'active' : ''}}"
+                     ng-if="arquivo.modulo == 'MODULO_1'">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Código da Dependência</th>
+                                    <th>Competência</th>
+                                    <th>Conta</th>
+                                    <th>Desdobramento</th>
+                                    <th>Saldo Inicial</th>
+                                    <th>Valor Débito</th>
+                                    <th>Valor Crédito</th>
+                                    <th>Saldo Final</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="registro0410 in consultaRegistro0410.list">
+                                    <td>{{registro0410.codigoDependencia}}</td>
+                                    <td>{{registro0410.competencia | date: 'MM/yyyy'}}</td>
+                                    <td>{{registro0410.conta.conta}}</td>
+                                    <td>{{registro0410.conta.desdobramento}}</td>
+                                    <td>{{registro0410.saldoInicial | currency: 'R$ '}}</td>
+                                    <td>{{registro0410.valorDebito | currency: 'R$ '}}</td>
+                                    <td>{{registro0410.valorCredito | currency: 'R$ '}}</td>
+                                    <td>{{registro0410.saldoFinal | currency: 'R$ '}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <pagination boundary-links="true"
+                                            total-items="consultaRegistro0410.per_page * consultaRegistro0410.links.last"
+                                            ng-model="consultaRegistro0410.page"
+                                            max-size="consultaRegistro0410.per_page"
+                                            items-per-page="consultaRegistro0410.per_page"
+                                            ng-change="loadPageRegistros0410(consultaRegistro0410.page)"
+                                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;"
+                                            last-text="&raquo;"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" id="tab-5" class="tab-pane {{activeTab == 5 ? 'active' : ''}}"
+                     ng-if="arquivo.modulo == 'MODULO_2'">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Código da Dependência</th>
+                                    <th>Conta</th>
+                                    <th>Desdobramento</th>
+                                    <th>Valor Crédito</th>
+                                    <th>Valor Débito</th>
+                                    <th>Valor Receita Tributável</th>
+                                    <th>Base de Cálculo</th>
+                                    <th>Alíquota</th>
+                                    <th>Valor ISSQN Retido</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="registro0430 in consultaRegistro0430.list">
+                                    <td>{{registro0430.codigoDependencia}}</td>
+                                    <td>{{registro0430.conta.conta}}</td>
+                                    <td>{{registro0430.conta.desdobramento}}</td>
+                                    <td>{{registro0430.valorCredito | currency: 'R$ '}}</td>
+                                    <td>{{registro0430.valorDebito | currency: 'R$ '}}</td>
+                                    <td>{{registro0430.valorReceitaTributavel | currency: 'R$ '}}</td>
+                                    <td>{{registro0430.baseCalculo | currency: 'R$ '}}</td>
+                                    <td>{{registro0430.aliquota | currency: '% '}}</td>
+                                    <td>{{registro0430.valorIssqnRetido | currency: 'R$ '}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <pagination boundary-links="true"
+                                            total-items="consultaRegistro0430.per_page * consultaRegistro0430.links.last"
+                                            ng-model="consultaRegistro0430.page"
+                                            max-size="consultaRegistro0430.per_page"
+                                            items-per-page="consultaRegistro0430.per_page"
+                                            ng-change="loadPageRegistros0430(consultaRegistro0430.page)"
+                                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;"
+                                            last-text="&raquo;"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" id="tab-6" class="tab-pane {{activeTab == 6 ? 'active' : ''}}"
+                     ng-if="arquivo.modulo == 'MODULO_2'">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>CNPJ Dependência</th>
+                                    <th>Código de Tributação</th>
+                                    <th>Valor Receita Tributável</th>
+                                    <th>Base de Cálculo</th>
+                                    <th>Alíquota</th>
+                                    <th>Valor ISSQN Devido</th>
+                                    <th>Valor ISSQN Retido</th>
+                                    <th>Valor Compensação</th>
+                                    <th>Valor ISSQN Recolhido</th>
+                                    <th>Valor ISSQN a Recolher</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="registro0440 in consultaRegistro0440.list">
+                                    <td>{{registro0440.cnpjDependencia}}</td>
+                                    <td>{{registro0440.codigoTributacao.codigo}} -
+                                        {{registro0440.codigoTributacao.descricao}}
+                                    </td>
+                                    <td>{{registro0440.valorReceitaTributavel | currency: 'R$ '}}</td>
+                                    <td>{{registro0440.baseCalculo | currency: 'R$ '}}</td>
+                                    <td>{{registro0440.aliquota | currency: '% '}}</td>
+                                    <td>{{registro0440.valorIssqn | currency: 'R$ '}}</td>
+                                    <td>{{registro0440.valorIssqnRetido | currency: 'R$ '}}</td>
+                                    <td>{{registro0440.valorCompensacao | currency: 'R$ '}}</td>
+                                    <td>{{registro0440.valorIssqnRecolhido | currency: 'R$ '}}</td>
+                                    <td>{{registro0440.valorIssqnRecolher | currency: 'R$ '}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <pagination boundary-links="true"
+                                            total-items="consultaRegistro0430.per_page * consultaRegistro0430.links.last"
+                                            ng-model="consultaRegistro0430.page"
+                                            max-size="consultaRegistro0430.per_page"
+                                            items-per-page="consultaRegistro0430.per_page"
+                                            ng-change="loadPageRegistros0430(consultaRegistro0430.page)"
+                                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;"
+                                            last-text="&raquo;"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" id="tab-7" class="tab-pane {{activeTab == 7 ? 'active' : ''}}"
+                     ng-if="arquivo.modulo == 'MODULO_1' || arquivo.modulo == 'MODULO_4'">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>CNPJ Contabilização</th>
+                                    <th>Número</th>
+                                    <th>Data</th>
+                                    <th>Valor da Partida</th>
+                                    <th>Conta</th>
+                                    <th>Tipo Partida</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="registro1000 in consultaRegistro1000.list">
+                                    <td>{{registro1000.cnpj}}</td>
+                                    <td>{{registro1000.numeroLancamento}}</td>
+                                    <td>{{registro1000.dataLancamento | date: 'dd/MM/yyyy' : '+0000'}}</td>
+                                    <td>{{registro1000.valorPartidaLancamento | currency: 'R$ '}}</td>
+                                    <td>{{registro1000.conta}}</td>
+                                    <td>{{'nfseApp.TipoPartidaArquivoDesif.' + registro1000.tipoPartida | translate}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <pagination boundary-links="true"
+                                            total-items="consultaRegistro1000.per_page * consultaRegistro1000.links.last"
+                                            ng-model="consultaRegistro1000.page"
+                                            max-size="consultaRegistro1000.per_page"
+                                            items-per-page="consultaRegistro1000.per_page"
+                                            ng-change="loadPageRegistros1000(consultaRegistro1000.page)"
+                                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            first-text="&laquo;"
+                                            last-text="&raquo;"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" ng-show="contasTributaveisNaoDeclaradas && contasTributaveisNaoDeclaradas.length > 0">
+            <div class="alert alert-warning">
+                Atenção! As seguintes contas são tributáveis e não foram declaradas.
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Conta</th>
+                        <th>Desdobramento</th>
+                        <th>Nome</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="conta in contasTributaveisNaoDeclaradas">
+                        <td>{{conta.conta}}</td>
+                        <td>{{conta.desdobramento}}</td>
+                        <td>{{conta.nome}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row m-t-lg">
+            <div class="col-md-12">
+                <button type="button"
+                        class="btn btn-success"
+                        ng-click="enviar()"
+                        ng-show="arquivo.situacao == 'AGUARDANDO'">
+                    <span class="glyphicon glyphicon-send"></span>&nbsp;
+                    <span>Enviar</span>
+                </button>
+
+                <button type="button"
+                        ui-sref="arquivoDesif"
+                        class="btn btn-default">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+                    <span>Voltar</span>
+                </button>
+
+                <button type="button"
+                        class="btn btn-danger"
+                        ng-click="excluir()"
+                        ng-show="arquivo.situacao == 'AGUARDANDO' || arquivo.situacao == 'INCONSISTENTE'">
+                    <span class="glyphicon glyphicon-trash"></span>&nbsp;
+                    <span>Excluir</span>
+                </button>
+
+                <button class="btn btn-info"
+                        ng-if="arquivo.idDeclaracaoMensalServico"
+                        title="Imprimir Guia"
+                        ng-click="imprimirGuia()">
+                    <span class="fa fa-print"></span>
+                    Imprimir Guia
+                </button>
+
+                <button class="btn btn-info"
+                        ng-if="arquivo.situacao == 'PROCESSADO'"
+                        title="Imprimir Recibo"
+                        ng-click="imprimirRecibo()">
+                    <span class="fa fa-print"></span>
+                    Imprimir Recibo
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

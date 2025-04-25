@@ -1,0 +1,20 @@
+{
+    "nfseApp": {
+        "rPS" : {
+            "home": {
+                "title": "RPSs",
+                "createLabel": "Create a new RPS",
+                "createOrEditLabel": "Create or edit a RPS"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete RPS {{ id }}?"
+            },
+            "detail": {
+                "title": "RPS"
+            },
+            "numero": "Numero",
+            "serie": "Serie",
+            "dataEmissao": "DataEmissao"
+        }
+    }
+}

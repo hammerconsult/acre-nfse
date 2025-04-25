@@ -1,0 +1,20 @@
+{
+    "nfseApp": {
+        "declaracaoMensalServico" : {
+            "home": {
+                "title": "DeclaracaoMensalServicos",
+                "createLabel": "Create a new DeclaracaoMensalServico",
+                "createOrEditLabel": "Create or edit a DeclaracaoMensalServico"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete DeclaracaoMensalServico {{ id }}?"
+            },
+            "detail": {
+                "title": "DeclaracaoMensalServico"
+            },
+            "codigo": "Codigo",
+            "competencia": "Competencia",
+            "prestador": "prestador"
+        }
+    }
+}

@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="col-lg-6">
+            <h3>Campanhas</h3>
+            <div ng-repeat="nota in notas">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-8 text-center">
+                                <i class="fa fa-trophy fa-5x"></i>
+                                <h1 class="m-xs">{{nota.descricao}}</h1>
+                            </div>
+                            <div class="col-md-4 text-center">
+
+                                <a class="font-bold"
+                                   ng-click="verDetalhes(nota)">Exibir prêmios</a>
+                                <br>
+                                <br>
+
+                                <a ng-click="verBilhetesPremiados(nota)">Exibir bilhete(s) premiado(s)</a>
+                                <br>
+
+                                <a has-role="ROLE_USER"
+                                   ng-click="verBilhetes(nota)">Exibir meus bilhete(s)</a>
+                                <br>
+
+                                <small>
+                                    <a class="text-muted text-danger" has-role="ROLE_USER"
+                                       ng-click="anularParticipacaoCampanha(nota)">
+                                        <i class="fa fa-ban"></i>
+                                        Não quero participar
+                                    </a>
+                                </small>
+
+                                <div class="p-xs">
+                                    <a class="btn btn-xs btn-success" style="color: white"
+                                       href="/api/arquivo/{{nota.arquivoDTO.id}}" target="_blank"
+                                       ng-disabled="{{nota.arquivoDTO.id == null}}">
+                                        <i class="fa fa-download"></i>
+                                        Download legislação
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h3>Calendário de Sorteios</h3>
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover small">
+                            <thead>
+                            <tr>
+                                <th>Data do Sorteio</th>
+                                <th>Prêmio</th>
+                                <th>Valor do prêmio (R$)</th>
+                                <th>Quantidade</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="premio in premios | orderBy:'-dataSorteio'">
+                                <td>{{premio.dataSorteio | date : 'dd/MM/yyyy'}}</td>
+                                <td>{{premio.premio}}</td>
+                                <td>{{premio.valorPremio | currency : 'R$ '}}</td>
+                                <td>{{premio.quantidade }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

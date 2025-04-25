@@ -1,0 +1,11 @@
+{
+    "nfseApp": {
+        "TipoPorte": {
+            "null": "",
+            "MICRO": "Micro",
+            "PEQUENA": "Pequena",
+            "MEDIA": "Média",
+            "GRANDE": "Grande"
+        }
+    }
+}

@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h4 class="modal-title" id="paisLabel" translate="nfseApp.pais.home.createOrEditLabel">Criar ou Editar o País</h4>
+
+            </div>
+            <div class="ibox-content">
+                <form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+                    <!--<div class="form-group">-->
+                    <div class="col-md-3">
+
+                        <div class="form-group">
+                            <label class="center-block" translate="nfseApp.pais.codigo"
+                                   for="nome">Codigo</label>
+                            <input type="text" class="form-control" name="codigo" id="codigo"
+                                   ng-model="pais.codigo"
+                                   required>
+
+                            <div ng-show="editForm.codigo.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.codigo.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label class="center-block" translate="nfseApp.pais.nome"
+                                   for="nome">Nome</label>
+                            <input type="text" class="form-control" name="codigo" id="nome"
+                                   ng-model="pais.nome"
+                                   required>
+
+                            <div ng-show="editForm.codigo.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.codigo.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="center-block" translate="nfseApp.pais.sigla"
+                                   for="codigo">Sigla</label>
+                            <input type="text" maxlength="3" class="form-control" name="codigo" id="sigla"
+                                   ng-model="pais.sigla"
+                                   required>
+
+                            <div ng-show="editForm.codigo.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.codigo.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-default" ui-sref="pais">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                            translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid"
+                                class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Opções de Filtros</div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label>Módulo</label>
+                                        <select class="form-control"
+                                                ng-model="filtro.modulo"
+                                                ng-options="modulo as 'nfseApp.ModuloArquivoDesif.' + modulo.name | translate for modulo in modulos track by modulo.value">
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Situação</label>
+                                        <select class="form-control"
+                                                ng-model="filtro.situacao"
+                                                ng-options="situacao as 'nfseApp.SituacaoArquivoDesif.' + situacao.name | translate for situacao in situacoes track by situacao.value">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row m-t-md">
+                                    <div class="col-md-4">
+                                        <button class="btn btn-primary" ng-click="loadAll()">
+                                            <span class="fa fa-search"></span> <span>Pesquisar</span>
+                                        </button>
+                                        <button class="btn btn-default" ng-click="filtro = {}">
+                                            <span class="fa fa-close"></span> <span>Limpar Filtros</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-offset-5 col-md-3">
+                                        <button class="btn btn-primary btn-block" ui-sref="arquivoDesif.validar">
+                                            <span class="fa fa-plus"></span> <span>Importar DES-IF</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span nfse-app-pagination></span>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Opções</th>
+                                    <th>Enviado em</th>
+                                    <th>Módulo</th>
+                                    <th>Situação</th>
+                                    <th>Competência</th>
+                                    <th>Tipo</th>
+                                    <th>Protocolo</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="arquivo in arquivos">
+                                    <td>
+                                        <button class="btn btn-sm btn-info"
+                                                ui-sref="arquivoDesif.detalhe({id: arquivo.id})">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </td>
+                                    <td>{{arquivo.enviadoEm | date:'dd/MM/yyyy HH:mm'}}</td>
+                                    <td>{{'nfseApp.ModuloArquivoDesif.' + arquivo.modulo | translate}}</td>
+                                    <td>{{'nfseApp.SituacaoArquivoDesif.' + arquivo.situacao | translate}}</td>
+                                    <td>
+                                        {{arquivo.inicioCompetencia | date:'MM/yyyy': '+0000'}} -
+                                        {{arquivo.fimCompetencia | date:'MM/yyyy': '+0000'}}
+                                    </td>
+                                    <td>{{'nfseApp.TipoArquivoDesif.' + arquivo.tipo | translate}}</td>
+                                    <td>{{arquivo.protocolo}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <span nfse-app-pagination></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="alert alert-info text-center" ng-show="loteRPS.situacao === 'AGUARDANDO'">
+            <strong>Aguarde</strong><br>
+            O Log do lote é recarregado automaticamente enquando estiver processando
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <th>Número</th>
+                            <th>Situação</th>
+                            <th>Recebido em</th>
+                            <th>Protocolo</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{loteRPS.numero}}
+                            </td>
+                            <td>
+                                {{loteRPS.situacao}}
+                            </td>
+                            <td>
+                                {{loteRPS.dataRecebimento | date:'dd/MM/yyyy'}}
+                            </td>
+                            <td>
+                                {{loteRPS.protocolo}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <h3>RPS do Lote</h3>
+                <search-box ng-model="searchQuery" search-method="loadAll()"></search-box>
+            </div>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped small">
+                        <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Número Nfs-e</th>
+                            <th>Série</th>
+                            <th>Data de Emissão</th>
+                            <th class="text-right">Valor Serviços</th>
+                            <th class="text-right">Valor ISS</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="rps in listaRps">
+                            <td>{{rps.numero}}</td>
+                            <td>{{rps.numeroNotaFiscal ? rps.numeroNotaFiscal : 'Não Gerado'}}</td>
+                            <td>{{rps.serie}}</td>
+                            <td>{{rps.dataEmissao | date:'dd/MM/yyyy' : '+0000'}}</td>
+                            <td class="text-right">{{rps.totalServicos | currency: 'R$'}}</td>
+                            <td class="text-right">{{rps.issPagar | currency: 'R$'}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <span nfse-app-pagination></span>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <h3>Log do Lote</h3>
+
+                <div ui-codemirror ng-model="loteRPS.log"
+                     ui-codemirror-opts="editorOptions">
+                </div>
+            </div>
+            <div class="col-md-12 m-t-md">
+                <button type="submit"
+                        ui-sref="loteRPS"
+                        class="btn btn-info">
+                    <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Voltar
+                </button>
+
+
+                <button type="button"
+                        has-role="ROLE_ADMIN"
+                        ng-if="loteRPS.situacao != 'PROCESSADO'"
+                        ng-click="reprocessarLote()"
+                        class="btn btn-success">
+                    <span class="glyphicon glyphicon-adjust"></span>&nbsp;Reprocessar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioExtratoContaCorrente_detalhamento" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="dcff0a72-51fd-4d80-b860-9752a2ace8cf">
+	<property name="ireport.zoom" value="1.1000000000000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="totalPorNaturezaSituacao" class="java.util.List"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/wellington/IdeaProjects/webpublico/src/main/resources/br/com/webpublico/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_TOTAL_POR_NATUREZA" class="net.sf.jasperreports.engine.JasperReport"/>
+	<field name="numero" class="java.lang.Long"/>
+	<field name="emissao" class="java.util.Date"/>
+	<field name="tipoDocumentoNfse" class="java.lang.String"/>
+	<field name="situacao" class="java.lang.String"/>
+	<field name="cpfCnpjTomador" class="java.lang.String"/>
+	<field name="naturezaOperacao" class="java.lang.String"/>
+	<field name="totalServicos" class="java.math.BigDecimal"/>
+	<field name="baseCalculo" class="java.math.BigDecimal"/>
+	<field name="iss" class="java.math.BigDecimal"/>
+	<field name="issRetido" class="java.lang.Boolean"/>
+	<field name="issCalculado" class="java.math.BigDecimal"/>
+	<variable name="NFSE_TOTAL_SERVICO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{situacao} != "CANCELADA" && $F{tipoDocumentoNfse}.equals("NFSE") ? $F{totalServicos} : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="NFSE_TOTAL_BASE_CALCULO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{situacao} != "CANCELADA" && $F{tipoDocumentoNfse}.equals("NFSE") ? $F{baseCalculo} : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="NFSE_TOTAL_ISS" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{situacao} != "CANCELADA" && $F{tipoDocumentoNfse}.equals("NFSE") ? $F{iss} : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="DECLARACAO_TOTAL_SERVICO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{situacao} != "CANCELADA" && $F{tipoDocumentoNfse}.equals("SERVICO_DECLARADO") ? $F{totalServicos} : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="DECLARACAO_TOTAL_BASE_CALCULO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{situacao} != "CANCELADA" && $F{tipoDocumentoNfse}.equals("SERVICO_DECLARADO") ? $F{baseCalculo} : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="DECLARACAO_TOTAL_ISS" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{situacao} != "CANCELADA" && $F{tipoDocumentoNfse}.equals("SERVICO_DECLARADO") ? $F{iss} : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_SERVICO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{situacao} != "CANCELADA" ? $F{totalServicos} : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_BASE_CALCULO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{situacao} != "CANCELADA" ? $F{baseCalculo} : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_ISS" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{situacao} != "CANCELADA" ? $F{iss} : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="DECLARACAO_TOTAL_ISS_RETIDO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{situacao} != "CANCELADA" && $F{tipoDocumentoNfse}.equals("SERVICO_DECLARADO") && $F{issRetido} != null && $F{issRetido} ? $F{issCalculado} : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_ISS_RETIDO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{situacao} != "CANCELADA" && $F{issRetido} != null && $F{issRetido} ? $F{issCalculado} : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="NFSE_TOTAL_ISS_RETIDO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{situacao} != "CANCELADA" && $F{tipoDocumentoNfse}.equals("NFSE") && $F{issRetido} != null && $F{issRetido} ? $F{issCalculado} : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement x="54" y="0" width="34" height="14" uuid="842b2370-ce80-40ec-8ac3-b058bf360068"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="0" width="42" height="14" uuid="dd7423d6-9529-4353-bd95-554a307087dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Emissão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="272" y="0" width="170" height="14" uuid="dc63fcff-3547-4242-9372-90f409aa2f80"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Operação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="191" y="0" width="71" height="14" uuid="5dc350bf-1d3f-41c7-a9a9-569758dea7fc"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CPF/CNPJ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="54" height="14" uuid="cae7a1a8-c289-43c5-8e0a-d0fccf7e97ad"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="0" width="90" height="14" uuid="549ae9ec-c90d-402d-a9e0-e264461392d4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor do Serviço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="0" width="60" height="14" uuid="c5663047-c78a-4344-8628-1b25a4d85ae1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Situação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="622" y="0" width="90" height="14" uuid="c94a66ab-72b8-4465-8359-ff4beefb81bf"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ISSQN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="532" y="0" width="90" height="14" uuid="68dbb954-de54-412a-8cdf-2acdc31781bb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Base de Cálculo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="712" y="0" width="90" height="14" uuid="3d4e0349-ed56-4ab5-82c2-2fcf6b756d74"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ISSQN (Retido)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="54" height="14" uuid="e8a805fb-df93-4cd4-9b0d-3697223e20a7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoDocumentoNfse}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="0" width="34" height="14" uuid="bce01d92-eb72-464d-82ac-3ef255ceb165"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="0" width="60" height="14" uuid="54d2e7df-a4c2-4d26-a4ef-e9db0ae82f22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{situacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="191" y="0" width="71" height="14" uuid="a9997122-81af-42de-9520-e5c10eeb940c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cpfCnpjTomador}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="272" y="0" width="170" height="14" uuid="96acb51e-e87f-472f-88f4-13f462e1e946"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{naturezaOperacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="88" y="0" width="42" height="14" uuid="73c1c3b6-1c55-4f12-9570-7ab425738b62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emissao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="442" y="0" width="90" height="14" uuid="722669f9-dd08-40ec-bd54-4fc77564642e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalServicos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="532" y="0" width="90" height="14" uuid="3c3f03d0-47bb-47e9-8ec5-3cf4769df247"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{baseCalculo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="622" y="0" width="90" height="14" uuid="86df13e5-b037-42ff-8d13-1133b4077e84"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{iss}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="712" y="0" width="90" height="14" uuid="6ca01728-0d06-4e68-8df9-77e45ce3fa32"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{issRetido} != null && $F{issRetido} ? $F{issCalculado} : BigDecimal.ZERO]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="41">
+			<staticText>
+				<reportElement x="312" y="0" width="130" height="13" uuid="a5253331-1ed0-4226-80f7-75d30c0d0fc5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de NFS-e: ]]></text>
+			</staticText>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="442" y="0" width="90" height="13" uuid="3943aaf5-a828-46b8-b8a9-27c45c6d6551"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{NFSE_TOTAL_SERVICO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="532" y="0" width="90" height="13" uuid="111ac0f5-d865-4eb7-ad57-f3a8d2895c7a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{NFSE_TOTAL_BASE_CALCULO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="622" y="0" width="90" height="13" uuid="b955c742-409f-4067-9011-a1148b643f68"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{NFSE_TOTAL_ISS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="312" y="13" width="130" height="14" uuid="6c6ef568-4f5b-49ac-b258-3994f10c1981"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Declaração: ]]></text>
+			</staticText>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="442" y="13" width="90" height="14" uuid="80a359e9-a62a-4946-a750-0e1e8ff4d092"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DECLARACAO_TOTAL_SERVICO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="622" y="13" width="90" height="14" uuid="eb03a8e1-db37-44cb-bc2c-391eebc9ce11"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DECLARACAO_TOTAL_ISS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="532" y="13" width="90" height="14" uuid="ef089541-a4f3-4fd7-a23a-8dc720411841"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DECLARACAO_TOTAL_BASE_CALCULO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="272" y="27" width="530" height="14" uuid="aeb56746-f65f-44f9-99d8-bd00a0194a27"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{totalPorNaturezaSituacao})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_TOTAL_POR_NATUREZA}]]></subreportExpression>
+			</subreport>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="712" y="0" width="90" height="13" uuid="af38c48f-1fa7-4bae-a9a6-a6bf40fbccc1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{NFSE_TOTAL_ISS_RETIDO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="712" y="13" width="90" height="14" uuid="ab2daaf8-a9aa-4aeb-a6b6-66c7a35a86f0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DECLARACAO_TOTAL_ISS_RETIDO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="272" y="26" width="530" height="1" uuid="ec11b8b1-a421-4e79-880d-d04e737781b0"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="802" height="1" uuid="6cc125cd-bdb6-4111-9cfa-33720f30616c"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+	<noData>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="752" height="20" uuid="4a4c6225-1a9e-44f3-b64e-c3be99e4465a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nenhum registro encontrado]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

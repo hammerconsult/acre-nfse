@@ -1,0 +1,23 @@
+{
+    "nfseApp": {
+        "tributosFederais" : {
+            "home": {
+                "title": "TributosFederaiss",
+                "createLabel": "Create a new TributosFederais",
+                "createOrEditLabel": "Create or edit a TributosFederais"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete TributosFederais {{ id }}?"
+            },
+            "detail": {
+                "title": "TributosFederais"
+            },
+            "pis": "Pis",
+            "cofins": "Cofins",
+            "inss": "Inss",
+            "irrf": "Irrf",
+            "csll": "Csll",
+            "outrasRetencoes": "OutrasRetencoes"
+        }
+    }
+}

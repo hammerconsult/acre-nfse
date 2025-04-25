@@ -1,0 +1,9 @@
+{
+    "nfseApp": {
+        "TipoServicoDeclarado": {
+            "null": "Serviço Prestado",
+            "SERVICO_PRESTADO": "Serviço Prestado",
+            "SERVICO_TOMADO": "Serviço Tomado"
+        }
+    }
+}

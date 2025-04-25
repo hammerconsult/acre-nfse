@@ -1,0 +1,125 @@
+<div class="ibox animated fadeInDown" xmlns="http://www.w3.org/1999/html">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label>Tipo de Nota</label>
+                <select class="form-control"
+                        ng-required
+                        ng-model="tipoDocumento">
+                    <option value="EMITIDA">Emitidas</option>
+                    <option value="RECEBIDA">Recebidas</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label>Filtro de Data</label>
+                <select class="form-control"
+                        ng-required
+                        ng-change="handleTipoData()"
+                        ng-model="tipoData">
+                    <option value="COMPETENCIA">Competência</option>
+                    <option value="EMISSAO">Emissão</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-3" ng-show="tipoData == 'COMPETENCIA'">
+                <label>Competência</label>
+                <select class="form-control"
+                        ng-required
+                        ng-model="competenciaMes"
+                        ng-options="mes as mes.descricao for mes in meses track by mes.numeroMes"></select>
+            </div>
+            <div class="form-group col-md-3" ng-show="tipoData == 'COMPETENCIA'">
+                <label>Ano</label>
+                <input class="form-control"
+                       ng-required
+                       maxlength="4"
+                       ng-model="competenciaAno">
+            </div>
+
+            <div class="form-group col-md-3" ng-show="tipoData == 'EMISSAO'">
+                <label>Emissão Inicial</label>
+                <input type="date"
+                       id="dataInicial"
+                       ng-model="dataInicial"
+                       class="form-control">
+            </div>
+
+            <div class="form-group col-md-3" ng-show="tipoData == 'EMISSAO'">
+                <label>Emissão Final</label>
+                <input type="date"
+                       ng-model="dataFinal"
+                       class="form-control">
+            </div>
+
+            <div class="form-group col-md-3">
+                <label>N° Nota Fiscal (Opcional)</label>
+                <input type="number"
+                       id="numeroNotaFiscal"
+                       ng-model="numeroNotaFiscal"
+                       class="form-control">
+            </div>
+
+            <div class="form-group col-md-3">
+                <label>Tipo de XML</label>
+                <select class="form-control"
+                        ng-required
+                        ng-model="tipo">
+                    <option value="NORMAL">Normal</option>
+                    <option value="ENVELOPE_SOAP">Envelope SOAP</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label>&nbsp;</label>
+                <button type="button"
+                        ng-click="exportarXml()"
+                        ng-show="!baixarXml || baixarXml.percentual == 100"
+                        class="btn btn-primary btn-outline btn-block">
+                    <span class="fa fa-code"></span>
+                    <span>Exportar XML</span>
+                </button>
+            </div>
+        </div>
+        <div class="row" ng-show="baixarXml">
+            <div class="col-md-12 text-center">
+                <div class="progress m-b-1">
+                    <div style="width: {{baixarXml.percentual}}%;"
+                         class="progress-bar progress-bar-striped progress-bar-animated">
+                        <strong>{{baixarXml.percentual}}%</strong>
+                    </div>
+                </div>
+
+                <div style="height: 50px" ng-show="!baixarXml.erro && (baixarXml.percentual < 100 || baixandoArquivo)">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                </div>
+
+                <small ng-show="!baixarXml.erro && baixarXml.percentual < 100">Gerando o XML, aguarde a finalização.</small>
+
+                <div ng-show="!baixarXml.erro && baixarXml.percentual == 100">
+                    <strong>XML Gerado. <br> </strong>
+
+                    <button type="button"
+                            ng-click="verificarBaixarXml()"
+                            class="btn btn-primary">
+                        <span class="fa fa-download"></span>
+                        <span>Baixar XML</span>
+                    </button>
+                </div>
+
+                <div ng-show="baixarXml.erro">
+                    <div class="alert alert-danger">
+                        Ocorreu um erro na conversão das notas fiscais para xml. Por favor entre em contato com o
+                        suporte!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

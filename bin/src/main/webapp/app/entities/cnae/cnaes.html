@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span translate="nfseApp.cnae.home.title"> Form </span>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-8">
+                        <search-box ng-model="searchQuery" search-method="search()"></search-box>
+                    </div>
+
+                    <div class="col-md-4">
+                        <button class="btn btn-primary pull-right" ui-sref="cnae.new">
+                            <span class="fa fa-plus"></span> <span
+                            translate="nfseApp.cnae.home.createLabel">Create a new Cnae</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Descrição</th>
+                            <th>Ativo</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="cnae in cnaes">
+                            <td><a ui-sref="cnae.detail({id:cnae.id})">{{cnae.codigo}}</a></td>
+                            <td>{{cnae.descricao}}</td>
+                            <td>{{cnae.ativo ? 'Sim' : 'Não'}}</td>
+                            <td style="min-width: 15%">
+                                <div class="pull-right">
+                                    <button type="submit"
+                                            ui-sref="cnae.detail({id:cnae.id})"
+                                            class="btn btn-info btn-sm">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ui-sref="cnae.edit({id:cnae.id})"
+                                            class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ng-click="delete(cnae.id)"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul class="pager">
+                            <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a href="#">&lt;&lt;</a>
+                            </li>
+                            <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a href="#">&lt;</a></li>
+                            <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a href="#">&gt;</a></li>
+                            <li ng-show="links['last']" ng-click="loadPage(links['last'])"><a href="#">&gt;&gt;</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,274 @@
+<div class="row">
+    <div class="col-md-12 text-raleway fadeIn animated m-b-sm">
+        <div class="header-page">
+            <div class="row p-t-lg">
+                <div class="col-md-12 text-center">
+                    <img ng-src="/content/images/rio-branco.png" style="width: 230px">
+                </div>
+                <div class="col-md-12 text-center m-t-sm" ng-show="!configuracao.producao">
+                    <h3 class="text-danger">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        Atenção! Ambiente de homologação
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row m-t-lg">
+
+    <div class="widget_featured_slider col-md-6 fadeInUp animated fadeInLeft hidden-sm hidden-xs">
+        <img ng-src="/content/images/nota-online.png"
+             ng-show="!ultimasNoticias || ultimasNoticias.length ==0"
+             class="img-responsive">
+        <carousel interval="5000">
+            <slide ng-repeat="noticia in ultimasNoticias" active="noticia.active">
+                <div id="imagem-noticia-{{noticia.id}}"></div>
+                <div class="carousel-caption">
+                    <a ui-sref="noticias.detail({id: item.id})">{{noticia.titulo}}</a>
+                </div>
+            </slide>
+        </carousel>
+    </div>
+
+    <div class="col-md-3 hidden-sm hidden-xs" id="placar">
+        <div class="ibox" id="ibox-emissores">
+            <div class="ibox-title">
+                <span class="label label-success float-right">Autorizados</span>
+                <h5>Emissores autorizados</h5>
+            </div>
+            <div class="ibox-content">
+                <h1 class="m-t-sm">{{placar.prestadoresAutorizados | number}}</h1>
+                <div class="stat-percent font-bold text-success"><i class="fa fa-building"></i></div>
+                <small>Total de Emissores autorizados</small>
+            </div>
+        </div>
+
+        <div class="ibox m-t-lg" id="ibox-notas">
+            <div class="ibox-title">
+                <span class="label label-primary float-right">Emitidas</span>
+                <h5>Notas Fiscais</h5>
+            </div>
+            <div class="ibox-content">
+                <h1 class="m-t-sm">{{placar.notasFiscaisEmitidas | number}}</h1>
+                <div class="stat-percent font-bold text-navy"><i class="fa fa-qrcode"></i></div>
+                <small>Total de Notas Emitidas</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 fadeInUp animated col-sm-12 col-xs-12 fadeInRight">
+        <div class="ibox float-e-margins" id="acesso-sistema">
+            <div class="ibox-title text-center">
+                <h5>Acesso ao Sistema</h5>
+            </div>
+            <div class="ibox-content" id="ibox-usuario">
+                <div style="border-bottom: 1px solid #d7dcd6">
+                    <form class="form" role="form" ng-submit="login($event)">
+                        <div class="form-group">
+                            <input enter-as-tab type="text" class="form-control" id="username"
+                                   placeholder="CPF ou CNPJ" ng-model="username">
+                        </div>
+                        <div class="form-group">
+                            <input enter-as-tab type="password" class="form-control" id="password"
+                                   placeholder="Senha"
+                                   ng-model="password">
+                        </div>
+                        <button type="submit" class="btn btn-info block full-width m-t-sm btn-rounded">
+                            Entrar
+                        </button>
+                    </form>
+                    <div class="form-group text-center m-t-sm">
+                        <span class="text-small text-muted">Ainda não tem acesso?</span>
+                        <button class="btn btn-success btn-block btn-rounded"
+                                ng-click="primeiroAcesso()">
+                            Primeiro Acesso
+                        </button>
+                    </div>
+                    <div class="form-group text-center m-t-sm">
+                        <a href="#/reset/request">
+                            <small>Esqueceu a senha?</small>
+                        </a>
+                    </div>
+                    <div class="form-group text-center m-t-sm" ng-show="configuracaoGovBr.id">
+                        <a href="{{configuracaoGovBr.urlLogin}}">
+                            <button type="button" class="btn-gov-br">
+                                <span>Entrar com</span>
+                                <span class="sub-title">gov.br</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <p class="text-muted text-center small m-t-sm">
+                    <small>Uma única conta para tudo o que a prefeitura oferece</small>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row m-t-md fadeInUp animated" ng-show="ultimasNoticias && ultimasNoticias.length > 0">
+    <div class="col-md-12">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Últimas Notícias</h5>
+                <div class="ibox-tools"><a ui-sref="noticias">(+) Veja Mais</a></div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="{{ultimasNoticias.length > 1 ?'col-md-8': 'col-md-12'}}">
+                        <div class="col-md-5">
+                            <a ui-sref="noticias.detail({id: primeiraNoticia.id})" class="float-left">
+                                <img alt="{{primeiraNoticia.titulo}}" ng-src="{{primeiraNoticia.imagem}}"
+                                     style="width: 100%; height: 200px;">
+                            </a>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="social-feed-box">
+                                <div class="social-avatar">
+                                    <div class="media-body">
+                                        <a ui-sref="noticias.detail({id: noticia.id})">
+                                            {{primeiraNoticia.titulo}}
+                                        </a>
+                                        <small class="text-muted">{{primeiraNoticia.dataNoticia | date: 'dd/MM/yyyy': '+0000'}}</small>
+                                    </div>
+                                </div>
+                                <div class="social-body" style="height: 200px">
+                                    {{primeiraNoticia.conteudo.length > 600 ? primeiraNoticia.conteudo.substr(0, 600) + '...' : primeiraNoticia.conteudo}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" ng-show="outrasNoticias && outrasNoticias.length > 0">
+                        <div class="social-footer">
+                            <div class="social-comment" ng-repeat="noticia in outrasNoticias">
+                                <a ui-sref="noticias.detail({id: noticia.id})" class="float-left">
+                                    <img alt="{{noticia.titulo}}" ng-src="{{noticia.imagem}}" class="img-responsive">
+                                </a>
+                                <div class="media-body">
+                                    <a ui-sref="noticias.detail({id: noticia.id})">
+                                        {{noticia.titulo}}
+                                    </a>
+                                    {{noticia.conteudo.length > 150 ? noticia.conteudo.substr(0, 150) + '...' : noticia.conteudo}}
+                                    <br>
+                                    <small class="text-muted">{{noticia.dataNoticia | date: 'dd/MM/yyyy': '+0000'}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row m-t-md text-center">
+    <div class="col-md-12">
+        <div class="col-md-3 m-b-sm">
+            <a ui-sref="perguntas-respostas" class="btn btn-rounded btn-primary btn-block">
+                <i class="fa fa-comments"></i>
+                <span class="nav-label">Perg. e Respostas</span>
+            </a>
+        </div>
+        <div class="col-md-3 m-b-sm">
+            <a ui-sref="legislacao" class="btn btn-rounded btn-warning bt btn-block">
+                <i class="fa fa-newspaper-o"></i>
+                <span class="nav-label">Legislação</span>
+            </a>
+        </div>
+        <div class="col-md-3 m-b-sm">
+            <a ui-sref="manual" class="btn btn-rounded btn-info btn-block">
+                <i class="fa fa-television"></i>
+                <span class="nav-label">Manuais</span>
+            </a>
+        </div>
+        <div class="col-md-3 m-b-sm" ng-if="configuracao.urlNotaPremiada">
+            <a href="{{configuracao.urlNotaPremiada}}" target="_blank"
+               title="{{configuracao.urlNotaPremiada}}"
+               class="btn btn-rounded btn-success btn-block">
+                <i class="fa fa-file"></i>
+                <span class="nav-label">Nota Premiada</span>
+            </a>
+        </div>
+        <div class="col-md-3 m-b-sm" ng-if="false">
+            <a ui-sref="desif" class="btn btn-rounded btn-success btn-block">
+                <i class="fa fa-file"></i>
+                <span class="nav-label">DES-IF</span>
+            </a>
+        </div>
+        <div class="col-md-3 m-b-sm">
+            <a ui-sref="notaFiscal.autenticar" class="btn btn-rounded btn-success btn-block">
+                <i class="fa fa-check-circle-o"></i>
+                <span class="nav-label">Autênticidade</span>
+            </a>
+        </div>
+        <div class="col-md-3 m-b-sm">
+            <a ui-sref="rPS.autenticar" class="btn btn-rounded btn-primary btn-block">
+                <i class="fa fa-refresh"></i>
+                <span class="nav-label">Consulta de RPS</span>
+            </a>
+        </div>
+        <div class="col-md-3 m-b-sm">
+            <a ui-sref="faleconosco" class="btn btn-rounded btn-success btn-block">
+                <i class="fa fa-envelope"></i>
+                <span class="nav-label">Fale Conosco</span>
+            </a>
+        </div>
+        <div class="col-md-3 m-b-sm">
+            <a ui-sref="substitutostributarios" class="btn btn-rounded btn-warning btn-block">
+                <i class="fa fa-refresh"></i>
+                <span class="nav-label">Consulta de Substitutos Trib.</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="footer m-t-lg text-raleway">
+    <div class="container ">
+        <div class="row m-t-lg">
+            <div class="col-md-6">
+                <div class="col-md-6 text-right">
+                    <a href='https://apps.apple.com/us/app/nota-online-rio-branco/id1537113490'>
+                        <img style="width: 80%;"
+                             alt='Disponível na App Store'
+                             src='/content/images/app-store.svg'/></a>
+                </div>
+                <div class="col-md-6 text-left no-padding">
+                    <a href='https://play.google.com/store/apps/details?id=br.com.webpublico.nfsemobile&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+                        <img style="width: 80%;"
+                             alt='Disponível no Google Play'
+                             src='/content/images/google-play-badge.png'/></a>
+                </div>
+
+
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-6 text-right">
+                    <img alt="image"
+                         style="width: 80%"
+                         ng-src="/content/images/nota-online.png"/>
+                </div>
+                <div class="col-md-6 text-left">
+                    <img alt="image"
+                         style="width: 80%"
+                         ng-src="/content/images/logo-rb-nome.png"/>
+                </div>
+
+            </div>
+        </div>
+        <div class="row m-t-lg">
+            <div class="col-md-6 text-center ">
+                Disponível nas lojas de aplicativos
+            </div>
+            <div class="col-md-6 text-center">
+                Copyright © 2021. Nota Online. Todos os direitos reservados.
+            </div>
+        </div>
+        <div class="row m-t-lg">
+            <div class="col-md-12 text-center m-t-lg p-lg">
+                Prefeitura Municipal de Rio Branco, Rua Rui Barbosa, 285 - Centro<br> Rio Branco/AC - CEP 69.900-901
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,260 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li>
+                        <a class="nav-link {{activeTab == 0 ? 'active' : ''}}" data-toggle="tab"
+                           ng-click="verIntegracoes()">
+                            Integrações
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link {{activeTab == 1 ? 'active' : ''}}" data-toggle="tab"
+                           ng-click="verGraficos()">
+                            Gráficos
+                        </a>
+                    </li>
+                </ul>
+
+
+                <div class="tabs-container">
+                    <div class="tab-content">
+                        <div role="tabpanel" id="tab-0" class="tab-pane {{activeTab == 0 ? 'active' : ''}}">
+                            <div class="col-md-12 m-sm">
+                                <form name="formFiltros" class="validate-input">
+                                    <div class="row m-b">
+                                        <div class="panel">
+                                            <div class="col-lg-6">
+                                                <div class="panel-heading">
+                                                    Opções de Filtro
+                                                </div>
+                                                <div class="panel-body">
+
+                                                    <div class="row m-b">
+                                                        <div class="col-md-6">
+                                                            <label>Inscrição Cadastral</label>
+                                                            <input enter-as-tab type="text"
+                                                                   ng-model="filtro.inscricaoCadastral"
+                                                                   class="form-control">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>N° Nfs-e</label>
+                                                            <input enter-as-tab type="text"
+                                                                   ng-model="filtro.numeroNotaFiscal"
+                                                                   class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-b">
+                                                        <div class="col-md-12">
+                                                            <label>Mensagem (contém)</label>
+                                                            <input enter-as-tab type="text"
+                                                                   ng-model="filtro.mensagem"
+                                                                   class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <button type="button"
+                                                                    ng-disabled="formFiltros.$invalid"
+                                                                    ng-click="buscarIntegracoes()"
+                                                                    class="btn btn-primary">
+                                                                <span class="fa fa-search"></span>
+                                                                <span>Pesquisar</span>
+                                                            </button>
+                                                            <button type="button"
+                                                                    ng-click="limparFiltros()"
+                                                                    class="btn btn-default">
+                                                                <span class="fa fa-close"></span>
+                                                                <span>Limpar Filtros</span>
+                                                            </button>
+                                                            <button type="button"
+                                                                    ng-click="enviarReintegracao()"
+                                                                    class="btn btn-danger">
+                                                                <span class="fa fa-send"></span>
+                                                                <span>Enviar Reintegração</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    Reintegração por código do erro
+                                                </div>
+                                                <div class="panel-body">
+
+                                                    <div class="row m-b">
+                                                        <div class="col-md-6">
+                                                            <label>Código Erro</label>
+                                                            <input enter-as-tab type="text"
+                                                                   ng-model="codigoErro"
+                                                                   class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <button type="button"
+                                                                    ng-click="reintegrarNotasPorCodigoErro()"
+                                                                    class="btn btn-danger">
+                                                                <span class="fa fa-send"></span>
+                                                                <span>Enviar Reintegração</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped small">
+                                                <thead>
+                                                <tr>
+                                                    <th>Inscrição Cadastral</th>
+                                                    <th>N° Nfs-e</th>
+                                                    <th>Situação</th>
+                                                    <th>Mensagem</th>
+                                                    <th style="text-align: center">
+                                                        <span>Reintegrar?</span><br/>
+                                                        <a ng-click="adicionarTodasParaReintegracao()">
+                                                            <span class="label label-success">
+                                                                Todas
+                                                            </span>
+                                                        </a>
+                                                        <a ng-click="removerTodasParaReintegracao()">
+                                                            <span class="m-l label label-default">
+                                                                Nenhuma
+                                                            </span>
+                                                        </a>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="item in lista">
+                                                    <td>{{item.inscricaoCadastral}}</td>
+                                                    <td>
+                                                        <span ng-show="item.status == 'PROCESSADO_COM_ERROS'">{{item.numeroNotaFiscal}}</span>
+                                                        <span ng-show="item.status == 'PROCESSADO_COM_SUCESSO'">
+                                                            <a href="https://www.nfse.gov.br/PainelMunicipal/NFSe/Visualizar?ChaveAcesso={{item.chaveAcesso}}"
+                                                               target="_blank"
+                                                               title="Clique aqui para visualizar a nfs-e integrada.">
+                                                            {{item.numeroNotaFiscal}}
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                    <td><span
+                                                            title="ID: {{item.id}}">{{'nfseApp.NotaNacional.StatusProcessamento.' + item.status | translate}}</span>
+                                                    </td>
+                                                    <td>{{item.mensagem}}</td>
+                                                    <td style="text-align: center">
+                                                        <a ng-if="item.status == 'PROCESSADO_COM_ERROS'"
+                                                           ng-click="adicionarOuRemoverReintegracao(item.idNotaFiscal)">
+                                                            <span ng-if="paraReintegrar(item.idNotaFiscal)"
+                                                                  class="label label-success">
+                                                                Sim
+                                                            </span>
+                                                            <span ng-if="!paraReintegrar(item.idNotaFiscal)"
+                                                                  class="label label-default">
+                                                                Não
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+
+                                            <span nfse-app-pagination></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" id="tab-1" class="tab-pane {{activeTab == 1 ? 'active' : ''}}">
+                            <div class="col-md-12 m-sm">
+                                <div class="col-md-6">
+                                    <div class="ibox animated fadeInDown">
+                                        <div class="ibox-title">
+                                            <span>Quantidade por erro.</span>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <canvas class="chart chart-doughnut"
+                                                            chart-data="graficoQuantidadePorErro.data"
+                                                            chart-labels="graficoQuantidadePorErro.labels">
+                                                    </canvas>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped small">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Descrição</th>
+                                                                <th>Quantidade</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat="item in quantidadePorErro">
+                                                                <td>{{item.descricao}}</td>
+                                                                <td>{{item.quantidade}}</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ibox animated fadeInDown">
+                                        <div class="ibox-title">
+                                            <span>Quantidade por status.</span>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <canvas class="chart chart-doughnut"
+                                                            chart-data="graficoQuantidadePorStatus.data"
+                                                            chart-labels="graficoQuantidadePorStatus.labels">
+                                                    </canvas>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped small">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Descrição</th>
+                                                                <th>Quantidade</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat="item in quantidadePorStatus">
+                                                                <td>{{item.descricao}}</td>
+                                                                <td>{{item.quantidade}}</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

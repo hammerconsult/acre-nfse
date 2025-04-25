@@ -1,0 +1,29 @@
+<div class="col-lg-10 col-lg-offset-1">
+    <div class="ibox">
+        <div class="ibox-content text-center">
+            <h3 class="m-b-xxs">Últimas Notícias</h3>
+            <small>Exibindo as notícias por data de publicação</small>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-md-center" ng-repeat="noticia in noticias">
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="text-center article-title">
+                    <span class="text-muted"><i
+                            class="fa fa-clock-o"></i> {{noticia.dataNoticia | date: 'dd/MM/yyyy' : '+0000'}}</span>
+                    <h1>
+                        {{noticia.titulo}}
+                    </h1>
+                </div>
+                <p>{{noticia.conteudo}}</p>
+                <img ng-src="{{noticia.imagem}}" class="img-responsive img-thumbnail m-t-sm"/>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<span nfse-app-pagination></span>

@@ -1,0 +1,115 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-lg-12 text-right">
+                <button class="btn btn-outline btn-primary"
+                        ng-click="mostrarFiltros= !mostrarFiltros">
+                    <i class="fa {{!mostrarFiltros ? 'fa-filter':'fa-times'}}"></i>
+                    <span>{{!mostrarFiltros ? 'Filtrar' : 'Fechar'}}</span>
+                </button>
+            </div>
+        </div>
+        <div class="row" ng-show="mostrarFiltros">
+            <div class="col-lg-12">
+                <form name="formFiltros" class="validate-input">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <div class="form-group col-md-2">
+                                <label>Data Inicial</label>
+                                <input enter-as-tab type="date"
+                                       id="dataRecebimentoInicial"
+                                       name="dataRecebimentoInicial"
+                                       ng-model="dataRecebimentoInicial"
+                                       class="form-control">
+                                <div ng-show="formFiltros.dataRecebimentoInicial.$invalid">
+                                    <p class="help-block">Data inválida.</p>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Data Final</label>
+                                <input enter-as-tab
+                                       type="date"
+                                       name="dataRecebimentoFinal"
+                                       ng-model="dataRecebimentoFinal"
+                                       class="form-control">
+                                <div ng-show="formFiltros.dataRecebimentoFinal.$invalid">
+                                    <p class="help-block">Data inválida.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label>N° Lote Inicial</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="numeroLoteInicial"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label>N° Lote Final</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="numeroLoteFinal"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Situação</label>
+                                <select class="form-control"
+                                        ng-model="situacao"
+                                        ng-options="situacao as 'nfseApp.SituacaoLoteRps.' + situacao.name | translate for situacao in situacoes track by situacao.value">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12 form-group">
+                                <button type="button"
+                                        ng-disabled="formFiltros.$invalid"
+                                        ng-click="loadAll()"
+                                        class="btn btn-primary">
+                                    <span class="fa fa-search"></span>
+                                    <span>Pesquisar</span>
+                                </button>
+                                <button type="button"
+                                        ng-click="limparFiltros()"
+                                        class="btn btn-default">
+                                    <span class="fa fa-close"></span>
+                                    <span>Limpar Filtros</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-striped small">
+                        <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th class="text-center">Recebimento</th>
+                            <th class="text-center">Situação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="lote in lotes">
+                            <td>
+                                <a ui-sref="loteRPS.detail({id:lote.id})">
+                                    {{lote.numero}}
+                                </a>
+                            </td>
+                            <td class="text-center">{{lote.dataRecebimento | date:'dd/MM/yyyy'}}</td>
+                            <td class="text-center">{{lote.situacao}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                    <span nfse-app-pagination></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

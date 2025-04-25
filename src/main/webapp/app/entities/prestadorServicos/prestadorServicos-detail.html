@@ -1,0 +1,405 @@
+<div class="row">
+    <form name="editForm" class="form-horizontal" role="form" novalidate ng-submit="save()">
+        <div class="col-lg-12">
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Dados da Pessoa</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label class="control-label" for="field_cpfCnpj">CNPJ</label>
+
+                            <input type="text" class="form-control" name="cpfCnpj" id="field_cpfCnpj"
+                                   ui-br-cnpj-mask
+                                   disabled
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.cpfCnpj">
+
+                        </div>
+
+                        <div class="col-md-3">
+                            <label translate="nfseApp.dadosPessoais.inscricaoMunicipal"
+                                   for="field_inscricaoMunicipal">InscricaoMunicipal</label>
+
+                            <input type="text" class="form-control" name="inscricaoMunicipal"
+                                   id="field_inscricaoMunicipal"
+                                   disabled
+                                   ng-model="prestadorServicos.inscricaoMunicipal">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="control-label"
+                                   for="field_inscricaoEstadualRg">Inscrição Estadual</label>
+
+                            <input type="text" class="form-control" name="inscricaoEstadualRg"
+                                   id="field_inscricaoEstadualRg"
+                                   disabled
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.inscricaoEstadualRg" required>
+
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-6">
+                            <label class="control-label"
+                                   for="field_nomeRazaoSocial">Razão Social</label>
+
+                            <input type="text" class="form-control" name="nomeRazaoSocial"
+                                   id="field_nomeRazaoSocial"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.nomeRazaoSocial" disabled>
+
+
+                        </div>
+                        <div class="col-md-6">
+                            <label translate="nfseApp.dadosPessoais.nomeFantasia"
+                                   for="field_nomeFantasia">NomeFantasia</label>
+                            <input type="text" class="form-control" name="nomeFantasia" id="field_nomeFantasia"
+                                   disabled
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.nomeFantasia">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label translate="nfseApp.dadosPessoais.email" for="field_email">Email</label>
+                            <input type="text" class="form-control" name="email" id="field_email"
+                                   disabled
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.email">
+                        </div>
+                        <div class="col-md-3">
+                            <label translate="nfseApp.dadosPessoais.telefone" for="field_telefone">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" id="field_telefone"
+                                   ui-br-phone-number
+                                   disabled
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.telefone">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="field_telefone">Celular</label>
+                            <input type="text" class="form-control" name="celular" id="field_celular"
+                                   ui-br-phone-number
+                                   disabled
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.celular">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Endereço</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label translate="nfseApp.endereco.cep" for="field_cep">Cep</label>
+                            <input type="text" class="form-control" name="id" id="field_cep"
+                                   ui-br-cep-mask
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.cep"
+                                   disabled>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="field_codigo_municipio">Município</label>
+
+                            <input type="text" class="form-control" name="municioio"
+                                   id="field_codigo_municipio"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.municipio.codigo"
+                                   disabled>
+
+                        </div>
+                        <div class="col-md-6">
+                            <label for="field_nome_municipio">Nome</label>
+                            <input type="text" class="form-control" name="nome_municipio"
+                                   id="field_nome_municipio"
+                                   disabled
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.municipio.nome">
+
+                        </div>
+                        <div class="col-md-2">
+                            <label for="field_estado_municipio">Estado</label>
+                            <input type="text" class="form-control" name="estado_municipio"
+                                   id="field_estado_municipio"
+                                   disabled
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.municipio.estado">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label translate="nfseApp.endereco.logradouro"
+                                   for="field_logradouro">Logradouro</label>
+                            <input type="text" class="form-control" name="logradouro" id="field_logradouro"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.logradouro"
+                                   disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label translate="nfseApp.endereco.bairro" for="field_bairro">Bairro</label>
+                            <input type="text" class="form-control" name="bairro" id="field_bairro"
+                                   disabled
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.bairro">
+
+                        </div>
+                        <div class="col-md-2">
+                            <label translate="nfseApp.endereco.numero" for="field_numero">Numero</label>
+                            <input type="text" class="form-control" name="numero" id="field_numero"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.numero"
+                                   disabled>
+                        </div>
+                        <div class="col-md-4">
+                            <label translate="nfseApp.endereco.complemento"
+                                   for="field_complemento">Complemento</label>
+                            <input type="text" class="form-control" name="complemento" id="field_complemento"
+                                   disabled
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.complemento">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Socios</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label class="center-block">CPF/CNPJ</label>
+                        </div>
+                        <div class="col-md-7">
+                            <label class="center-block">Nome</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="center-block">Percentual</label>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-repeat="socio in prestadorServicos.socios"
+                         ng-form="socioForm"
+                         class="animated fadeInDown">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="socio_cpfCnpj"
+                                   id="field_socio_cpfCnpj"
+                                   ui-br-cpfcnpj-mask=""
+                                   required
+                                   disabled
+                                   ng-model="socio.socio.dadosPessoais.cpfCnpj">
+
+
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" name="socio_nome"
+                                   id="field_socio_nome"
+                                   disabled
+                                   ng-model="socio.socio.dadosPessoais.nomeRazaoSocial">
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="socio_proporcao"
+                                       ui-percentage-mask ui-percentage-value
+                                       disabled
+                                       id="field_socio_proporcao"
+                                       ng-model="socio.proporcao">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Enquadramento Fiscal</h4>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="form-group animated fadeInUp">
+
+                        <div class="col-md-4">
+                            <label for="field_porte">Porte</label>
+                            <input type="text" class="form-control" name="porte" id="field_porte"
+                                   disabled
+                                   ng-model="prestadorServicos.enquadramentoFiscal.porte">
+
+                        </div>
+                        <div class="col-md-4">
+                            <label for="field_porte">Tipo de Contribuinte</label>
+                            <input type="text" class="form-control" name="tipoContribuinte" id="field_tipoContribuinte"
+                                   disabled
+                                   ng-model="prestadorServicos.enquadramentoFiscal.tipoContribuinte">
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="field_porte">Regime Tributario</label>
+                            <input type="text" class="form-control" name="regimeTributario" id="field_regimeTributario"
+                                   disabled
+                                   ng-model="prestadorServicos.enquadramentoFiscal.regimeTributario">
+
+                        </div>
+                        <div class="col-md-4">
+                            <label for="field_porte">Tipo de Iss</label>
+                            <input type="text" class="form-control" name="tipoIss" id="field_tipoIss"
+                                   disabled
+                                   ng-model="prestadorServicos.enquadramentoFiscal.tipoIss">
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="field_porte">Tipo de Iss Estimado</label>
+                            <input type="text" class="form-control" name="tipoIssEstimado" id="field_tipoIssEstimado"
+                                   disabled
+                                   ng-model="prestadorServicos.enquadramentoFiscal.tipoIssEstimado">
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="field_porte">Valor de Iss Estimado</label>
+                            <input type="text" class="form-control" name="valorIssEstimado" id="field_valorIssEstimado"
+                                   disabled
+                                   ng-model="prestadorServicos.enquadramentoFiscal.valorIssEstimado">
+
+                        </div>
+                        <div class="col-md-4">
+                            <label for="field_porte">Classificação da Atividade</label>
+                            <input type="text" class="form-control" name="classificacaoAtividade" id="field_classificacaoAtividade"
+                                   disabled
+                                   ng-model="prestadorServicos.enquadramentoFiscal.classificacaoAtividade">
+
+                        </div>
+                        <div class="col-md-4">
+                            <label for="field_porte">Tipo de Nota Fiscal</label>
+                            <input type="text" class="form-control" name="tipoNotaFiscal" id="field_tipoNotaFiscal"
+                                   disabled
+                                   ng-model="prestadorServicos.enquadramentoFiscal.tipoNotaFiscal">
+
+                        </div>
+                        <div class="col-md-4">
+                            <label for="field_porte">Substituto Tributario</label>
+                            <input type="text" class="form-control" name="substitutoTributario" id="field_substitutoTributario"
+                                   disabled
+                                  value="{{prestadorServicos.enquadramentoFiscal.substitutoTributario? 'Sim': 'Não'}}">
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Serviços</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label class="center-block">Código</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="center-block">Aliquota</label>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="center-block">Descrição</label>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-repeat="servico in prestadorServicos.servicos"
+                         class="animated fadeInDown">
+                        <div class="col-md-2">
+                            <input type="text" class="form-control"
+                                   name="servico_codigo" id="field_servico_codigo"
+                                   disabled
+                                   ng-model="servico.codigo">
+
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control"
+                                   name="servico_aliquota" id="field_servico_aliquota"
+                                   ng-model="servico.aliquota" disabled>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="servico_descricao"
+                                   id="field_servico_descricao"
+                                   disabled
+                                   ng-model="servico.descricao">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Cnaes</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label class="center-block">Código</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="center-block">Descricao</label>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-repeat="cnae in prestadorServicos.cnaes"
+                         class="animated fadeInDown">
+                        <div class="col-md-2">
+                            <input type="text" class="form-control"
+                                   name="cane_codigo" id="field_cnae_codigo"
+                                   disabled
+                                   ng-model="cnae.codigo">
+
+                        </div>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="cnae_descricao"
+                                   id="field_cnae_descricao"
+                                   disabled
+                                   ng-model="cnae.descricao">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Usuários</h4>
+                </div>
+                <div class="ibox-content">
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Login</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="usuario in prestadorServicos.usuarios">
+                            <td>{{usuario.usuario.nomeRazao ? usuario.usuario.nomeRazao : usuario.usuario.login}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-default" ui-sref="prestadorServicos">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                    translate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit"
+                        not-has-role="ROLE_ADMIN"
+                        ng-disabled="editForm.$invalid
+                        || !$scope.prestadorServicos.situacoesTributaria && $scope.prestadorServicos.situacoesTributaria == 0"
+                        class="btn btn-primary">
+                    <span class="glyphicon glyphicon-save"></span>
+                    &nbsp;
+                    <span translate="entity.action.save">Save</span>
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+</div>

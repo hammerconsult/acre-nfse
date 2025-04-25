@@ -1,0 +1,281 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-lg-12 text-right">
+                <button class="btn btn-outline btn-primary" ng-show="!mostrarFiltros"
+                        ng-click="habilitarDesabilitarFiltros()">
+                    <i class="fa fa-filter"></i> <span>Filtrar</span>
+                </button>
+            </div>
+        </div>
+        <div class="row m-t-md" ng-show="mostrarFiltros">
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <div class="form-group col-md-3">
+                        <label>Período Inicial</label>
+                        <input enter-as-tab type="date"
+                               id="dataInicial"
+                               ng-model="emissaoInicial"
+                               class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Período Final</label>
+                        <input enter-as-tab type="date"
+                               ng-model="emissaoFinal"
+                               class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Operação</label>
+                        <select class="form-control"
+                                ng-model="naturezaOperacao"
+                                ng-options="naturezaOperacao as 'nfseApp.NaturezaOperacao.' + naturezaOperacao.name | translate for naturezaOperacao in naturezasOperacao track by naturezaOperacao.value">
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Situação</label>
+                        <select class="form-control"
+                                ng-model="situacao"
+                                ng-options="situacao as 'nfseApp.SituacaoNota.' + situacao.name | translate for situacao in situacoes track by situacao.value">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="col-md-2 form-group">
+                        <label>N° Nota Inicial</label>
+                        <input enter-as-tab type="text"
+                               ng-model="notaFiscalInicial"
+                               class="form-control">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label>N° Nota Final</label>
+                        <input enter-as-tab type="text"
+                               ng-model="notaFiscalFinal"
+                               class="form-control">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label>N° RPS Inicial</label>
+                        <input enter-as-tab type="text"
+                               ng-model="numeroRpsInicial"
+                               class="form-control">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label>N° RPS Final</label>
+                        <input enter-as-tab type="text"
+                               ng-model="numeroRpsFinal"
+                               class="form-control">
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>Série RPS</label>
+                        <input enter-as-tab type="text"
+                               ng-model="serieRps"
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-4 form-group">
+                        <label>CPF/CNPJ Tomador</label>
+                        <input enter-as-tab type="text"
+                               ng-model="cpfCnpjTomador"
+                               class="form-control">
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <label>Nome/Razão Social Tomador</label>
+                        <input enter-as-tab type="text"
+                               ng-model="nomeRazaoSocialTomador"
+                               class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                        <div class="col-md-3">
+                            <label>Competência Inicial</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Competência Final</label>
+                        </div>
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <div class="col-md-1">
+                        <input class="form-control"
+                               ng-required
+                               maxlength="4"
+                               ng-model="competenciaAnoInicial"/>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control"
+                                ng-required
+                                ng-model="competenciaMesInicial"
+                                ng-options="mes as mes.descricao for mes in meses track by mes.numeroMes"></select>
+                    </div>
+                    <div class="col-md-1">
+                         <input class="form-control"
+                                ng-required
+                                maxlength="4"
+                                ng-model="competenciaAnoFinal"/>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control"
+                                ng-required
+                                ng-model="competenciaMesFinal"
+                                ng-options="mes as mes.descricao for mes in meses track by mes.numeroMes"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 form-group">
+                <button type="button"
+                        ng-click="loadAll()"
+                        class="btn btn-primary">
+                    <span class="fa fa-search"></span>
+                    <span>Pesquisar</span>
+                </button>
+                <button ng-click="habilitarDesabilitarFiltros()"
+                        class="btn btn-default">
+                    <span class="fa fa-close"></span>
+                    <span>Cancelar</span>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped small">
+                        <thead>
+                        <tr>
+                            <th>Opções</th>
+                            <th>
+                                <a ng-click="orderBy = 'to_number(r.numero)'; sortReverse = !sortReverse; loadAll()">
+                                    <span ng-show="orderBy == 'to_number(r.numero)' && sortReverse"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="orderBy == 'to_number(r.numero)' && !sortReverse"
+                                          class="fa fa-caret-up"></span>
+                                    Número do RPS
+                                </a>
+                            </th>
+                            <th>
+                                <a ng-click="orderBy = 'r.serie'; sortReverse = !sortReverse; loadAll()">
+                                    <span ng-show="orderBy == 'r.serie' && sortReverse"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="orderBy == 'r.serie' && !sortReverse"
+                                          class="fa fa-caret-up"></span>
+                                    Série
+                                </a>
+                            </th>
+                            <th>
+                                <a ng-click="orderBy = 'r.dataEmissao'; sortReverse = !sortReverse; loadAll()">
+                                    <span ng-show="orderBy == 'r.dataEmissao' && sortReverse"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="orderBy == 'r.dataEmissao' && !sortReverse"
+                                          class="fa fa-caret-up"></span>
+                                    Data de Emissão
+                                </a>
+                            </th>
+                            <th>
+                                Valor Serviços
+                            </th>
+                            <th>
+                                Valor ISS
+                            </th>
+                            <th class="text-center">
+                                <a ng-click="orderBy = 'nota.numero'; sortReverse = !sortReverse; loadAll()">
+                                    <span ng-show="orderBy == 'nota.numero' && sortReverse"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="orderBy == 'nota.numero' && !sortReverse"
+                                          class="fa fa-caret-up"></span>
+                                    Número Nfs-e
+                                </a>
+                            </th>
+                            <th class="text-center">
+                                <a ng-click="orderBy = 'lote.numero'; sortReverse = !sortReverse; loadAll()">
+                                    <span ng-show="orderBy == 'lote.numero' && sortReverse"
+                                          class="fa fa-caret-down"></span>
+                                    <span ng-show="orderBy == 'lote.numero' && !sortReverse"
+                                          class="fa fa-caret-up"></span>
+                                    Número Lote
+                                </a>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="rps in listaRps">
+                            <td class="dropdown">
+                                <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown"
+                                        type="button">
+                                    <i class="fa fa-caret-down"></i>
+                                    Opções
+                                </button>
+
+                                <ul class="dropdown-menu">
+
+                                    <li>
+                                        <a type="submit" ui-sref="rPS.detail({id:rps.id})">
+                                            <i class="fa fa-eye"></i>
+                                            Visualizar
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-show="!rps.numeroNotaFiscal"
+                                           ng-click="gerarNota(rps)"
+                                           title="Clique aqui para emitir uma nova nota fiscal com os mesmos dados deste RPS">
+                                            <i class="fa fa-file"></i>
+                                            Gerar Nota Fiscal
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </td>
+                            <td><a ui-sref="rPS.detail({id:rps.id})">{{rps.numero}}</a></td>
+                            <td>{{rps.serie}}</td>
+                            <td>{{rps.dataEmissao |date:'dd/MM/yyyy' : '+0000'}}</td>
+                            <td>{{rps.totalServicos | currency: 'R$'}}</td>
+                            <td>{{rps.issPagar | currency: 'R$'}}</td>
+                            <td class="text-center">
+                                <a ui-sref="notaFiscal.detail({id:rps.idNotaFiscal})"
+                                   ng-show="rps.numeroNotaFiscal"
+                                   class="label label-info">
+                                    {{rps.numeroNotaFiscal}}
+                                </a>
+
+                                <a ng-click="gerarNota(rps)"
+                                   ng-show="!rps.numeroNotaFiscal"
+                                   class="label label-danger">
+                                    Não Gerado
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a ui-sref="loteRPS.detail({id: rps.idLote})">
+                                    {{rps.numeroLote}}
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="col-md-12 text-right">
+
+                        <button class="btn btn-danger btn-outline"
+                                title="Clique para baixar as notas resumidas em PDF"
+                                ng-click="baixarPDFResumido()">
+                            <i class="fa fa-download"></i>
+                            PDF (Resumido)
+                        </button>
+
+                        <button class="btn btn-danger btn-outline"
+                                title="Clique para baixar as notas detalhadas em PDF"
+                                ng-click="baixarPDFDetalhado()">
+                            <i class="fa fa-download"></i>
+                            PDF (Detalhado)
+                        </button>
+
+                    </div>
+
+
+                    <span nfse-app-pagination></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

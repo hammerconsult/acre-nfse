@@ -1,0 +1,145 @@
+{
+  "global": {
+    "title": "Nota Online",
+    "browsehappy": "Você está usando um navegador <strong>desatualizado</strong>. Favor <a href=\"http://browsehappy.com/?locale=pt_BR\">atualizar o seu navegador</a> para ter uma experiência melhor.",
+    "menu": {
+      "home": "Início",
+      "entities": {
+        "main": "Entidades",
+        "construcaoCivil": "ConstrucaoCivil",
+        "tributosFederais": "TributosFederais",
+        "pagamento": "Pagamento",
+        "servico": "Servico",
+        "municipio": "Municipio",
+        "endereco": "Endereco",
+        "dadosPessoais": "DadosPessoais",
+        "pessoa": "Pessoa",
+        "prestadorServicos": "Prestadores de Servicos",
+        "servicoPrestador": "ServicoPrestador",
+        "tomador": "Tomador",
+        "tomadorNota": "TomadorNota",
+        "declaracaoPrestacaoServico": "DeclaracaoPrestacaoServico",
+        "itemDeclaracaoServico": "ItemDeclaracaoServico",
+        "notaFiscal": "NotaFiscal",
+        "substituicaoNotaFiscal": "SubstituicaoNotaFiscal",
+        "declaracaoMensalServico": "DeclaracaoMensalServico",
+        "notaDeclarada": "NotaDeclarada",
+        "guia": "Guia",
+        "rPS": "RPS",
+        "substituicaoRPS": "SubstituicaoRPS",
+        "loteRPS": "LoteRPS",
+        "notificacao": "Notificacao",
+        "credenciar": "Novo Credenciamento",
+        "cnae": "Cnae",
+        "configuracao": "Configuracao",
+        "additionalEntity": "JHipster will add additional entities here (do not translate!)",
+        "options": "Opções",
+        "pais": "País"
+      },
+      "account": {
+        "main": "Conta",
+        "settings": "Configuração",
+        "password": "Senha",
+        "sessions": "Sessões",
+        "login": "Entrar",
+        "logout": "Sair",
+        "register": "Registrar"
+      },
+      "admin": {
+        "main": "Administração",
+        "tracker": "Rastreamento de usuário",
+        "metrics": "Métricas",
+        "health": "Estado do Sistema",
+        "configuration": "Configuração",
+        "logs": "Logs",
+        "audits": "Auditorias",
+        "apidocs": "API",
+        "database": "Database"
+      },
+      "language": "Idioma"
+    },
+    "form": {
+      "username": "Usuário",
+      "username.placeholder": "Seu usuário",
+      "newpassword": "Nova senha",
+      "currentpassword": "Senha Atual",
+      "currentpassword.placeholder": "Senha Atual",
+      "newpassword.placeholder": "Nova senha",
+      "confirmpassword": "Confirmação de nova senha",
+      "confirmpassword.placeholder": "Confirme a nova senha",
+      "email": "E-mail",
+      "email.placeholder": "Seu e-mail",
+      "search": "Pesquisar"
+    },
+    "messages": {
+      "info": {
+        "authenticated": "Para <a href=\"#/login\">entrar</a>, utilize as seguintes contas padrões:<br/>- Administrador (usuário=\"admin\" and senha=\"admin\") <br/>- Usuário (usuário=\"user\" and senha=\"user\").",
+        "register": "Criar uma Conta"
+      },
+      "error": {
+        "dontmatch": "A senha e sua confirmação devem ser iguais!"
+      },
+      "validate": {
+        "newpassword": {
+          "required": "A senha é obrigatória.",
+          "minlength": "A senha deve ter pelo menos 5 caracteres",
+          "maxlength": "A senha não pode ter mais de 50 caracteres",
+          "strength": "Nível de dificuldade da senha:"
+        },
+        "confirmpassword": {
+          "required": "A confirmação da senha é obrigatória.",
+          "minlength": "A confirmação da senha deve ter pelo menos 5 caracteres",
+          "maxlength": "A confirmação da senha não pode ter mais de 50 caracteres"
+        },
+        "email": {
+          "required": "O e-mail é obrigatório.",
+          "invalid": "E-mail inválido.",
+          "minlength": "O e-mail deve ter pelo menos 5 caracteres",
+          "maxlength": "O e-mail não pode ter mais de 50 caracteres"
+        }
+      }
+    },
+    "field": {
+      "id": "Código"
+    }
+  },
+  "entity": {
+    "action": {
+      "back": "Voltar",
+      "cancel": "Cancelar",
+      "delete": "Excluir",
+      "edit": "Editar",
+      "save": "Salvar",
+      "saveContinue": "Salvar e Continuar",
+      "view": "Visualizar"
+    },
+    "detail": {
+      "field": "Campo",
+      "value": "Valor"
+    },
+    "delete": {
+      "title": "Confirme a exclusão"
+    },
+    "validation": {
+      "required": "O campo é obrigatório.",
+      "minlength": "Este campo deve ter ao menos {{min}} caracteres.",
+      "maxlength": "Este campo não pode ter mais que {{max}} caracteres.",
+      "min": "Este campo deve ser maior que {{min}}.",
+      "max": "Este campo não pode ser maior que {{max}}.",
+      "pattern": "Este campo deve estar dentro do seguinte padrão {{pattern}}.",
+      "number": "Este campo é do tipo número.",
+      "datetimelocal": "Este campo é do tipo data/hora."
+    },
+    "errorCode": {
+      "NotNull": "O campo é obrigatório.",
+      "DataBaseConstraint": "O Registro possuí dependências.",
+      "RegistroExistente": "Já existe um registro na base.",
+      "Warning": "Atenção",
+      "Min": "Quantidade infomada é menor que a mínima permitida.",
+      "Length": "O campo não pode exceder o tamanho maximo de 3000 caracteres.",
+      "undefined": "Operação não permitida.",
+      "Size": "O campo possuí um tamanho inválido."
+    }
+  },
+  "footer": "Este é o seu rodapé"
+}

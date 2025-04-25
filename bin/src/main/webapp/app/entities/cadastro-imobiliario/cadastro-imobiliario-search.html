@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cancel()">&times;
+    </button>
+    <h4 class="modal-title" id="myServicoLabel">Pesquisa de Cadastro Imobiliário</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group input-group">
+                <input type="text" class="form-control"
+                       name="searchQuery"
+                       ng-enter="search()"
+                       ng-model="searchQuery" id="searchQuery"
+                       placeholder="Pesquisar ...">
+                <span class="input-group-btn">
+                                             <button class="btn btn-info" type="button" ng-click="search()">
+                                                 <i class="fa fa-search"></i>
+                                             </button>
+                                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Inscrição Cadastral</th>
+                <th>Proprietário(s)</th>
+                <th>Bairro</th>
+                <th>Logradouro</th>
+                <th>Número</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="cadastro in cadastros">
+                <td>{{cadastro.inscricaoCadastral}}</td>
+                <td>{{cadastro.proprietarios}}</td>
+                <td>{{cadastro.bairro}}</td>
+                <td>{{cadastro.logradouro}}</td>
+                <td>{{cadastro.numero}}</td>
+                <td class="pull-right">
+                    <button type="submit"
+                            ng-click="ok(cadastro)"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-check"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <span nfse-app-pagination></span>
+</div>

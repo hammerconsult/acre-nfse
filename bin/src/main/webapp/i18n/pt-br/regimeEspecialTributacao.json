@@ -1,0 +1,9 @@
+{
+    "nfseApp": {
+        "RegimeEspecialTributacao": {
+            "null": "",
+            "PADRAO": "Padrão",
+            "INSTITUICAO_FINANCEIRA": "Instituição Financeira"
+        }
+    }
+}

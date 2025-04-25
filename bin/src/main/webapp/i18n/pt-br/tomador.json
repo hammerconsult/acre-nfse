@@ -1,0 +1,19 @@
+{
+    "nfseApp": {
+        "tomador" : {
+            "home": {
+                "title": "Tomadores de Serviço",
+                "createLabel": "Criar novo Tomador",
+                "createOrEditLabel": "Criar ou editar Tomador"
+            },
+            "delete": {
+                "question": "Você tem certeza que quer excluir o Tomador {{ id }}?"
+            },
+            "detail": {
+                "title": "Detalhes do Tomador"
+            },
+            "dadosPessoais": "dadosPessoais",
+            "prestador": "prestador"
+        }
+    }
+}

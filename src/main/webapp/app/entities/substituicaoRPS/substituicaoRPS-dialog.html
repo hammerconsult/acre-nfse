@@ -1,0 +1,36 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="mySubstituicaoRPSLabel" translate="nfseApp.substituicaoRPS.home.createOrEditLabel">Create or edit a SubstituicaoRPS</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label translate="global.field.id">ID</label>
+            <input type="text" class="form-control" name="id"
+                    ng-model="substituicaoRPS.id" readonly>
+        </div>
+
+
+        <div class="form-group">
+            <label translate="nfseApp.substituicaoRPS.de" for="field_de">de</label>
+            <select class="form-control" id="field_de" name="de" ng-model="substituicaoRPS.de.id" ng-options="rPS.id as rPS.id for rPS in rpss">
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="nfseApp.substituicaoRPS.para" for="field_para">para</label>
+            <select class="form-control" id="field_para" name="para" ng-model="substituicaoRPS.para.id" ng-options="rPS.id as rPS.id for rPS in rpss">
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid" not-has-role="ROLE_ADMIN" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

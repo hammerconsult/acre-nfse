@@ -1,0 +1,576 @@
+<div ng-show="prestadorServicos">
+    <div class="col-md-4">
+        <div class="ibox float-e-margins">
+            <div>
+                <div class="ibox-content no-padding border-left-right">
+                    <img ng-if="imagemPrestador" ng-src="{{imagemPrestador}}"
+                         alt="image" class="img-responsive center">
+                    <img ng-show="!imagemPrestador" ng-src="/content/images/user-default.jpg"
+                         alt="image" class="img-responsive center">
+                </div>
+                <div class="ibox-content profile-content">
+                    <p class="small text-center">
+                        <a ng-click="trocarImagemEmpresa()">
+                            <i class="fa fa-refresh"></i>
+                            Trocar Imagem
+                        </a>
+                    </p>
+                    <h3 class="m-t-md"><strong>{{prestadorServicos.pessoa.dadosPessoais.nomeRazaoSocial}}</strong>
+                    </h3>
+                    <h4><strong>{{prestadorServicos.pessoa.dadosPessoais.nomeFantasia}}</strong></h4>
+                    <h4><strong>{{prestadorServicos.pessoa.dadosPessoais.cpfCnpj | brCpfCnpj}}</strong></h4>
+                    <p>Ins. Mun. {{prestadorServicos.inscricaoMunicipal}}</p>
+                    <p>Ins. Est. {{prestadorServicos.pessoa.dadosPessoais.inscricaoEstadualRg}}</p>
+                    <p><i class="fa fa-map-marker"></i> {{getEnderecoCompleto()}}</p>
+
+                    <dl class="dl-horizontal text-left">
+                        <dt>Porte:</dt>
+                        <dd>{{ajustaNomeEnum(prestadorServicos.enquadramentoFiscal.porte)}}</dd>
+                        <dt>Tipo de Contribuinte:</dt>
+                        <dd> {{ajustaNomeEnum(prestadorServicos.enquadramentoFiscal.tipoContribuinte)}}</dd>
+                        <dt>Tipo de Enquadramento:</dt>
+                        <dd> {{ajustaNomeEnum(prestadorServicos.enquadramentoFiscal.tipoEnquadramentoFiscal)}}</dd>
+                        <dt>Regime Tributario:</dt>
+                        <dd>{{ajustaNomeEnum(prestadorServicos.enquadramentoFiscal.regimeTributario)}}</dd>
+                        <dt>Tipo de Iss:</dt>
+                        <dd>{{ajustaNomeEnum(prestadorServicos.enquadramentoFiscal.tipoIssqn)}}</dd>
+                        <span ng-if="prestadorServicos.enquadramentoFiscal.tipoIssqn == 'ESTIMADO'">
+                        <dt>Tipo de Iss Estimado:</dt> <dd>  {{ajustaNomeEnum(prestadorServicos.enquadramentoFiscal.tipoIssEstimado)}}</dd>
+                        <dt>Valor de Iss Estimado:</dt> <dd>{{ajustaNomeEnum(prestadorServicos.enquadramentoFiscal.valorIssEstimado)}} </dd>
+                        </span>
+                        <dt>Classificação da Atividade:</dt>
+                        <dd>{{ajustaNomeEnum(prestadorServicos.enquadramentoFiscal.classificacaoAtividade)}}</dd>
+                        <dt>Tipo de Nota Fiscal:</dt>
+                        <dd> {{ajustaNomeEnum(prestadorServicos.enquadramentoFiscal.tipoNotaFiscal)}}</dd>
+                        <dt>Regime Especial de Tributação:</dt>
+                        <dd>{{'nfseApp.RegimeEspecialTributacao.' + prestadorServicos.enquadramentoFiscal.regimeEspecialTributacao | translate}}</dd>
+                        <dt ng-if="prestadorServicos.enquadramentoFiscal.regimeEspecialTributacao === 'INSTITUICAO_FINANCEIRA'">Versão DES-IF:</dt>
+                        <dd ng-if="prestadorServicos.enquadramentoFiscal.regimeEspecialTributacao === 'INSTITUICAO_FINANCEIRA'">{{'nfseApp.VersaoDESIF.' + prestadorServicos.enquadramentoFiscal.versaoDesif  | translate}}</dd>
+                        <dt>Substituto Tributario:</dt>
+                        <dd>{{prestadorServicos.enquadramentoFiscal.substitutoTributario ? 'Sim' : 'Não'}}</dd>
+                        <dt>Abertura:</dt>
+                        <dd>{{prestadorServicos.abertura | date: 'dd/MM/yyyy' : '+0000'}}</dd>
+                        <dt>Encerramento:</dt>
+                        <dd>{{prestadorServicos.encerramento | date: 'dd/MM/yyyy' : '+0000'}}</dd>
+                        <dt>Situação:</dt>
+                        <dd>{{ajustaNomeEnum(prestadorServicos.situacao)}}</dd>
+                    </dl>
+
+                    <table class="table table-hover no-margins"
+                           ng-show="prestadorServicos.socios && prestadorServicos.socios.length > 0">
+                        <thead>
+                        <tr class="text-center">
+                            <th colspan="2">Quadro societário</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="socio in prestadorServicos.socios">
+                            <td>{{socio.socio.dadosPessoais.nomeRazaoSocial}}</td>
+                            <td class="text-navy">{{socio.proporcao}}%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table table-hover no-margins"
+                           ng-show="prestadorServicos.servicos && prestadorServicos.servicos.length > 0">
+                        <thead>
+                        <tr class="text-center">
+                            <th colspan="3">Serviços</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="servico in prestadorServicos.servicos">
+                            <td>{{servico.codigo}}</td>
+                            <td>{{servico.descricao}}</td>
+                            <td class="text-navy">{{servico.aliquota}}%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-hover no-margins"
+                           ng-show="prestadorServicos.cnaes && prestadorServicos.cnaes.length > 0">
+                        <thead>
+                        <tr class="text-center">
+                            <th colspan="2">Cnaes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="cnae in prestadorServicos.cnaes">
+                            <td>{{cnae.codigo}}</td>
+                            <td>{{cnae.descricao}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div class="row">
+                    <form name="editForm" role="form" novalidate>
+                        <div class="form-group col-md-6">
+                            <label for="field_email">e-Mail</label>
+                            <input type="email" class="form-control" name="email" id="field_email"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.email">
+                            <div ng-show="editForm.email.$invalid" class="has-error">
+                                <p class="help-block">
+                                    e-Mail inválido.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="field_site">Site (home page)</label>
+                            <input type="text" class="form-control" name="site" id="field_site"
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.site">
+                            <div ng-show="editForm.email.$invalid" class="has-error">
+                                <p class="help-block">
+                                    Site inválido.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="field_telefone">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" id="field_telefone"
+                                   ui-br-phone-number
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.telefone">
+
+                            <div ng-show="editForm.telefone.$invalid" class="has-error">
+                                <p class="help-block">
+                                    Telefone inválido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="field_celular">Celular</label>
+                            <input type="text" class="form-control" name="celular" id="field_celular"
+                                   ui-br-phone-number
+                                   ng-model="prestadorServicos.pessoa.dadosPessoais.celular">
+
+                            <div ng-show="editForm.celular.$invalid" class="has-error">
+                                <p class="help-block">
+                                    Celular inválido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="field_contato">Nome para Contato</label>
+                            <input type="text" class="form-control" name="contato" id="field_contato"
+                                   ng-model="prestadorServicos.nomeParaContato">
+
+                            <div ng-show="editForm.contato.$invalid" class="has-error">
+                                <p class="help-block">
+                                    Nome para contato inválido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="field_telefoneParaContato">Telefone para Contato</label>
+                            <input type="text" class="form-control" name="telefoneParaContato"
+                                   id="field_telefoneParaContato"
+                                   ui-br-phone-number
+                                   ng-model="prestadorServicos.telefoneParaContato">
+
+                            <div ng-show="editForm.telefoneParaContato.$invalid" class="has-error">
+                                <p class="help-block">
+                                    Telefone para contato inválido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label
+                                    class="control-label"
+                                    for="field_escritorio">Escritório Contábil</label>
+
+                            <div class="input-group">
+                                <input type="text" class="form-control"
+                                       disabled
+                                       name="escritorio" id="field_escritorio"
+                                       value="{{getNomeEscritorio()}}"
+                                       required>
+                                <span class="input-group-btn">
+                                            <button type="button" class="btn btn-info"
+                                                    ng-click="searchEscritorioContabil()">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="field_resumoSobreEmpresa">Resumo sobre a empresa</label>
+
+                            <textarea type="text" class="form-control"
+                                      name="resumoSobreEmpresa" id="field_resumoSobreEmpresa"
+                                      maxlength="300"
+                                      ng-model="prestadorServicos.resumoSobreEmpresa">
+                                        </textarea>
+
+                            <div ng-show="editForm.resumoSobreEmpresa.$invalid" class="has-error">
+                                <p class="help-block">
+                                    Resumo sobre a empresa inválido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div ng-if="configuracao.permiteAlterarOpcoesEmailPerfilEmpresa">
+                            <div class="form-group col-md-6">
+                                <label
+                                        for="field_enviaEmailNfseTomador">
+                                    Enviar e-mail automaticamente ao Tomador de Serviços na emissão de NFS-e?
+                                </label>
+
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" checked name="enviaEmailNfseTomador"
+                                               ng-model="prestadorServicos.enviaEmailNfseTomador"
+                                               class="onoffswitch-checkbox"
+                                               id="field_enviaEmailNfseTomador">
+                                        <label class="onoffswitch-label" for="field_enviaEmailNfseTomador">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label
+                                        for="field_enviaEmailNfseTomador">
+                                    Enviar e-mail automaticamente ao Tomador de Serviços no cancelamento de NFS-e?
+                                </label>
+
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" checked name="enviaEmailCancelaNfseTomador"
+                                               ng-model="prestadorServicos.enviaEmailCancelaNfseTomador"
+                                               class="onoffswitch-checkbox"
+                                               id="field_enviaEmailCancelaNfseTomador">
+                                        <label class="onoffswitch-label" for="field_enviaEmailCancelaNfseTomador">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label
+                                        for="field_enviaEmailNfseContador">
+                                    Enviar e-mail automaticamente ao meu Contador na emissão de NFS-e?
+                                </label>
+
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" checked name="enviaEmailNfseContador"
+                                               ng-model="prestadorServicos.enviaEmailNfseContador"
+                                               class="onoffswitch-checkbox"
+                                               id="field_enviaEmailNfseContador">
+                                        <label class="onoffswitch-label" for="field_enviaEmailNfseContador">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label
+                                        for="field_enviaEmailCancelaNfseContador">
+                                    Enviar e-mail automaticamente ao meu Contador no cancelamento de NFS-e?
+                                </label>
+
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" checked name="enviaEmailCancelaNfseContador"
+                                               ng-model="prestadorServicos.enviaEmailCancelaNfseContador"
+                                               class="onoffswitch-checkbox"
+                                               id="field_enviaEmailCancelaNfseContador">
+                                        <label class="onoffswitch-label" for="field_enviaEmailCancelaNfseContador">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label
+                                        for="field_enviaEmailNfseContador">
+                                    Enviar e-mail automaticamente ao Sócios na emissão de NFS-e?
+                                </label>
+
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" checked name="enviaEmailNfseSocios"
+                                               ng-model="prestadorServicos.enviaEmailNfseSocios"
+                                               class="onoffswitch-checkbox"
+                                               id="field_enviaEmailNfseSocios">
+                                        <label class="onoffswitch-label" for="field_enviaEmailNfseSocios">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label
+                                        for="field_enviaEmailCancelaNfseSocios">
+                                    Enviar e-mail automaticamente ao Sócios no cancelamento de NFS-e?
+                                </label>
+
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" checked name="enviaEmailCancelaNfseSocios"
+                                               ng-model="prestadorServicos.enviaEmailCancelaNfseSocios"
+                                               class="onoffswitch-checkbox"
+                                               id="field_enviaEmailCancelaNfseSocios">
+                                        <label class="onoffswitch-label" for="field_enviaEmailCancelaNfseSocios">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <button type="button"
+                                    not-has-role="ROLE_ADMIN"
+                                    ng-click="save()"
+                                    class="btn btn-primary pull-right">
+                                <i class="fa fa-save"></i>&nbsp;
+                                Salvar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h2>Configurações de Web service</h2>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="chave-acesso">Chave Acesso</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="chave-acesso"
+                                   id="chave-acesso"
+                                   ng-disabled="true"
+                                   value="{{prestadorServicos.chaveAcesso}}">
+                            <span class="input-group-btn">
+                                            <button type="button" class="btn btn-info"
+                                                    ng-click="trocarChaveAcesso()">
+                                                <span class="fa fa-refresh"></span>
+                                                {{prestadorServicos.chaveAcesso ? 'Trocar Chave' : 'Gerar Chave'}}
+                                            </button>
+                                         </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h2>Configurações dos Tributos Federais</h2>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="form-group  col-md-3">
+                        <label class="center-block">Alíquota PIS</label>
+                        <input type="text" class="form-control"
+                               ui-number-mask="2"
+                               name="percentual_pis"
+                               id="field_pis"
+                               ng-model="prestadorServicos.tributosFederais.pis">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="center-block">Alíquota COFINS</label>
+                        <input type="text" class="form-control"
+                               ui-number-mask="2"
+                               name="percentual_cofins"
+                               id="field_cofins"
+                               ng-model="prestadorServicos.tributosFederais.cofins">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="center-block">Alíquota INSS</label>
+                        <input type="text" class="form-control"
+                               ui-number-mask="2"
+                               name="percentual_inss"
+                               id="field_inss"
+                               ng-model="prestadorServicos.tributosFederais.inss">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="center-block">Alíquota IR</label>
+                        <input type="text" class="form-control"
+                               ui-number-mask="2"
+                               name="percentual_irrf"
+                               id="field_irrf"
+                               ng-model="prestadorServicos.tributosFederais.irrf">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="center-block">Alíquota CSLL</label>
+                        <input type="text" class="form-control"
+                               ui-number-mask="2"
+                               name="percentual_csll"
+                               id="field_csll"
+                               ng-model="prestadorServicos.tributosFederais.csll">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="center-block">Alíquota CPP</label>
+                        <input type="text" class="form-control"
+                               ui-number-mask="2"
+                               name="percentual_cpp"
+                               id="field_percentual_cpp"
+                               ng-model="prestadorServicos.tributosFederais.cpp">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="center-block">Alíquota Outras Retenções</label>
+                        <input type="text" class="form-control"
+                               ui-number-mask="2"
+                               name="percentual_outrasRetencoes"
+                               id="field_percentual_outrasRetencoes"
+                               ng-model="prestadorServicos.tributosFederais.outrasRetencoes">
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <button type="button"
+                                ng-click="salvarTributosFederais()"
+                                not-has-role="ROLE_ADMIN"
+                                class="btn btn-primary pull-right">
+                            <i class="fa fa-save"></i>&nbsp;
+                            Salvar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ibox float-e-margins" ng-repeat="usuario in prestadorServicos.usuarios">
+            <div class="ibox-title">
+                <h4>Usuário: {{usuario.nome}}</h4>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                E-mail
+                            </th>
+                            <th>
+                                Login/Cpf
+                            </th>
+                            <th class="center">
+                                Contador?
+                            </th>
+                            <th class="center">
+                                Ativo?
+                            </th>
+                        </tr>
+
+                        <tr ng-class="{'todo-completed': !usuario.permitido}"
+                            ng-show="usuario">
+                            <td>{{usuario.email}}</td>
+                            <td>{{usuario.login}}</td>
+                            <td class="center">
+                                {{usuario.contador ? 'Sim' : 'Não'}}
+
+                                <a ng-class="{'disabled': !usuario.permitido, 'text-danger': usuario.contador, 'text-success': !usuario.contador}"
+                                   ng-disabled="!usuario.permitido"
+                                   not-has-role="ROLE_ADMIN"
+                                   ng-click="usuario.contador = !usuario.contador; atualizarPrestadorUsuario(usuario)">
+                                    <i class="fa"
+                                       ng-class="{'fa-times': usuario.contador, 'fa-check': !usuario.contador}"></i>
+                                </a>
+                            </td>
+                            <td class="center">
+                                {{usuario.permitido ? 'Sim' : 'Não'}}
+
+                                <a ng-class="{'text-danger': usuario.permitido, 'text-success': !usuario.permitido}"
+                                   not-has-role="ROLE_ADMIN"
+                                   ng-click="usuario.permitido = !usuario.permitido; atualizarPrestadorUsuario(usuario)">
+                                    <i class="fa"
+                                       ng-class="{'fa-times': usuario.permitido, 'fa-check': !usuario.permitido}"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr ng-show="usuario.permitido">
+                            <td colspan="4" valign="middle">
+                                <label>Função</label>
+                                <textarea type="text" class="form-control"
+                                          maxlength="255"
+                                          ng-model="usuario.funcao">
+                                </textarea>
+                            </td>
+                            <td class="center" style="vertical-align: middle !important;">
+                                <a not-has-role="ROLE_ADMIN"
+                                   ng-click="atualizarPrestadorUsuario(usuario)"
+                                   class="text-info">
+                                    <i class="fa fa-save"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr ng-show="usuario.permitido">
+                            <td colspan="5">
+                                <table class="table small m-sm">
+                                    <tr>
+                                        <th>Acesso</th>
+                                        <th>Permite?</th>
+                                    </tr>
+                                    <tr ng-repeat="role in rolesEmpresa">
+                                        <td>{{role.value}}</td>
+
+                                        <td>
+                                            {{usuario.roles.indexOf(role.name) >= 0 ? 'Sim' : 'Não'}}
+                                            <a ng-show="usuario.roles.indexOf(role.name) >= 0"
+                                               not-has-role="ROLE_ADMIN"
+                                               ng-click="usuario.roles.splice(usuario.roles.indexOf(role.name),1); atualizarPrestadorUsuario(usuario);"
+                                               class="text-danger">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+
+                                            <a ng-show="usuario.roles.indexOf(role.name) < 0"
+                                               not-has-role="ROLE_ADMIN"
+                                               ng-click="usuario.roles.push(role.name); atualizarPrestadorUsuario(usuario);"
+                                               class="text-success">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="ibox">
+            <div class="ibox-content text-center">
+                <a ng-click="searchUser()"
+                   class="text-navy">
+                    <i class="fa fa-plus-circle"></i>&nbsp;
+                    Adicionar Usuário
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>

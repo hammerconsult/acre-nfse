@@ -1,0 +1,29 @@
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h3>Mensagens</h3>
+    </div>
+    <div class="ibox-content">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Título da Mensagem</th>
+                <th class="col-md-2">Data do Envio</th>
+                <th class="col-md-2">Data de Leitura</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="mensagemContribuinteUsuario in mensagens" style="cursor: pointer"
+                ui-sref="mensagemContribuinteUsuario.detail({id: mensagemContribuinteUsuario.id})">
+                <td>{{mensagemContribuinteUsuario.mensagem.titulo}}</td>
+                <td class="col-md-2 text-navy textRight">
+                    {{mensagemContribuinteUsuario.mensagem.emitidaEm | date: 'dd/MM/yyyy HH:mm'}}
+                </td>
+                <td class="col-md-2 text-navy textRight">
+                    {{mensagemContribuinteUsuario.dataLeitura | date: 'dd/MM/yyyy HH:mm'}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <span nfse-app-pagination></span>
+    </div>
+</div>

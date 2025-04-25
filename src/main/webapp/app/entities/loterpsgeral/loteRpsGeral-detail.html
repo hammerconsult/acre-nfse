@@ -1,0 +1,102 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="alert alert-info text-center" ng-show="lote.situacao == 'AGUARDANDO'">
+            <strong>Aguarde</strong><br>
+            O Log do lote é recarregado automaticamente enquando estiver processando
+        </div>
+        <div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <th>Inscrição Cadastral</th>
+                        <th>Número</th>
+                        <th>Data Recebimento</th>
+                        <th>Protocolo</th>
+                        <th>Versão Sistema</th>
+                        <th>Versão Abrasf</th>
+                        <th>Situação</th>
+                        <th>Homologação</th>
+                    </tr>
+                    <tr>
+                        <td>{{lote.prestador.inscricaoMunicipal}}</td>
+                        <td>{{lote.numero}}</td>
+                        <td>{{lote.dataRecebimento | date: 'dd/MM/yyyy' : '+0000'}}</td>
+                        <td>{{lote.protocolo}}</td>
+                        <td>{{lote.versaoSistema}}</td>
+                        <td>{{lote.versaoAbrasf}}</td>
+                        <td>{{'nfseApp.SituacaoLoteRps.' + lote.situacao | translate}}</td>
+                        <td>{{lote.homologacao ? 'Sim' : 'Não'}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <h3>RPS do Lote</h3>
+                <search-box ng-model="searchQuery" search-method="loadAll()"></search-box>
+            </div>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped small">
+                        <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Série</th>
+                            <th>Data de Emissão</th>
+                            <th>Valor Serviços</th>
+                            <th>Valor ISS</th>
+                            <th>Número Nfs-e</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="rps in listaRps">
+                            <td>{{rps.numero}}</td>
+                            <td>{{rps.serie}}</td>
+                            <td>{{rps.dataEmissao |date:'dd/MM/yyyy' : '+0000'}}</td>
+                            <td>{{rps.totalServicos | currency: 'R$'}}</td>
+                            <td>{{rps.issPagar | currency: 'R$'}}</td>
+                            <td>{{rps.numeroNotaFiscal ? rps.numeroNotaFiscal : 'Não Gerado'}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <span nfse-app-pagination></span>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <h3>Log do Lote</h3>
+                    <div ui-codemirror ng-model="lote.log"
+                         ui-codemirror-opts="editorOptions">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3 style="display: inline-block">XML do Lote</h3>
+                    <button style="display: inline-block"
+                            type="button"
+                            class="btn btn-sm btn-info"
+                            ng-click="copyToClipboard(lote.xml)">
+                        <span class="glyphicon glyphicon-copy"></span>
+                    </button>
+                    <pre style="max-height: 250px; overflow: auto;">{{ lote.xml | prettyXml }}</pre>
+                    <span class="text-info">{{mensagemCopy}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="com-md-12" >
+            <button type="submit"
+                    style="margin-top: 10px;"
+                    ui-sref="loteRpsGeral"
+                    class="btn btn-info">
+                <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Voltar
+            </button>
+            <button type="button"
+                    style="margin-top: 10px;"
+                    ng-click="reprocessarLote()"
+                    ng-show="lote.situacao != 'PROCESSADO'"
+                    class="btn btn-success">
+                <span class="glyphicon glyphicon-adjust"></span>&nbsp;Reprocessar
+            </button>
+        </div>
+    </div>
+</div>

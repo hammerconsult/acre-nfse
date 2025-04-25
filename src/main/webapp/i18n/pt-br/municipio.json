@@ -1,0 +1,19 @@
+{
+    "nfseApp": {
+        "municipio" : {
+            "home": {
+                "title": "Municipios",
+                "createLabel": "Create a new Municipio",
+                "createOrEditLabel": "Create or edit a Municipio"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Municipio {{ id }}?"
+            },
+            "detail": {
+                "title": "Municipio"
+            },
+            "codigo": "Codigo",
+            "nome": "Nome"
+        }
+    }
+}

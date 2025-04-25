@@ -1,0 +1,37 @@
+<div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="alert alert-warning">
+                        <strong>Primeiro Acesso!</strong><br/>
+                        Para sua segurança, é recomendado a troca de senha de acesso após seu primeiro acesso
+                    </div>
+
+                    <form name="form" role="form" novalidate ng-submit="changePassword()">
+                        <div class="form-group">
+                            <label>Senha Atual</label>
+                            <input type="password" class="form-control" name="currentpassword"
+                                   ng-model="trocarSenhaDTO.oldPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nova Senha</label>
+                            <input type="password" class="form-control" name="password"
+                                   ng-model="trocarSenhaDTO.newPassword" ng-minlength=5 ng-maxlength=50 required>
+                            <password-strength-bar password-to-check="password"></password-strength-bar>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirmar Senha</label>
+                            <input type="password" class="form-control" name="confirmPassword"
+                                   ng-model="trocarSenhaDTO.confirmPassword" ng-minlength=5 ng-maxlength=50 required>
+                        </div>
+
+                        <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">
+                            Enviar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+
+<div>
+    <h2><span translate="nfseApp.servico.detail.title">Servico</span> {{servico.id}}</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="nfseApp.servico.codigo">Codigo</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{servico.codigo}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="nfseApp.servico.descricao">Descricao</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{servico.descricao}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="nfseApp.servico.aliquota">Aliquota</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{servico.aliquota}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="nfseApp.servico.aliquotaIBPT">Aliquota IBPT</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" ui-percentage-mask
+                               value="{{servico.aliquotaIBPT}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="servico"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

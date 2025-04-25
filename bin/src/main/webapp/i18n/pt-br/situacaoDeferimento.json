@@ -1,0 +1,10 @@
+{
+  "nfseApp": {
+    "SituacaoDeferimento": {
+      "null": "",
+      "EM_ANALISE": "Em Análise",
+      "DEFERIDO": "Deferido",
+      "NAO_DEFERIDO": "Indeferido"
+    }
+  }
+}

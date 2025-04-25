@@ -1,0 +1,19 @@
+{
+    "nfseApp": {
+        "loteRPS" : {
+            "home": {
+                "title": "LoteRPSs",
+                "createLabel": "Create a new LoteRPS",
+                "createOrEditLabel": "Create or edit a LoteRPS"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete LoteRPS {{ id }}?"
+            },
+            "detail": {
+                "title": "LoteRPS"
+            },
+            "codigo": "Codigo",
+            "rps": "rps"
+        }
+    }
+}

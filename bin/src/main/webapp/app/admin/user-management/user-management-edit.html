@@ -1,0 +1,120 @@
+<div class="row">
+    <form name="editForm" class="form-horizontal" role="form" novalidate ng-submit="save()">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Dados do Usuário</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label>Código</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="user.id" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="field_ativo">Ativo</label>
+
+                            <div class="switch">
+                                <div class="onoffswitch">
+                                    <input type="checkbox" checked name="ativo"
+                                           ng-model="user.activated"
+                                           class="onoffswitch-checkbox" id="field_ativo">
+                                    <label class="onoffswitch-label" for="field_ativo">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label>Login</label>
+                            <input type="text" class="form-control" name="login"
+                                   ng-model="user.login" ng-required="user.id == null" ng-maxlength="50">
+
+                            <div ng-show="editForm.login.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.login.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+
+                                <p class="help-block"
+                                   ng-show="editForm.login.$error.maxlength" translate="entity.validation.maxlength"
+                                   translate-value-max="50">
+                                    This field cannot be longer than 50 characters.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>e-Mail</label>
+                            <input type="text" class="form-control" name="email"
+                                   ng-model="user.email" required ng-maxlength="100">
+
+                            <div ng-show="editForm.email.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.email.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+
+                                <p class="help-block"
+                                   ng-show="editForm.email.$error.maxlength" translate="entity.validation.maxlength"
+                                   translate-value-max="100">
+                                    This field cannot be longer than 100 characters.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label translate="user-management.nomeRazao">Nome/Razão Social</label>
+                            <input type="text" class="form-control" name="nomeRazao"
+                                   ng-model="user.nomeRazao" ng-maxlength="50">
+
+                            <div ng-show="editForm.nomeRazao.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.nomeRazao.$error.maxlength" translate="entity.validation.maxlength"
+                                   translate-value-max="50">
+                                    This field cannot be longer than 50 characters.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label style="margin-right: 10px">Pessoa</label>
+                            <button
+                                    type="button"
+                                    ng-click="visualizarPessoaUsuario()"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label>Perfil</label>
+                            <select class="form-control" multiple name="authority" ng-model="user.roles"
+                                    ng-options="authority for authority in authorities">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+
+                <button type="button" class="btn btn-default" ng-click="clear()">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                        translate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;<span
+                        translate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,170 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <form name="editForm" class="form-horizontal" role="form" novalidate ng-submit="save()">
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label for="field_mes" class="control-label"> Mês da Competência</label>
+                            <select class="form-control"
+                                    id="field_mes"
+                                    name="mes"
+                                    ng-model="declaracaoMensalServico.mes"
+                                    ng-change="limparContas();">
+                                <option ng-repeat="mes in meses" value="{{mes.numeroMes}}">{{mes.descricao}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="field_ano" class="control-label"> Ano da Competência</label>
+
+                            <input type="text"
+                                   id="field_ano"
+                                   name="ano"
+                                   class="form-control"
+                                   ng-model="declaracaoMensalServico.exercicio"
+                                   ng-blur="limparNotas();"
+                                   required>
+
+                            <div ng-if="!declaracaoMensalServico.exercicio">
+                                <p class="help-block">
+                                    Informe o ano
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label for="field_conta" class="control-label">Conta</label>
+                            <div class="input-group">
+                                <input type="text"
+                                       id="field_conta"
+                                       name="conta"
+                                       class="form-control"
+                                       ng-model="conta"
+                                       ng-blur="buscarPgcc()">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn btn-success"
+                                            ng-click="pesquisarPgcc()">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="control-label">Nome</label>
+                            <input type="text"
+                                   name="nome"
+                                   class="form-control small"
+                                   ng-model="declaracaoContaBancaria.conta.nome"
+                                   readonly>
+                            <small ng-if="declaracaoContaBancaria.conta"
+                                   title="{{declaracaoContaBancaria.conta.codigoTributacao.descricao}}">
+                                Alíquota: {{declaracaoContaBancaria.aliquotaIssqn | number:2}}%,
+                                {{declaracaoContaBancaria.conta.codigoTributacao.codigo}} -
+                                {{declaracaoContaBancaria.conta.codigoTributacao.descricao.substring(0, 80)}}...
+                            </small>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="field_valor_movimento" class="control-label">Base de Cálculo</label>
+                            <div class="input-group">
+                                <input type="text"
+                                       id="field_valor_movimento"
+                                       class="form-control"
+                                       ng-model="declaracaoContaBancaria.baseCalculo"
+                                       ui-money-mask="">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="control-label">Alíquota</label>
+                            <div class="input-group">
+                                <input type="text"
+                                       class="form-control"
+                                       disabled="true"
+                                       value="{{declaracaoContaBancaria.aliquotaIssqn | currency: '% '}}"/>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Valor do ISSQN</label>
+                            <div class="input-group">
+                                <input type="text"
+                                       class="form-control"
+                                       disabled="true"
+                                       value="{{calcularIssPagar(declaracaoContaBancaria) | currency}}">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn btn-success"
+                                            ng-click="adicionarDeclaracaoContaBancaria()">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row"
+                         ng-if="declaracaoMensalServico.contasBancarias && declaracaoMensalServico.contasBancarias.length > 0">
+                        <div class="col-md-12">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Conta</th>
+                                    <th>Nome</th>
+                                    <th style="text-align: right">Base de Cálculo</th>
+                                    <th style="text-align: right">% Iss</th>
+                                    <th style="text-align: right">Iss Pagar</th>
+                                    <th style="text-align: center">Ações</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="declaracaoContaBancaria in declaracaoMensalServico.contasBancarias">
+                                    <td>{{declaracaoContaBancaria.conta.conta}}</td>
+                                    <td>{{declaracaoContaBancaria.conta.nome}}</td>
+                                    <td style="text-align: right">
+                                        {{declaracaoContaBancaria.baseCalculo | currency:'R$ ':2}}
+                                    </td>
+                                    <td style="text-align: right">{{declaracaoContaBancaria.aliquotaIssqn | number:2}}
+                                    </td>
+                                    <td style="text-align: right">
+                                        {{calcularIssPagar(declaracaoContaBancaria) | currency:'R$ ':2}}
+                                    </td>
+                                    <td style="text-align: center">
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                ng-click="removerDeclaracaoContaBancaria(declaracaoContaBancaria)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="4" style="text-align: right">
+                                        <label>{{calcularTotalBaseCalculo() | currency:'R$ ':2}}</label>
+                                    </td>
+                                    <td colspan="2" style="text-align: right">
+                                        <label>{{calcularTotalIssPagar() | currency:'R$ ':2}}</label>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <button type="button"
+                            ui-sref="declaracaoMensalServicoInstituicaoFinanceira"
+                            class="btn btn-default">
+                        <span class="glyphicon glyphicon-ban-circle"></span>Cancelar</span>
+                    </button>
+
+
+                    <button type="submit"
+                            class="btn btn-primary"
+                            not-has-role="ROLE_ADMIN"
+                            ng-disabled="editForm.$invalid">
+                        <span class="glyphicon glyphicon-check"></span>&nbsp;
+                        <span>{{getTextoBotaoSalvar()}}</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

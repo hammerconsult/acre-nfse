@@ -1,0 +1,144 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 well text-center m-b-md" ng-if="configuracao.mensagemAutenticacao">
+                <p>
+                    {{configuracao.mensagemAutenticacao}}
+                </p>
+            </div>
+            <div class="col-lg-12">
+                <h3 class="font-bold">
+                    Informe os dados abaixo e clique em Verificar
+                </h3>
+                <p class="text-justify">
+                    Esta página possibilita verificar a autenticidade da NFS-e emitida.<br>
+                    No caso da confirmação da autenticidade, a NFS-e será exibida na tela, podendo ser impressa.
+                </p>
+            </div>
+            <div class="col-lg-8">
+                <form name="editForm" role="form" novalidate>
+                    <div class="row m-t-sm">
+                        <div class="form-group"
+                             ng-class="{'has-error' : editForm.cpfCnpj.$invalid && (editForm.$submitted || editForm.cpfCnpj.$touched)}">
+                            <div class="col-md-8">
+                                <label
+                                        class="control-label"
+                                        for="field_cpfCnpj">CPF ou CNPJ do Prestador (Emitente da NFS-e)</label>
+
+                                <input enter-as-tab type="text" class="form-control" name="cpfCnpj" id="field_cpfCnpj"
+                                       ng-model="autenticar.cpfCnpjPrestador"
+                                       required>
+
+                                <div ng-show="editForm.cpfCnpj.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.cpfCnpj.$error.required">
+                                        Informe o CPF ou CNPJ do prestador de serviços
+                                    </p>
+
+                                    <p class="help-block"
+                                       ng-show="editForm.cpfCnpj.$error.cpf || editForm.cpfCnpj.$error.cnpj">
+                                        CPF ou CNPJ inválido
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-t-sm">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <label for="field_numero_nota">Número da NFS-e</label>
+                                <input enter-as-tab type="number" class="form-control" name="numeroNota"
+                                       id="field_numero_nota"
+                                       required
+                                       ng-maxlength="7"
+                                       ng-model="autenticar.numeroNfse">
+
+                                <div ng-show="editForm.numeroNota.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.numeroNota.$error">
+                                        Informe o número do documento com o máximo de 7 caracteres
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-sm">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <label for="field_codigo_nota">Código de Verificação</label>
+                                <input enter-as-tab type="text" class="form-control" name="codigoAutenticacao"
+                                       id="field_codigo_nota"
+                                       required
+                                       ng-maxlength="40"
+                                       ng-model="autenticar.codigoAutenticacao">
+
+                                <div ng-show="editForm.codigoAutenticacao.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.codigoAutenticacao.$error">
+                                        Informe o Código de Verificação do documento com o máximo de 40 caracteres
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-t-sm">
+                        <div class="form-group">
+                            <div class="col-md-12">
+
+                                <button type="submit"
+                                        ng-disabled="editForm.$invalid"
+                                        ng-click="autenticarNota()"
+                                        class="btn btn-success">
+                                    <span class="glyphicon glyphicon-check"></span>&nbsp;
+                                    <span>Autenticar</span>
+                                </button>
+
+                                <button type="button"
+                                        ng-click="limpar()"
+                                        class="btn btn-default">
+                                    <span class="fa fa-times"></span>&nbsp;
+                                    <span>Limpar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <div class="widget navy-bg p-lg text-center" ng-if="valido === true && !cancelado">
+                    <div class="m-b-md">
+                        <i class="fa fa-thumbs-up fa-4x"></i>
+                        <h1 class="m-xs"> Nota Fiscal Válida</h1>
+                        <h3 ng-click="imprimirNota(nfse.id)" class="font-bold no-margins">
+                            <i class="fa fa-print"></i>
+                            Imprimir
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="widget yellow-bg p-lg text-center" ng-if="valido === true && cancelado === true">
+                    <div class="m-b-md">
+                        <i class="fa fa-exclamation-triangle fa-4x"></i>
+                        <h1 class="m-xs"> Nota Fiscal Cancelada</h1>
+                        <h3 ng-click="imprimirNota(nfse.id)" class="font-bold no-margins">
+                            <i class="fa fa-print"></i>
+                            Imprimir
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="widget red-bg p-lg text-center" ng-if="valido === false">
+                    <div class="m-b-md">
+                        <i class="fa fa-exclamation-triangle fa-4x"></i>
+                        <h3 class="font-bold no-margins">
+                            Nota Fiscal Inválida
+                        </h3>
+                        <small>Não foi encontrada nenhuma nota fiscal com os campos informados</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

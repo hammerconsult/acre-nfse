@@ -1,0 +1,166 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cancel()">&times;
+    </button>
+    <h4 class="modal-title" id="myServicoLabel">
+        Cancelamento de Nota Fiscal</h4>
+</div>
+<div class="modal-body">
+    <div class="row" ng-show="cancelamentos && cancelamentos.length >0">
+        <div class="col-md-12 text-center">
+            <h3> Já existe uma solicitação de cancelamento para esse documento.</h3>
+        </div>
+        <div class="col-md-12">
+            <table class="table">
+                <tr>
+                   <th>Data do Cancelamento</th>
+                   <th>Solicitante</th>
+                   <th>Motivo</th>
+                   <th>Observações</th>
+                   <th>Situação</th>
+                    <th>Observações do Fiscal</th>
+
+                </tr>
+                <tr ng-repeat="cancelamento in cancelamentos">
+                    <td>{{cancelamento.dataCancelamento | date:'dd/MM/yyyy': '+0000'}}</td>
+                    <td>{{cancelamento.solicitante}}</td>
+                    <td>
+                        {{'nfseApp.MotivoCancelamento.'+cancelamento.motivoCancelamento | translate}}
+                    </td>
+                    <td>{{cancelamento.observacoesCancelamento}}</td>
+                    <td>
+                        {{'nfseApp.SituacaoDeferimento.'+cancelamento.situacaoFiscal | translate}}
+                    </td>
+                    <td>{{cancelamento.obrservacoesFiscal}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" ng-show="podeSolicitar">
+        <form name="editForm" role="form" novalidate>
+
+            <div class="form-group col-md-12">
+                <div class="col-md-2">
+                    <small>N° da Nota Fiscal</small>
+                    <br>
+                    <strong>{{cancelamento.notaFiscal.numero}}</strong>
+                </div>
+                <div class="col-md-8">
+                    <small>Tomador do Serviço</small>
+                    <br>
+                    <strong ng-show="cancelamento.notaFiscal.tomador && cancelamento.notaFiscal.tomador.dadosPessoais">
+                        {{cancelamento.notaFiscal.tomador.dadosPessoais.cpfCnpj}} -
+                        {{cancelamento.notaFiscal.tomador.dadosPessoais.nomeRazaoSocial}}
+                    </strong>
+                    <strong ng-show="!cancelamento.notaFiscal.tomador || !cancelamento.notaFiscal.tomador.dadosPessoais">
+                        Não Identificado
+                    </strong>
+                </div>
+                <div class="col-md-2">
+                    <small>Total do Serviço</small>
+                    <br>
+                    <strong>{{cancelamento.notaFiscal.totalServicos | currency:'R$ '}}</strong>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                <div class="col-md-12">
+                    <label for="field_motivo">Motivo do cancelamento</label>
+                    <select class="form-control" name="motivo"
+                            required
+                            ng-model="cancelamento.motivoCancelamento"
+                            id="field_motivo">
+                        <option value="ERRO_EMISSAO">Erro de emissão</option>
+                        <option value="SERVICO_NAO_PRESTADO">Serviço não prestado</option>
+                        <option value="DUPLICIDADE">Duplicidade de nota</option>
+                        <option value="ERRO_ASSINATURA">Erro de assinatura</option>
+                        <option value="ERRO_DADOS">Erro de dados na Emissão</option>
+                    </select>
+                    <div ng-show="editForm.motivo.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.motivo.$error.required">
+                            Informe o Motivo
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                <div class="col-md-12">
+                    <label for="field_observacap">Observações do cancelamento</label>
+                    <textarea type="text" class="form-control"
+                              ng-maxlength="3000"
+                              name="observacao" id="field_observacap"
+                              ng-model="cancelamento.observacoesCancelamento">
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                <div class="col-md-12">
+                    <label
+                        for="field_substituida">Foi substituida por outra nota?</label>
+
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input enter-as-tab type="checkbox" checked name="subistituida"
+                                   ng-model="substituida"
+                                   class="onoffswitch-checkbox"
+                                   id="field_substituida">
+                            <label class="onoffswitch-label" for="field_substituida">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="substituida" class="form-group col-md-12">
+                <div class="col-md-2">
+                    <label for="field_numeroSubstituta">N° Nota Fiscal Substituta</label>
+                    <div class="input-group">
+                        <input enter-as-tab type="text" class="form-control" name="numeroSubstituta"
+                               id="field_numeroSubstituta"
+                               ng-model="numeroSubstituta"
+                               ng-blur="findNotaSubstituta()">
+                    </div>
+                </div>
+                <div class="col-md-8" ng-show="cancelamento.notaFiscalSubstituta">
+                    <small>Tomador do Serviço</small>
+                    <br>
+                    <strong ng-show="cancelamento.notaFiscalSubstituta.tomador">
+                        {{cancelamento.notaFiscalSubstituta.tomador.dadosPessoais.cpfCnpj -
+                        cancelamento.notaFiscalSubstituta.tomador.dadosPessoais.nomeRazaoSocial}}
+                    </strong>
+                    <strong ng-show="!cancelamento.notaFiscalSubstituta.tomador">
+                        Não Identificado
+                    </strong>
+                </div>
+                <div class="col-md-2" ng-show="cancelamento.notaFiscalSubstituta">
+                    <small>Total do Serviço</small>
+                    <br>
+                    <strong>{{cancelamento.notaFiscalSubstituta.totalServicos | currency:'R$ '}}</strong>
+                </div>
+            </div>
+
+            <div ng-show="erroAoCancelar" class="col-md-12 alert alert-danger text-center">
+                {{erroAoCancelar}}
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer" ng-show="podeSolicitar">
+    <button type="submit"
+            not-has-role="ROLE_ADMIN"
+            ng-click="cancelarNota()"
+            ng-disabled="editForm.$invalid || (cancelamento.substituida && !cancelamento.notaFiscalSubstituta)"
+            class="btn btn-danger">
+        <span class="glyphicon glyphicon-check"></span>&nbsp;
+        <span>Cancelar Nota Fiscal</span>
+    </button>
+</div>
+

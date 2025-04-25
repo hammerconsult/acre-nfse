@@ -1,0 +1,291 @@
+<ul class="nav nav-tabs" role="tablist">
+    <li ng-if="isPrestadorPermitido() && prestadorPrincipal.prestador.emiteNfs">
+        <a class="nav-link" ui-sref="notaFiscal">
+            Nfs-e Emitidas
+        </a>
+    </li>
+    <li>
+        <a class="nav-link" ui-sref="notas-recebidas">
+            Nfs-e Recebidas
+        </a>
+    </li>
+    <li>
+        <a class="nav-link active" ui-sref="servicoDeclarado">
+            Serviços Declarados
+        </a>
+    </li>
+</ul>
+
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-12 text-right">
+                        <button class="btn btn-outline btn-primary" ng-show="!mostrarFiltros"
+                                ng-click="habilitarDesabilitarFiltros()">
+                            <i class="fa fa-filter"></i> <span>Filtrar</span>
+                        </button>
+
+                        <button class="btn btn-primary" ui-sref="servicoDeclarado.new">
+                            <span class="fa fa-plus"></span> <span>Declarar Serviço</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row m-t-md" ng-show="mostrarFiltros">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <div class="form-group col-md-3">
+                                <label>Período Inicial</label>
+                                <input enter-as-tab
+                                       id="dataInicial"
+                                       onkeypress="exec(this, mdata)"
+                                       ng-model="emissaoInicial"
+                                       class="form-control">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Período Final</label>
+                                <input enter-as-tab
+                                       onkeypress="exec(this, mdata)"
+                                       ng-model="emissaoFinal"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>N° Inicial</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="numeroInicial"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>N° Final</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="numeroFinal"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3 form-group">
+                                <label>CPF/CNPJ Prestador</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="cpfCnpjPrestador"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Nome/Razão Social Prestador</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="nomeRazaoSocialPrestador"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Situação</label>
+                                <select class="form-control"
+                                        ng-model="situacao"
+                                        ng-options="situacao as 'nfseApp.SituacaoNota.' + situacao.name | translate for situacao in situacoes track by situacao.value">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <label>Competência Inicial</label>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Competência Final</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <div class="col-md-1">
+                                <input class="form-control"
+                                       ng-required
+                                       maxlength="4"
+                                       ng-model="competenciaAnoInicial"/>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-control"
+                                        ng-required
+                                        ng-model="competenciaMesInicial"
+                                        ng-options="mes as mes.descricao for mes in meses track by mes.numeroMes"></select>
+                            </div>
+                            <div class="col-md-1">
+                                <input class="form-control"
+                                       ng-required
+                                       maxlength="4"
+                                       ng-model="competenciaAnoFinal"/>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-control"
+                                        ng-required
+                                        ng-model="competenciaMesFinal"
+                                        ng-options="mes as mes.descricao for mes in meses track by mes.numeroMes"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 form-group">
+                        <button type="button"
+                                ng-click="loadAll()"
+                                class="btn btn-primary">
+                            <span class="fa fa-search"></span>
+                            <span>Pesquisar</span>
+                        </button>
+                        <button ng-click="cancelar()"
+                                class="btn btn-default">
+                            <span class="fa fa-close"></span>
+                            <span>Cancelar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row m-t-md">
+                    <div class="col-lg-12 text-right m-b-sm" ng-show="!mostrarFiltros">
+                        <small class="text-muted">Exibindo declarações de {{emissaoInicial}} até
+                            {{emissaoFinal}}</small>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th class="issue-info">
+                                        Número
+                                        <small>Emissão</small>
+                                    </th>
+                                    <th class="issue-info">
+                                        Tipo de Documento
+                                    </th>
+                                    <th>Prestador</th>
+                                    <th class="text-right issue-info">
+                                        Valor Serviços
+                                        <small>Base de Calculo</small>
+                                    </th>
+                                    <th class="text-right issue-info">
+                                        Valor ISS
+                                        <small>Retido?</small>
+                                    </th>
+                                    <th class="issue-info">
+                                        Situação
+                                    </th>
+                                    <th class="text-center"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="servicoDeclarado in servicosDeclarados">
+                                    <td class="issue-info">
+                                        <a ui-sref="servicoDeclarado.detail({id:servicoDeclarado.id})">
+                                            {{servicoDeclarado.numero}}
+                                        </a>
+                                        <small>
+                                            {{servicoDeclarado.emissao | date: 'dd/MM/yyyy' : '+0000'}}
+                                        </small>
+                                    </td>
+                                    <td class="issue-info">
+                                        {{servicoDeclarado.tipoDocumentoDescricao}}
+                                    </td>
+                                    <td class="issue-info">
+                                        <span>({{servicoDeclarado.prestadorCpfCnpj | brCpfCnpj}})&ensp;</span>
+                                        {{servicoDeclarado.prestadorNomeRazaoSocial}}
+                                    </td>
+                                    <td class="text-right issue-info">
+                                        {{servicoDeclarado.totalServicos | currency: 'R$ '}}
+                                        <small>{{servicoDeclarado.baseCalculo | currency: 'R$ '}}</small>
+                                    </td>
+                                    <td class="text-right issue-info">
+                                        {{servicoDeclarado.issCalculado | currency: 'R$ '}}
+                                        <small>{{servicoDeclarado.issRetido ? 'Sim' : 'Não'}}</small>
+                                    </td>
+                                    <td class="issue-info">
+                                        <strong class="{{servicoDeclarado.situacao === 'CANCELADA' || servicoDeclarado.situacao === 'NAO_EMITIDA' ? 'text-danger': 'text-navy'}}">
+                                            {{'nfseApp.SituacaoNota.' + servicoDeclarado.situacao | translate}}
+                                        </strong>
+                                    </td>
+                                    <td class="dropdown">
+                                        <button class="btn btn-white btn-sm dropdown-toggle"
+                                                data-toggle="dropdown"
+                                                data-boundary="viewport"
+                                                type="button">
+                                            <i class="fa fa-caret-down"></i>
+                                            Opções
+                                        </button>
+
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a title="Clique para visualizar o documento"
+                                                   ui-sref="servicoDeclarado.detail({id:servicoDeclarado.id})">
+                                                    <i class="fa fa-eye"></i>
+                                                    Visualizar
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a title="Clique para imprimir o documento"
+                                                   ng-click="imprimir(servicoDeclarado.id)">
+                                                    <i class="fa fa-print"></i>
+                                                    Imprimir Documento
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a title="Clique para cancelar o documento"
+                                                   ng-if="servicoDeclarado.situacao == 'EMITIDA'"
+                                                   ng-click="cancelarServicoDeclarado(servicoDeclarado)">
+                                                    <i class="fa fa-trash"></i>
+                                                    Cancelar
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a title="Clique para excluir o documento"
+                                                   ng-click="excluir(servicoDeclarado.id)">
+                                                    <i class="fa fa-trash"></i>
+                                                    Excluir
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ng-if="servicoDeclarado && !servicoDeclarado.idDms &&
+                                                servicoDeclarado.situacao != 'CANCELADA'"
+                                                   title="Clique para imprimir a nota fiscal"
+                                                   ng-click="imprimirDam(servicoDeclarado)">
+                                                    <i class="fa fa-barcode"></i>
+                                                    Gerar Guia
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ng-if="servicoDeclarado && servicoDeclarado.situacaoDebito == 'EM_ABERTO'"
+                                                   title="Clique para imprimir a nota fiscal"
+                                                   ng-click="imprimirDam(servicoDeclarado)">
+                                                    <i class="fa fa-barcode"></i>
+                                                    Imprimir Guia
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="col-md-12 text-right">
+
+
+                                <button class="btn btn-danger btn-outline"
+                                        title="Clique para baixar os serviços em PDF"
+                                        ng-click="baixarPDF()">
+                                    <i class="fa fa-download"></i>
+                                    PDF
+                                </button>
+
+                                <button class="btn btn-primary btn-outline"
+                                        title="Clique para baixar os serviços em formato de XLS"
+                                        ng-click="baixarExcel()">
+                                    <i class="fa fa-download"></i>
+                                    Excel
+                                </button>
+
+                            </div>
+
+                            <span nfse-app-pagination></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

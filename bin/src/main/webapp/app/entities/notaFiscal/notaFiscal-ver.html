@@ -1,0 +1,625 @@
+<div class="row">
+    <div class="col-md-12 m-t-md">
+        <h3>Resumo da NFS-e {{notaFiscal.numero}} </h3>
+    </div>
+</div>
+
+<div ng-show="notaFiscal.rps">
+    <div class="row">
+        <div class="col-md-12 m-t-md">
+            <h3>Dados do RPS</h3>
+        </div>
+    </div>
+    <div class="col-md-12 form-group">
+        <div class="col-md-2">
+            <small>Número</small>
+            <br>
+            <strong>{{notaFiscal.rps.numero}}</strong>
+        </div>
+
+        <div class="col-md-2">
+            <small>Série</small>
+            <br>
+            <strong>{{notaFiscal.rps.serie}}</strong>
+        </div>
+
+        <div class="col-md-2">
+            <small>Data de Emissão</small>
+            <br>
+            <strong>{{notaFiscal.rps.dataEmissao | date: 'dd/MM/yyyy': '+0000'}}</strong>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 m-t-md">
+        <h3>Dados da Nota </h3>
+    </div>
+</div>
+
+<div class="col-md-12 form-group">
+    <div class="col-md-3" ng-show="notaFiscal.id">
+        <small>Código de Verificação</small>
+        <br>
+        <strong>{{notaFiscal.codigoVerificacao}}</strong>
+    </div>
+
+    <div class="col-md-2" ng-if="notaFiscal.id">
+        <small>Competência</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.competencia | date:'MM/yyyy': '+0000'}}</strong>
+    </div>
+
+    <div class="col-md-2" ng-if="notaFiscal.id">
+        <small>Emissão</small>
+        <br>
+        <strong ng-if="temHora(notaFiscal.emissao)">{{notaFiscal.emissao | date:'dd/MM/yyyy HH:mm': '+0000'}}</strong>
+        <strong ng-if="!temHora(notaFiscal.emissao)">{{notaFiscal.emissao | date:'dd/MM/yyyy': '+0000'}}</strong>
+    </div>
+    <div class="col-md-1" ng-if="notaFiscal.id && !tributadoEmOutroMunicipio()">
+        <small>ISS Retido</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.issRetido ? 'Sim' : 'Não'}}</strong>
+    </div>
+    <div class="col-md-1" ng-if="notaFiscal.declaracaoPrestacaoServico.origemEmissao">
+        <small>Origem</small>
+        <br>
+        <strong>{{'nfseApp.OrigemEmissao.' + notaFiscal.declaracaoPrestacaoServico.origemEmissao |
+        translate}}</strong>
+    </div>
+</div>
+
+<div class="col-md-12 form-group">
+    <div class="col-md-3">
+        <small>Modalidade</small>
+        <br>
+        <strong>{{'nfseApp.ModalidadeNota.' + notaFiscal.modalidade |
+        translate}}</strong>
+    </div>
+
+    <div class="col-md-3" ng-if="notaFiscal.declaracaoPrestacaoServico.itens[0].municipio">
+        <small>Local de Prestação</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.itens[0].municipio.nome}}/{{notaFiscal.declaracaoPrestacaoServico.itens[0].municipio.estado}}</strong>
+    </div>
+
+    <div class="col-md-3" ng-if="!notaFiscal.declaracaoPrestacaoServico.itens[0].municipio">
+        <small>Local de Prestação</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.itens[0].pais.nome}}</strong>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 m-t-md">
+        <h3>Prestador do Serviço</h3>
+    </div>
+</div>
+
+<div class="col-md-12 form-group">
+    <div class="col-md-3">
+        <small>CPF ou CNPJ</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.cpfCnpj |
+        brCpfCnpj}}</strong>
+    </div>
+
+    <div class="col-md-3">
+        <small>Inscrição Municipal</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.inscricaoMunicipal}}</strong>
+    </div>
+
+    <div class="col-md-3">
+        <small>Inscrição Estadual ou RG</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.inscricaoEstadualRg}}</strong>
+    </div>
+</div>
+<div class="col-md-12 form-group">
+    <div class="col-md-8">
+        <small>Nome ou Razão Social</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.nomeRazaoSocial}}</strong>
+    </div>
+
+    <div class="col-md-4">
+        <small>Nome Fantasia</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.nomeFantasia}}</strong>
+    </div>
+</div>
+<div class="col-md-12 form-group">
+    <div class="col-md-6">
+        <small>E-mail</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.email}}</strong>
+    </div>
+</div>
+<div class="col-md-12 form-group">
+    <div class="col-md-2">
+        <small>Telefone</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.telefone}}</strong>
+    </div>
+    <div class="col-md-2">
+        <small>Celular</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.celular}}</strong>
+    </div>
+    <div class="col-md-2">
+        <small>Cep</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.cep}}</strong>
+    </div>
+    <div class="col-md-6">
+        <small>Município</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.municipio.nome}}
+            {{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.municipio.estado}}</strong>
+    </div>
+</div>
+<div class="col-md-12 form-group">
+    <div class="col-md-5">
+        <small>Logradouro</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.logradouro}}</strong>
+    </div>
+    <div class="col-md-3">
+        <small>Bairro</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.bairro}}</strong>
+    </div>
+    <div class="col-md-1">
+        <small>Número</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.numero}}</strong>
+    </div>
+    <div class="col-md-3">
+        <small>Complemento</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.complemento}}</strong>
+    </div>
+</div>
+<div class="col-md-12 form-group">
+    <div class="col-md-3">
+        <small>Tipo de Issqn</small>
+        <br>
+        <strong>{{'nfseApp.TipoIssqn.' + notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.tipoIssqn |
+        translate}}</strong>
+    </div>
+    <div class="col-md-3">
+        <small>Regime Tributário</small>
+        <br>
+        <strong>{{'nfseApp.RegimeTributario.' +
+        notaFiscal.declaracaoPrestacaoServico.dadosPessoaisPrestador.regimeTributario | translate}}</strong>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 m-t-md">
+        <h3>Tomador do Serviço</h3>
+    </div>
+</div>
+
+<div class="col-md-12 form-group" ng-if="notaFiscal.modalidade == 'NAO_IDENTIFICADO'">
+    <div class="col-md-3">
+        <strong>Não Identificado</strong>
+    </div>
+</div>
+
+<div ng-if="notaFiscal.modalidade != 'NAO_IDENTIFICADO'">
+    <div class="col-md-12 form-group">
+        <div class="col-md-3">
+            <small>CPF ou CNPJ</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.cpfCnpj |
+            brCpfCnpj}}</strong>
+        </div>
+
+        <div class="col-md-3">
+            <small>Inscrição Municipal</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.inscricaoMunicipal}}</strong>
+        </div>
+
+        <div class="col-md-3">
+            <small>Inscrição Estadual ou RG</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.inscricaoEstadualRg}}</strong>
+        </div>
+    </div>
+    <div class="col-md-12 form-group">
+        <div class="col-md-8">
+            <small>Nome ou Razão Social</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.nomeRazaoSocial}}</strong>
+        </div>
+
+        <div class="col-md-4">
+            <small>Nome Fantasia</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.nomeFantasia}}</strong>
+        </div>
+    </div>
+    <div class="col-md-12 form-group">
+        <div class="col-md-6">
+            <small>E-mail</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.email}}</strong>
+        </div>
+    </div>
+    <div class="col-md-12 form-group">
+        <div class="col-md-2">
+            <small>Telefone</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.telefone}}</strong>
+        </div>
+        <div class="col-md-2">
+            <small>Celular</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.celular}}</strong>
+        </div>
+        <div class="col-md-2">
+            <small>Cep</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.cep}}</strong>
+        </div>
+        <div class="col-md-6">
+            <small>Município</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.municipio.nome}}
+                {{notaFiscal.tomador.dadosPessoais.municipio.estado}}</strong>
+        </div>
+    </div>
+    <div class="col-md-12 form-group">
+        <div class="col-md-5">
+            <small>Logradouro</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.logradouro}}</strong>
+        </div>
+        <div class="col-md-3">
+            <small>Bairro</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.bairro}}</strong>
+        </div>
+        <div class="col-md-1">
+            <small>Número</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.numero}}</strong>
+        </div>
+        <div class="col-md-3">
+            <small>Complemento</small>
+            <br>
+            <strong>{{notaFiscal.tomador.dadosPessoais.complemento}}</strong>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 m-t-md">
+        <h3>Serviços</h3>
+    </div>
+</div>
+
+<div ng-repeat="serv in notaFiscal.declaracaoPrestacaoServico.itens">
+    <div class="col-md-12 form-group">
+        <div class="col-md-2">
+            <small>Código</small>
+            <br>
+            <strong>{{serv.servico.codigo}}</strong>
+        </div>
+        <div class="col-md-10">
+            <small>Descrição</small>
+            <br>
+            <strong>{{serv.servico.descricao}}</strong>
+        </div>
+    </div>
+
+    <div ng-if="serv.detalhes && serv.detalhes.length > 0">
+        <div class="col-md-12 m-t-md">
+            <h3>Itens do Serviço</h3>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table small" ng-if="serv.detalhes && serv.detalhes.length > 0">
+            <thead>
+            <th class="col-md-6">Descrição</th>
+            <th class="col-md-2">Quantidade</th>
+            <th class="col-md-4 text-right">Valor do Serviço</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="detalhe in serv.detalhes">
+                <td class="col-md-6">{{detalhe.descricao}}</td>
+                <td class="col-md-2">{{detalhe.quantidade}}</td>
+                <td class="col-md-4 text-right">{{detalhe.valorServico | currency: 'R$ '}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12 form-group">
+        <div class="col-md-2" ng-show="!tributadoEmOutroMunicipio()">
+            <small>Alíquota</small>
+            <br>
+            <strong>{{serv.aliquotaServico}}%</strong>
+        </div>
+        <div class="col-md-2">
+            <small>Quantidade</small>
+            <br>
+            <strong>{{serv.quantidade}}</strong>
+        </div>
+        <div class="col-md-2">
+            <small>Total do Serviço</small>
+            <br>
+            <strong>{{serv.valorServico | currency:'R$ '}}</strong>
+        </div>
+        <div class="col-md-2">
+            <small>Base de Cálculo</small>
+            <br>
+            <strong>{{serv.baseCalculo | currency: 'R$ '}}</strong>
+        </div>
+        <div class="col-md-2" ng-show="!tributadoEmOutroMunicipio()">
+            <small>Valor ISS</small>
+            <br>
+            <strong>{{serv.iss | currency: 'R$ '}}</strong>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 form-group">
+    <div class="col-md-12">
+        <small>Descriminação</small>
+        <br>
+        <strong>{{notaFiscal.descriminacaoServico}}</strong>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 m-t-md">
+        <h3>Tributos Federais</h3>
+    </div>
+</div>
+
+<div class="col-md-12 form-group">
+    <div class="col-md-4">
+        <small>PIS</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.tributosFederais.pis | currency:'R$ '}} </strong>
+    </div>
+    <div class="col-md-4">
+        <small>COFINS</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.tributosFederais.cofins | currency:'R$ '}} </strong>
+    </div>
+    <div class="col-md-4">
+        <small>INSS</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.tributosFederais.inss | currency:'R$ '}} </strong>
+    </div>
+</div>
+
+<div class="col-md-12 form-group">
+    <div class="col-md-4">
+        <small>IRRF</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.tributosFederais.irrf | currency:'R$ '}} </strong>
+    </div>
+    <div class="col-md-4">
+        <small>CSLL</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.tributosFederais.csll | currency:'R$ '}} </strong>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 m-t-md">
+        <h3>Construção Civil</h3>
+    </div>
+</div>
+<div class="col-md-12 form-group">
+    <div class="col-md-4">
+        <small>Código da Obra</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.construcaoCivil.codigoObra}} </strong>
+    </div>
+    <div class="col-md-4">
+        <small>ART</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.construcaoCivil.art}} </strong>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 m-t-md">
+        <h3>Intermediário</h3>
+    </div>
+</div>
+<div class="col-md-12 form-group">
+    <div class="col-md-4">
+        <small>CPF ou CNPJ</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.intermediario.cpfCnpj}} </strong>
+    </div>
+    <div class="col-md-8">
+        <small>Nome ou Razão Social</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.intermediario.nomeRazaoSocial}} </strong>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12 m-t-md">
+        <h3>Valores da Nota</h3>
+    </div>
+</div>
+
+<div class="col-md-12 form-group">
+    <div class="col-md-3">
+        <small>Valor dos Serviços</small>
+        <br>
+        <strong>{{notaFiscal.totalServicos | currency:'R$ '}} </strong>
+    </div>
+    <div class="col-md-2">
+        <small>Deduções Legais</small>
+        <br>
+        <strong>{{notaFiscal.deducoesLegais | currency:'R$ '}} </strong>
+    </div>
+    <div class="col-md-2">
+        <small>Descontos Incondicionados</small>
+        <br>
+        <strong>{{notaFiscal.descontosIncondicionais | currency:'R$ '}} </strong>
+    </div>
+    <div class="col-md-2">
+        <small>Descontos Condicionados</small>
+        <br>
+        <strong>{{notaFiscal.descontosCondicionais | currency:'R$ '}}</strong>
+    </div>
+</div>
+
+<div class="col-md-12 form-group">
+    <div class="col-md-3">
+        <small>Retenções Federais</small>
+        <br>
+        <strong>{{notaFiscal.retencoesFederais | currency:'R$ '}} </strong>
+    </div>
+    ,
+    <div class="col-md-2">
+        <small>Outras Retenções</small>
+        <br>
+        <strong>{{notaFiscal.declaracaoPrestacaoServico.tributosFederais.outrasRetencoes | currency:'R$ '}} </strong>
+    </div>
+    <div class="col-md-2">
+        <small>Base de Cálculo</small>
+        <br>
+        <strong>{{notaFiscal.baseCalculo | currency:'R$ '}} </strong>
+    </div>
+    <div class="col-md-2" ng-show="!tributadoEmOutroMunicipio()">
+        <small>Valor de ISS</small>
+        <br>
+        <strong>{{notaFiscal.issCalculado | currency:'R$ '}} </strong>
+    </div>
+    <div class="col-md-2">
+        <small>Valor Liquido</small>
+        <br>
+        <strong>{{notaFiscal.valorLiquido | currency:'R$ '}} </strong>
+    </div>
+</div>
+
+<div class="row" ng-if="parcelas && parcelas.length > 0">
+    <div class="col-md-12 m-t-md border-bottom">
+        <h3>Débitos</h3>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>DAM</th>
+                <th>Referência</th>
+                <th>Exercício</th>
+                <th>Vencimento</th>
+                <th>Imposto</th>
+                <th>Taxa</th>
+                <th>Juros</th>
+                <th>Multa</th>
+                <th>Correção</th>
+                <th>Honorários</th>
+                <th>Total</th>
+                <th>Situação</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="parc in parcelas">
+                <td>
+                    <a ui-sref="debitos.details({id:parc.idParcela})">
+                        {{parc.dam.numeroDAM}}
+                    </a>
+                </td>
+                <td>{{parc.referencia}}</td>
+                <td>{{parc.exercicio}}</td>
+                <td>{{parc.vencimento | date:'dd/MM/yyyy': '+0000'}}</td>
+                <td>{{parc.valorImposto | currency: ' '}}</td>
+                <td>{{parc.valorTaxa | currency: ' '}}</td>
+                <td>{{parc.valorJuros | currency: ' '}}</td>
+                <td>{{parc.valorMulta | currency: ' '}}</td>
+                <td>{{parc.valorCorrecao | currency: ' '}}</td>
+                <td>{{parc.valorHonorarios | currency: ' '}}</td>
+                <td>{{parc.total | currency: ' '}}</td>
+                <td>{{'nfseApp.SituacaoParcela.' + parc.situacao | translate}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" ng-if="cancelamentos && cancelamentos.length > 0">
+    <div class="col-md-12 m-t-md border-bottom">
+        <h3>Solicitações de Cancelamento</h3>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Motivo</th>
+                <th>Observações</th>
+                <th>Situação</th>
+                <th>Observações do Fiscal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="cancelamento in cancelamentos">
+                <td>{{cancelamento.dataCancelamento | date:'dd/MM/yyyy': '+0000'}}</td>
+                <td>
+                    {{'nfseApp.MotivoCancelamento.' + cancelamento.motivoCancelamento | translate}}
+                </td>
+                <td>{{cancelamento.observacoesCancelamento}}</td>
+                <td>
+                    {{'nfseApp.SituacaoDeferimento.' + cancelamento.situacaoFiscal | translate}}
+                </td>
+                <td>{{cancelamento.observacoesFiscal}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" has-role="ROLE_ADMIN">
+    <div class="col-md-12 m-t-md border-bottom">
+        <h3>Integração com a Nota Fiscal Nacional</h3>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th style="text-align: left;">Data Processamento</th>
+                    <th style="text-align: center;">Status Processamento</th>
+                    <th style="text-align: left;">NSU Recebimento</th>
+                    <th style="text-align: left;">Chave Acesso</th>
+                    <th style="text-align: center;">Erros/Alertas</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-show="!retornosDfeAdn || retornosDfeAdn.length == 0">
+                    <td colspan="5">Nenhum registro foi encontrado.</td>
+                </tr>
+                <tr ng-repeat="retornoDfeAdn in retornosDfeAdn">
+                    <td style="text-align: left;">{{retornoDfeAdn.dataHoraProcessamento | date: 'dd/MM/yyyy'}}</td>
+                    <td style="text-align: center;">
+                        {{'nfseApp.NotaNacional.StatusProcessamento.' + retornoDfeAdn.statusProcessamento | translate}}
+                    </td>
+                    <td style="text-align: left;">{{retornoDfeAdn.nsuRecebimento}}</td>
+                    <td style="text-align: left;">
+                        <a href="https://www.nfse.gov.br/PainelMunicipal/NFSe/Visualizar?ChaveAcesso={{retornoDfeAdn.chaveAcesso}}"
+                           target="_blank">
+                            {{retornoDfeAdn.chaveAcesso}}
+                        </a>
+                    </td>
+                    <td style="text-align: center;">
+                        <button class="btn btn-sm btn-primary"
+                                ng-click="exibirMensagensNotaNacional(retornoDfeAdn)">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

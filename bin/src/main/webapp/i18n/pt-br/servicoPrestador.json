@@ -1,0 +1,19 @@
+{
+    "nfseApp": {
+        "servicoPrestador" : {
+            "home": {
+                "title": "ServicoPrestadors",
+                "createLabel": "Create a new ServicoPrestador",
+                "createOrEditLabel": "Create or edit a ServicoPrestador"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete ServicoPrestador {{ id }}?"
+            },
+            "detail": {
+                "title": "ServicoPrestador"
+            },
+            "servico": "servico",
+            "prestador": "prestador"
+        }
+    }
+}

@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cancel()">&times;
+    </button>
+    <h4 class="modal-title" id="myServicoLabel">Selecione um Escritório</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group input-group">
+                <input type="text" class="form-control"
+                       ng-model="searchQuery" id="searchQuery"
+                       placeholder="{{'global.form.search' | translate}}">
+                <span class="input-group-btn">
+                                             <button class="btn btn-info" ng-click="loadAll()"><span
+                                                 class="glyphicon glyphicon-search"></span>
+                                             </button>
+                                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nome Escritório</th>
+                <th>Cnpj</th>
+                <th>Crc</th>
+                <th>Nome Contabor</th>
+                <th>Cpf</th>
+                <th>Crc</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="escritorio in escritorios">
+                <td>{{escritorio.codigo}}</td>
+                <td>{{escritorio.dadosPessoais.nomeRazaoSocial}}</td>
+                <td>{{escritorio.dadosPessoais.cpfCnpj}}</td>
+                <td>{{escritorio.crcEscritorio}}</td>
+                <td>{{escritorio.responsavel.nomeRazaoSocial}}</td>
+                <td>{{escritorio.responsavel.cpfCnpj}}</td>
+                <td>{{escritorio.crcContador}}</td>
+                <td class="pull-right">
+                    <button type="submit"
+                            ng-click="ok(escritorio)"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-check"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <span nfse-app-pagination></span>
+
+</div>

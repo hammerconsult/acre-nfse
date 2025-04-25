@@ -1,0 +1,13 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="text-center article-title">
+                    <span class="text-muted"><i
+                            class="fa fa-clock-o"></i> {{noticia.dataNoticia | date: 'dd/MM/yyyy' : '+0000'}}</span>
+            <h1>
+                {{noticia.titulo}}
+            </h1>
+        </div>
+        <p>{{noticia.conteudo}}</p>
+        <img ng-src="{{noticia.imagem}}" class="img-responsive img-thumbnail m-t-sm"/>
+    </div>
+</div>

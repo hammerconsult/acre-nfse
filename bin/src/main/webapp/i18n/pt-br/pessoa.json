@@ -1,0 +1,18 @@
+{
+  "nfseApp": {
+    "pessoa": {
+      "home": {
+        "title": "Pessoas",
+        "createLabel": "Adicionar nova Pessoa",
+        "createOrEditLabel": "Adicionar ou Editar uma Pessoa"
+      },
+      "delete": {
+        "question": "Gostaria de realmente excluir a Pessoa: {{ id }}?"
+      },
+      "detail": {
+        "title": "Pessoa"
+      },
+      "dadosPessoais": "dadosPessoais"
+    }
+  }
+}

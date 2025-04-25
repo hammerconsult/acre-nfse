@@ -1,0 +1,392 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins animated fadeInDown">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h3>Cadastro de Conta do PGCC</h3>
+                        </div>
+                    </div>
+                </div>
+                <form name="editForm" ng-submit="save(editForm)">
+                    <div class="row m-t-md">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Início de Vigência</label>
+                                <input type="date"
+                                       name="inicioVigencia"
+                                       ng-required="true"
+                                       ng-model="entity.inicioVigencia"
+                                       class="form-control">
+
+                                <p class="help-block"
+                                   ng-show="editForm.$submitted && editForm.inicioVigencia.$error.required">
+                                    Informe o Início de Vigência
+                                </p>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fim de Vigência</label>
+                                <input type="date"
+                                       ng-model="entity.fimVigencia"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-md">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Conta</label>
+                                <input type="text"
+                                       name="conta"
+                                       ng-required="true"
+                                       onkeypress="somenteNumeros(event, this, false, true, true)"
+                                       ng-model="entity.conta"
+                                       class="form-control">
+
+                                <p class="help-block"
+                                   ng-show="editForm.$submitted && editForm.conta.$error.required">
+                                    Informe a Conta
+                                </p>
+                            </div>
+                            <div class="col-md-2" ng-show="isVersaoDesifAbrasf32()">
+                                <label>Desdobramento</label>
+                                <input type="text"
+                                       ng-required="isVersaoDesifAbrasf32()"
+                                       name="desdobramento"
+                                       onkeypress="somenteNumeros(event, this, false, true, true)"
+                                       ng-model="entity.desdobramento"
+                                       maxlength="2"
+                                       class="form-control">
+
+                                <p class="help-block"
+                                   ng-show="editForm.$submitted && editForm.desdobramento.$error.required">
+                                    Informe o Desdobramento, caso não tenha, informe '00'.
+                                </p>
+                            </div>
+                            <div class="col-md-8">
+                                <label>Nome</label>
+                                <input type="text"
+                                       required
+                                       name="nome"
+                                       ng-model="entity.nome"
+                                       class="form-control">
+
+                                <p class="help-block"
+                                   ng-show="editForm.$submitted && editForm.nome.$error.required">
+                                    Informe o Nome.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-md">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Descrição Detalhada</label>
+                                <textarea type="text" class="form-control"
+                                          required
+                                          rows="7"
+                                          maxlength="3000" minlength="3"
+                                          name="descricaoDetalhada"
+                                          ng-model="entity.descricaoDetalhada">
+                                </textarea>
+
+                                <p class="help-block"
+                                   ng-show="editForm.$submitted && editForm.descricaoDetalhada.$error.required">
+                                    Informe a Descrição Detalhada.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-md">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <h4>COSIF</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label class="center-block">Conta</label>
+
+                                <div class="input-group">
+                                    <input type="text"
+                                           name="cosif"
+                                           ng-model="cosif"
+                                           ng-blur="buscarCosif()"
+                                           class="form-control"
+                                           required>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn btn-success"
+                                                ng-click="pesquisarCosif()">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+
+                                    <p class="help-block"
+                                       ng-show="editForm.$submitted && editForm.cosif.$error.required">
+                                        Informe a COSIF
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label class="center-block">Descrição</label>
+                                <input type="text"
+                                       disabled="true"
+                                       ng-model="entity.cosif.descricao"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-md" ng-show="!isVersaoDesifAbrasf32()">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <h4>Serviço</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-show="!isVersaoDesifAbrasf32()">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label class="center-block">Código</label>
+                                <div class="input-group">
+                                    <input type="text"
+                                           name="servico"
+                                           ng-model="codigoServico"
+                                           ng-blur="buscarServico()"
+                                           class="form-control"
+                                           ng-required="!isVersaoDesifAbrasf32()">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn btn-success"
+                                                ng-click="pesquisarServico()">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+
+                                    <p class="help-block"
+                                       ng-show="editForm.$submitted && editForm.servico.$error.required">
+                                        Informe o Serviço
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label class="center-block">Descrição</label>
+                                <input type="text"
+                                       disabled="true"
+                                       ng-model="entity.servico.descricao"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-md" ng-show="isVersaoDesifAbrasf32()">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <h4>Código de Tributação</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-show="isVersaoDesifAbrasf32()">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label class="center-block">Código</label>
+                                <div class="input-group">
+                                    <input type="text"
+                                           name="codigoTributacao"
+                                           ng-model="codigoTributacao"
+                                           ng-blur="buscarCodigoTributacao()"
+                                           class="form-control"
+                                           ng-required="isVersaoDesifAbrasf32()">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn btn-success"
+                                                ng-click="pesquisarCodigoTributacao()">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+
+                                    <p class="help-block"
+                                       ng-show="editForm.$submitted && editForm.codigoTributacao.$error.required">
+                                        Informe o Código de Tributação
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label class="center-block">Descrição</label>
+                                <input type="text"
+                                       disabled="true"
+                                       ng-model="entity.codigoTributacao.descricao"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-md" ng-show="isVersaoDesifAbrasf32()">
+                        <div class="col-md-offset-3 col-md-6 text-center">
+                            <button type="button"
+                                    ng-click="changeTipoVinculo('TARIFA_BANCARIA')"
+                                    class="btn {{tipoVinculo == 'TARIFA_BANCARIA' ? 'btn-success' : 'btn-default'}}">
+                                <span class="glyphicon glyphicon-save"></span>&nbsp;
+                                Tarifa Bancária
+                            </button>
+                            <button type="button"
+                                    ng-click="changeTipoVinculo('PRODUTO_SERVICO')"
+                                    class="btn {{tipoVinculo == 'PRODUTO_SERVICO' ? 'btn-success' : 'btn-default'}}">
+                                <span class="glyphicon glyphicon-save"></span>&nbsp;
+                                Produto/Serviço
+                            </button>
+                        </div>
+                    </div>
+
+                    <div ng-show="isVersaoDesifAbrasf32() && tipoVinculo == 'TARIFA_BANCARIA'">
+                        <div class="row m-t-md">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <h4>Tarifa Bancária</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="center-block">Código</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               name="tarifaBancaria"
+                                               ng-model="tarifaBancaria"
+                                               ng-blur="buscarTarifaBancaria()"
+                                               class="form-control"
+                                               ng-required="isVersaoDesifAbrasf32() && tipoVinculo == 'TARIFA_BANCARIA'">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn btn-success"
+                                                    ng-click="pesquisarTarifaBancaria()">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+
+                                        <p class="help-block"
+                                           ng-show="editForm.$submitted && editForm.tarifaBancaria.$error.required">
+                                            Informe o Tarifa Bancária
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="center-block">Descrição</label>
+                                    <input type="text"
+                                           disabled
+                                           value="{{entity.tarifaBancaria.tarifaBancaria.descricao}}"
+                                           class="form-control">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="center-block">Início de Vigência</label>
+                                    <input type="date"
+                                           ng-disabled="!entity.tarifaBancaria"
+                                           ng-model="entity.tarifaBancaria.inicioVigencia"
+                                           class="form-control">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="center-block">Valor Unitário</label>
+                                    <input enter-as-tab type="text" class="form-control"
+                                           ui-money-mask=""
+                                           ng-disabled="!entity.tarifaBancaria"
+                                           ng-model="entity.tarifaBancaria.valorUnitario">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="center-block">Valor Percentual</label>
+                                    <input enter-as-tab type="text" class="form-control"
+                                           ui-money-mask=""
+                                           ng-disabled="!entity.tarifaBancaria"
+                                           ng-model="entity.tarifaBancaria.valorPercentual">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="isVersaoDesifAbrasf32() && tipoVinculo == 'PRODUTO_SERVICO'">
+                        <div class="row m-t-md">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <h4>Produto/Serviço</h4>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="center-block">Código</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               name="produtoServico"
+                                               ng-model="produtoServico"
+                                               ng-blur="buscarProdutoServico()"
+                                               class="form-control"
+                                               ng-required="isVersaoDesifAbrasf32() && tipoVinculo == 'PRODUTO_SERVICO'">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn btn-success"
+                                                    ng-click="pesquisarProdutoServico()">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                        <p class="help-block"
+                                           ng-show="editForm.$submitted && editForm.produtoServico.$error.required">
+                                            Informe o Produto/Serviço
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <label class="center-block">Descrição</label>
+                                    <input type="text"
+                                           disabled
+                                           value="{{entity.produtoServico.produtoServico.descricao}}"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label class="center-block">Descrição Complementar</label>
+                                    <textarea type="text" class="form-control"
+                                              ng-disabled="!entity.produtoServico"
+                                              rows="7"
+                                              maxlength="3000" minlength="3"
+                                              ng-model="entity.produtoServico.descricaoComplementar">
+                                </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-md">
+                        <div class="col-md-12 m-t-lg">
+                            <button type="submit"
+                                    class="btn btn-success"
+                                    ng-disabled="editForm.$invalid">
+                                <span class="glyphicon glyphicon-save"></span>&nbsp;
+                                Salvar
+                            </button>
+
+                            <button type="button"
+                                    ui-sref="planoGeralContasComentado"
+                                    class="btn btn-default">
+                                <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

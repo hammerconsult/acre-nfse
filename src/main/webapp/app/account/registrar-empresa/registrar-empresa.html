@@ -1,0 +1,575 @@
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="form" role="form" ng-submit="register()">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="row m-t-md">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+
+                                        <label for="field_cpfCnpj">CPF ou CNPJ <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="cpfCnpj" id="field_cpfCnpj"
+                                               ui-br-cpfcnpj-mask
+                                               placeholder="CPF ou CNPJ"
+                                               ng-blur="loadByCpfCnpj()"
+                                               ng-model="prestadorServicos.pessoa.dadosPessoais.cpfCnpj">
+
+                                        <div ng-show="form.cpfCnpj.$invalid" class="has-error">
+                                            <p class="help-block"
+                                               ng-show="form.cpfCnpj.$error.cpf || form.cpfCnpj.$error.cnpj">
+                                                CPF ou CNPJ inválido
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="field_rg_ie">RG ou Inscrição Estadual<span
+                                                class="text-danger">*</span></label>
+
+                                        <input type="text" class="form-control" name="rgIE" id="field_rg_ie"
+                                               placeholder="RG ou Inscrição Estadual"
+                                               ng-model="prestadorServicos.pessoa.dadosPessoais.inscricaoEstadualRg">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <label>Nome/Razão Social <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="nomeRazao"
+                                               placeholder="Nome"
+                                               minlength="3" maxlength="50"
+                                               ng-model="prestadorServicos.pessoa.dadosPessoais.nomeRazaoSocial"
+                                        >
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="field_rg_ie">Inscrição Municipal<span
+                                                class="text-danger">*</span></label>
+
+                                        <input type="text" class="form-control"
+                                               placeholder="Inscrição Municipal"
+                                               ng-model="prestadorServicos.inscricaoMunicipal">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <label>Nome Fantasia <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="nomeRazao"
+                                               placeholder="Nome"
+                                               minlength="3" maxlength="50"
+                                               ng-model="prestadorServicos.pessoa.dadosPessoais.nomeFantasia"
+                                        >
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>E-mail <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" name="email"
+                                               placeholder="E-mail"
+                                               ng-model="prestadorServicos.pessoa.dadosPessoais.email" minlength="5"
+                                               maxlength="100">
+
+                                        <div ng-show="form.email.$invalid" class="has-error">
+                                            <p class="help-block"
+                                               ng-show="form.email.$error.email">
+                                                E-mail é inválido
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <label for="field_telefone">Telefone <span class="text-info">*</span></label>
+                                        <input type="text" class="form-control" name="telefone" id="field_telefone"
+                                               ui-br-phone-number
+                                               ng-model="prestadorServicos.pessoa.dadosPessoais.telefone">
+
+                                        <div ng-show="form.telefone.$invalid" class="has-error">
+                                            <p class="help-block"
+                                               ng-show="form.telefone.$error">
+                                                Telefone é inválido
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="field_celular">Celular <span class="text-info">*</span></label>
+                                        <input type="text" class="form-control" name="celular" id="field_celular"
+                                               ui-br-phone-number
+                                               ng-model="prestadorServicos.pessoa.dadosPessoais.celular">
+
+                                        <div ng-show="form.celular.$invalid" class="has-error">
+                                            <p class="help-block"
+                                               ng-show="form.celular.$error">
+                                                Celular é inválido
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Endereço</h4>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="form-group animated fadeInUp">
+
+
+                            <div class="col-md-2">
+                                <label for="field_cep">CEP <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="cep" id="field_cep"
+                                       ui-br-cep-mask
+                                       ng-blur="loadEnderecoByCEP(prestadorServicos.pessoa.dadosPessoais.cep)"
+                                       ng-model="prestadorServicos.pessoa.dadosPessoais.cep">
+                            </div>
+                            <div class="col-md-7">
+                                <label for="field_logradouro">Logradouro <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="logradouro" id="field_logradouro"
+                                       ng-model="prestadorServicos.pessoa.dadosPessoais.logradouro" maxlength="255">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="field_numero">Número <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="numero" id="field_numero"
+                                       onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.keyCode == 9 || event.keyCode == 8'
+                                       ng-model="prestadorServicos.pessoa.dadosPessoais.numero" maxlength="255">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="field_complemento">Complemento</label>
+                                <input type="text" class="form-control" name="complemento"
+                                       id="field_complemento"
+                                       ng-model="prestadorServicos.pessoa.dadosPessoais.complemento" maxlength="255">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="field_bairro">Bairro <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="bairro" id="field_bairro"
+                                       ng-model="prestadorServicos.pessoa.dadosPessoais.bairro" maxlength="255">
+                            </div>
+
+
+                            <div class="col-md-10">
+                                <label for="field_municipio">Município <span
+                                        class="text-danger">*</span></label>
+
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="municioio"
+                                           id="field_municipio"
+                                           disabled
+                                           ng-model="prestadorServicos.pessoa.dadosPessoais.municipio.nome">
+                                    <span class="input-group-btn">
+                                            <button type="button" class="btn btn-info" ng-click="searchMunicipio()">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="field_estado">UF <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="municipio" id="field_estado"
+                                       disabled
+                                       ng-model="prestadorServicos.pessoa.dadosPessoais.municipio.estado"
+                                       maxlength="2">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Sócios</h4>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group animated fadeInUp">
+
+                            <div class="col-md-3">
+
+                                <label for="field_cpfCnpj">CPF ou CNPJ <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="cpfCnpjSocio" id="field_cpfCnpj_socio"
+                                       ui-br-cpfcnpj-mask
+                                       placeholder="CPF ou CNPJ"
+                                       ng-model="socio.socio.dadosPessoais.cpfCnpj">
+
+                                <div ng-show="form.cpfCnpjSocio.$invalid" class="has-error">
+                                    <p class="help-block"
+                                       ng-show="form.cpfCnpjSocio.$error.cpf || form.cpfCnpjSocio.$error.cnpj">
+                                        CPF ou CNPJ inválido
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Nome/Razão Social <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="nomeRazaoSocio"
+                                       placeholder="Nome"
+                                       minlength="3" maxlength="50"
+                                       ng-model="socio.socio.dadosPessoais.nomeRazaoSocial">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="field_percentual">Percentual</label>
+
+                                <input type="number" class="form-control"
+                                       id="field_percentual"
+                                       placeholder="Percentual"
+                                       ng-model="socio.proporcao">
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-info" ng-click="adicionarSocio()">
+                            <i class="fa fa-plus"></i>
+                            Adicionar
+                        </button>
+
+
+                        <div class="form-group m-t-lg">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-2">
+                                <label>CPF/CNPJ</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Nome/Razão Social</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Percentual</label>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-repeat="socio in prestadorServicos.socios"
+                             class="animated fadeInDown">
+                            <div class="col-md-2">
+                                <button ng-click="removerSocio($index)"
+                                        class="btn btn-default ">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-2">
+                                <h4>{{socio.socio.dadosPessoais.cpfCnpj}}</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>{{socio.socio.dadosPessoais.nomeRazaoSocial}}</h4>
+                            </div>
+                            <div class="col-md-2">
+                                <h4>{{socio.proporcao}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Enquadramento Fiscal</h4>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="form-group animated fadeInUp">
+
+                            <div class="col-md-4">
+                                <label for="field_porte">Porte <span class="text-danger">*</span></label>
+                                <select class="form-control" name="porte"
+                                        required
+                                        ng-options="tipoPorte.name as (tipoPorte.value) for tipoPorte in tipoPortes"
+                                        ng-model="prestadorServicos.enquadramentoFiscal.porte"
+                                        id="field_porte">
+                                </select>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label for="field_porte">Tipo de Contribuinte <span class="text-danger">*</span></label>
+                                <select class="form-control" name="tipoContribuinte"
+                                        required
+                                        ng-options="tipo.name as (tipo.value) for tipo in tipoContribuintes"
+                                        ng-model="prestadorServicos.enquadramentoFiscal.tipoContribuinte"
+                                        id="field_tipoContribuinte">
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="field_porte">Regime Tributario <span class="text-danger">*</span></label>
+                                <select class="form-control" name="regimeTributario"
+                                        required
+                                        ng-options="regime.name as (regime.value) for regime in regimeTributarios"
+                                        ng-model="prestadorServicos.enquadramentoFiscal.regimeTributario"
+                                        id="field_regimeTributario">
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="field_porte">Classificação da Atividade <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-control" name="classificacaoAtividade"
+                                        required
+                                        ng-options="classificacao as (classificacao.descricao) for classificacao in classificacaoAtividades"
+                                        ng-model="prestadorServicos.enquadramentoFiscal.classificacaoAtividade"
+                                        id="field_classificacaoAtividade">
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="field_porte">Tipo de Nota Fiscal <span class="text-danger">*</span></label>
+                                <select class="form-control" name="tipoNotaFiscal"
+                                        required
+                                        ng-options="tipoNotaFiscal.name as (tipoNotaFiscal.value) for tipoNotaFiscal in tipoNotaFiscais"
+                                        ng-model="prestadorServicos.enquadramentoFiscal.tipoNotaFiscal"
+                                        id="field_tipoNotaFiscal">
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="field_porte">Natureza Jurídica<span
+                                        class="text-danger">*</span></label>
+                                <select class="form-control" name="naturezaJuridica"
+                                        required
+                                        ng-options="naturezaJuridica as (naturezaJuridica.descricao) for naturezaJuridica in naturezasJuridicas"
+                                        ng-model="prestadorServicos.naturezaJuridica"
+                                        id="field_naturezaJuridica">
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <label for="field_substitutoTributario">Substituto Tributário <span class="text-danger">*</span></label>
+
+                                <input type="checkbox" name="substitutoTributario"
+                                       id="field_substitutoTributario"
+                                       ng-model="prestadorServicos.enquadramentoFiscal.substitutoTributario">
+
+
+                                <label for="field_substitutoTributario"
+                                       ng-if="!prestadorServicos.enquadramentoFiscal.substitutoTributario">
+                                    <span class="text-danger">Não</span>
+                                </label>
+                                <label for="field_substitutoTributario"
+                                       ng-if="prestadorServicos.enquadramentoFiscal.substitutoTributario">
+                                    <span class="text-success">Sim</span>
+                                </label>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Cnaes</h4>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <button type="button" class="btn btn-info" ng-click="searchCnae()">
+                                    <span class="fa fa-search"></span>
+                                    Escolher
+                                </button>
+                            </div>
+
+                            <div class="col-md-12 text-center">
+                                <div class="form-group m-t-lg"
+                                     ng-if="prestadorServicos.cnaes && prestadorServicos.cnaes.length > 0">
+
+                                    <div class="col-md-2">
+                                        <label>Código</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label>Descricao</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Remover</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group animated fadeInDown"
+                                     data-ng-repeat="cnae in prestadorServicos.cnaes">
+                                    <div class="col-md-2">
+                                        <h4>{{cnae.codigo}}</h4>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4>{{cnae.descricao}}</h4>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a ng-click="removerCnae($index)"
+                                           class="text-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>
+                            Serviços
+                        </h4>
+
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <button type="button" class="btn btn-info" ng-click="searchServico()">
+                                    <span class="fa fa-search"></span>
+                                    Escolher
+                                </button>
+                            </div>
+
+                            <div class="col-md-12 text-center"
+                                 ng-if="prestadorServicos.servicos && prestadorServicos.servicos.length > 0">
+                                <div class="form-group m-t-lg">
+
+                                    <div class="col-md-2">
+                                        <label>Código</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Aliquota</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Descrição</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Remover</label>
+                                    </div>
+                                </div>
+                                <div class="form-group animated fadeInDown"
+                                     data-ng-repeat="servico in prestadorServicos.servicos">
+                                    <div class="col-md-2">
+                                        <h4>{{servico.codigo}}</h4>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <h4>{{servico.aliquota}}</h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4>{{servico.descricao}}</h4>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <a ng-click="removerServico(prestadorServicos.servicos.indexOf(servico))"
+                                           ng-show="prestadorServicos.servicos.indexOf(servico) >= 0"
+                                           class="text-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>
+                            Receita Tributária Bruta
+                        </h4>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="form-group col-md-4"
+                                 ng-repeat="receitaTributariaBruta in prestadorServicos.receitasTributariaBruta">
+                                <div class="form-group col-md-6 text-right">
+                                    <label
+                                            class="m-xxs">{{receitaTributariaBruta.ano}} / {{'nfseApp.Mes.' +
+                                        receitaTributariaBruta.mes | translate}}</label>
+                                </div>
+                                <div class="form-group col-md-6 text-left">
+                                    <input type="text" class="form-control m-xxs" name="valorBruto"
+                                           ui-money-mask="R$"
+                                           id="field_valor_bruto"
+                                           ng-model="receitaTributariaBruta.valorBruto">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Logo da empresa</h4>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group col-md-12">
+                            <button ngf-select="upload($file)"
+                                    ngf-max-size="10MB"
+                                    class="btn btn-block btn-default btn-outline"
+                                    accept="image/*">
+                                <i class="fa fa-upload"></i>
+                                Selecione um arquivo para anexar
+                            </button>
+                        </div>
+
+                        <br>
+                        <br>
+                        <br>
+
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins" ng-if="prestadorServicos.criarUsuario">
+                    <div class="ibox-title">
+                        <h4>Usuário de Acesso</h4>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Senha <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" name="password"
+                                       required
+                                       placeholder="Senha"
+                                       ng-model="prestadorServicos.password" ng-minlength=5 ng-maxlength=50>
+                                <password-strength-bar
+                                        password-to-check="prestadorServicos.password"></password-strength-bar>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Confirmação de Senha <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" name="confirmPassword"
+                                       required
+                                       placeholder="Informe a senha novamente"
+                                       ng-model="prestadorServicos.confirmPassword" ng-minlength=5 ng-maxlength=50>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Finalizar</h4>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <button type="submit"
+                                        ui-sref="login"
+                                        class="btn btn-info">
+                                    <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span
+                                        translate="entity.action.back"> Back</span>
+                                </button>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit"
+                                        class="btn btn-primary btn-block">
+                                    <span class="glyphicon glyphicon-arrow-right"></span>&nbsp;
+                                    Registrar
+                                </button>
+                            </div>
+                        </div>
+                        Os campos que possuem <span class="text-danger">*</span> são campos obrigatórios. <br>
+                        Os campos que possuem <span class="text-info">*</span> deve-se informar pelo menos um
+                        dos
+                        campos.
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,310 @@
+<div>
+    <div class="row">
+        <div class="col-lg-12">
+
+            <form name="editForm"
+                  role="form"
+                  class="form-horizontal"
+                  ng-submit="save()"
+                  novalidate>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Dados do Usuário</h4>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label for="field_cpf">CPF</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="field_cpf"
+                                       name="cpf"
+                                       ui-br-cpfcnpj-mask
+                                       ng-model="pessoa.dadosPessoais.cpfCnpj"
+                                       ng-disabled="true">
+
+                                <div ng-show="editForm.cpf.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.cp.$error.required">
+                                        O Campo é obrigatório.
+                                    </p>
+
+                                    <p class="help-block"
+                                       ng-show="editForm.cpf.$error.cpf">
+                                        CPF inválido
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="field_rg">RG</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="field_rg"
+                                       name="rg"
+                                       ng-model="pessoa.dadosPessoais.inscricaoEstadualRg">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="field_nome">Nome</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="field_nome"
+                                       name="nome"
+                                       ng-model="pessoa.dadosPessoais.nomeRazaoSocial"
+                                       required>
+
+                                <div ng-show="editForm.nome.$invalid">
+                                    <p class="help-block"
+                                       ng-show="editForm.nome.$error.required">
+                                        O Campo é obrigatório.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label for="field_email">e-Mail</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="field_email"
+                                       name="email"
+                                       ng-model="pessoa.dadosPessoais.email"
+                                       ng-disabled="true">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="field_telefone">Telefone</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="field_telefone"
+                                       name="telefone"
+                                       ng-model="pessoa.dadosPessoais.telefone"
+                                       ui-br-phone-number>
+
+                                <div ng-show="editForm.telefone.$invalid" class="has-error">
+                                    <p class="help-block">
+                                        Telefone inválido.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="field_celular">Celular</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="field_celular"
+                                       name="celular"
+                                       ng-model="pessoa.dadosPessoais.celular"
+                                       ui-br-phone-number>
+
+                                <div ng-show="editForm.celular.$invalid" class="has-error">
+                                    <p class="help-block">
+                                        Celular inválido.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Endereço</h4>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label for="field_cep">Cep</label>
+                                <input type="text"
+                                       id="field_cep"
+                                       name="id"
+                                       class="form-control"
+                                       ui-br-cep-mask=""
+                                       ng-blur="loadEnderecoByCEP(pessoa.dadosPessoais.cep)"
+                                       ng-model="pessoa.dadosPessoais.cep">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="field_codigo_municipio">Município</label>
+
+                                <div class="input-group">
+                                    <input type="text"
+                                           id="field_codigo_municipio"
+                                           name="municioio"
+                                           class="form-control"
+                                           ng-blur="loadMunicipioByCodigo(pessoa.dadosPessoais.municipio.codigo)"
+                                           ng-model="pessoa.dadosPessoais.municipio.codigo">
+                                    <span class="input-group-btn">
+                                            <button type="button" class="btn" ng-click="searchMunicipio()">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="field_municipio_nome">Nome</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="field_municipio_nome"
+                                       name="municipio_nome"
+                                       ng-model="pessoa.dadosPessoais.municipio.nome"
+                                       ng-disabled="true">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="field_municipio_estado">Estado</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="field_municipio_estado"
+                                       name="municipio_estado"
+                                       ng-model="pessoa.dadosPessoais.municipio.estado"
+                                       ng-disabled="true">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="field_logradouro">Logradouro</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="field_logradouro"
+                                       name="logradouro"
+                                       ng-model="pessoa.dadosPessoais.logradouro">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label for="field_bairro">Bairro</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="field_bairro"
+                                       name="bairro"
+                                       ng-model="pessoa.dadosPessoais.bairro">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="field_numero">Número</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="field_numero"
+                                       name="numero"
+                                       ng-model="pessoa.dadosPessoais.numero">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="field_complemento">Complemento</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="field_complemento"
+                                       name="complemento"
+                                       ng-model="pessoa.dadosPessoais.complemento">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Imagem</h4>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <div class="form-group" ng-show="imagemUsuario">
+                            <div class="col-md-4 col-md-offset-4">
+                                <img ng-src="{{imagemUsuario}}" class="img-circle img-responsive">
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-show="imagemUsuario">
+                            <div class="col-md-8 col-md-offset-2">
+                                <button class="btn btn-info btn-block"
+                                        type="button"
+                                        ng-click="imagemUsuario = null">
+                                    <i class="fa fa-refresh"></i>
+                                    Trocar Imagem
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-show="!imagemUsuario">
+
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <label for="file-upload"
+                                           class="custom-file-upload">
+                                        <span class="fa fa-cloud-upload"></span> Selecionar Imagem
+                                    </label>
+                                    <input type="file"
+                                           id="file-upload"
+                                           name="file"
+                                           ngf-select="upload($file)"
+                                           ng-model="arquivo"
+                                           ngf-max-size="15MB"
+                                           accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-show="!imagemUsuario && myImage">
+
+                            <div class="col-md-7">
+                                <label>Imagem Original</label>
+
+                                <div class="cropArea">
+                                    <img-crop image="myImage" result-image="myCroppedImage"></img-crop>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="col-md-12">
+                                    <label>Imagem Ajustada</label>
+                                </div>
+                                <div class="col-md-12">
+                                    <img ng-src="{{myCroppedImage}}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+
+                        <button class="btn btn-primary"
+                                type="submit"
+                                ng-show="myImage">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;
+                            Salvar
+                        </button>
+
+                        <button class = "btn btn-primary"
+                                type="button"
+                                ng-show="myImage"
+                                ng-click="cancelButton()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+                            Cancelar
+                        </button>
+
+                        <button class="btn btn-primary"
+                                ng-show="imagemUsuario"
+                                type="button"
+                                ng-click="delete()">
+                            <span class="glyphicon glyphicon-remove"></span>&nbsp;
+                            Excluir imagem
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

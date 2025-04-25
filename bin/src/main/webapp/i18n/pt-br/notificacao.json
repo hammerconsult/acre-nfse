@@ -1,0 +1,20 @@
+{
+    "nfseApp": {
+        "notificacao" : {
+            "home": {
+                "title": "Notificacaos",
+                "createLabel": "Create a new Notificacao",
+                "createOrEditLabel": "Create or edit a Notificacao"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Notificacao {{ id }}?"
+            },
+            "detail": {
+                "title": "Notificacao"
+            },
+            "titulo": "Titulo",
+            "conteudo": "Conteudo",
+            "usuario": "usuario"
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "nfseApp": {
+    "TipoArredondamentoArquivoDesif": {
+      "null": "",
+      "TIPO_1": "1 - Arredondado",
+      "TIPO_2": "2 – Truncado"
+    }
+  }
+}

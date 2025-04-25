@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span translate="nfseApp.municipio.home.title"> Form </span>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-8">
+                        <search-box ng-model="searchQuery" search-method="search()"></search-box>
+                    </div>
+
+                    <div class="col-md-4">
+                        <button class="btn btn-primary pull-right" ui-sref="municipio.new">
+                            <span class="fa fa-plus"></span> <span
+                            translate="nfseApp.municipio.home.createLabel">Create a new Municipio</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Código IBGE</th>
+                            <th>Nome</th>
+                            <th>UF</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="municipio in municipios">
+                            <td><a ui-sref="municipio.detail({id:municipio.id})">{{municipio.id}}</a></td>
+                            <td>{{municipio.codigoIbge}}</td>
+                            <td>{{municipio.nome}}</td>
+                            <td>{{municipio.estado}}</td>
+                            <td>
+                                <div class="pull-right">
+                                    <button type="submit"
+                                            ui-sref="municipio.detail({id:municipio.id})"
+                                            class="btn btn-info btn-sm">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ui-sref="municipio.edit({id:municipio.id})"
+                                            class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ng-click="delete(municipio.id)"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <span nfse-app-pagination></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="servicoDeclarado" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="c28d35be-f044-4783-88e3-bb477e4c2a19">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.1000000000000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IMAGEM" class="java.io.InputStream"/>
+	<parameter name="MUNICIPIO" class="java.lang.String"/>
+	<parameter name="SECRETARIA" class="java.lang.String"/>
+	<parameter name="DEPARTAMENTO" class="java.lang.String"/>
+	<parameter name="ENDERECO" class="java.lang.String"/>
+	<parameter name="QRCODE" class="java.io.InputStream"/>
+	<parameter name="LOGOPRESTADOR" class="java.io.InputStream"/>
+	<parameter name="URLSITE" class="java.lang.String"/>
+	<parameter name="EMITIDO_EM" class="java.util.Date"/>
+	<parameter name="HOMOLOGACAO" class="java.lang.Boolean"/>
+	<queryString language="SQL">
+		<![CDATA[]]>
+	</queryString>
+	<field name="tomadorCmc" class="java.lang.String"/>
+	<field name="tomadorRazaoSocial" class="java.lang.String"/>
+	<field name="tomadorCpfCnpj" class="java.lang.String"/>
+	<field name="prestadorCmc" class="java.lang.String"/>
+	<field name="prestadorRazaoSocial" class="java.lang.String"/>
+	<field name="prestadorCpfCnpj" class="java.lang.String"/>
+	<field name="numero" class="java.lang.Long"/>
+	<field name="emissao" class="java.util.Date"/>
+	<field name="tipoDocumento" class="java.lang.String"/>
+	<field name="municipio" class="java.lang.String"/>
+	<field name="item" class="java.lang.String"/>
+	<field name="servico" class="java.lang.String"/>
+	<field name="valorServico" class="java.math.BigDecimal"/>
+	<field name="deducao" class="java.math.BigDecimal"/>
+	<field name="baseCalculo" class="java.math.BigDecimal"/>
+	<field name="aliquota" class="java.math.BigDecimal"/>
+	<field name="imposto" class="java.math.BigDecimal"/>
+	<field name="situacao" class="java.lang.String"/>
+	<field name="discriminacaoServico" class="java.lang.String"/>
+	<background>
+		<band height="802">
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="1" width="535" height="58" forecolor="#FE6767" uuid="1f53c2f1-fd21-4678-9a0b-9496dbddd304">
+					<printWhenExpression><![CDATA[$P{HOMOLOGACAO}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="rtf">
+					<font size="16" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[NOTA FISCAL SEM VALIDADE JURIDICA - EMITIDA EM HOMOLOGAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="143" width="535" height="75" forecolor="#FE6767" uuid="f38098fe-45f0-4228-869a-45eba667ba52">
+					<printWhenExpression><![CDATA[$P{HOMOLOGACAO}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="16" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[NOTA FISCAL SEM VALIDADE JURIDICA - EMITIDA EM HOMOLOGAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="306" width="535" height="82" forecolor="#FE6767" uuid="df3d1ef3-3d59-4a98-8166-6b6d453d0fbd">
+					<printWhenExpression><![CDATA[$P{HOMOLOGACAO}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="16" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[NOTA FISCAL SEM VALIDADE JURIDICA - EMITIDA EM HOMOLOGAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="497" width="535" height="70" forecolor="#FE6767" uuid="b3d4ae14-bb22-4b9d-9b39-9f88d0caca37">
+					<printWhenExpression><![CDATA[$P{HOMOLOGACAO}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="16" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[NOTA FISCAL SEM VALIDADE JURIDICA - EMITIDA EM HOMOLOGAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="674" width="535" height="76" forecolor="#FE6767" uuid="6a39a432-6429-407a-a36f-478364e72040">
+					<printWhenExpression><![CDATA[$P{HOMOLOGACAO}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="16" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[NOTA FISCAL SEM VALIDADE JURIDICA - EMITIDA EM HOMOLOGAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="59" width="535" height="58" forecolor="#FE6767" uuid="10da7763-050a-4e11-8e49-a98e11e8f7af">
+					<printWhenExpression><![CDATA[$F{situacao}.equals("CANCELADA")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="16" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO CANCELADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="-2" y="218" width="535" height="58" forecolor="#FE6767" uuid="fb0a72bd-f7ca-4494-bfbd-fbcbb0d7b3bb">
+					<printWhenExpression><![CDATA[$F{situacao}.equals("CANCELADA")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="16" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO CANCELADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="388" width="535" height="58" forecolor="#FE6767" uuid="767ceedb-4783-4c61-b4d5-4b9e21308611">
+					<printWhenExpression><![CDATA[$F{situacao}.equals("CANCELADA")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="16" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO CANCELADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="567" width="535" height="58" forecolor="#FE6767" uuid="74d0998f-7699-4ee4-a585-ca38f7f80fc8">
+					<printWhenExpression><![CDATA[$F{situacao}.equals("CANCELADA")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="16" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO CANCELADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="744" width="535" height="58" forecolor="#FE6767" uuid="ed054aa3-aea7-4fc5-86b9-f91a376acb19">
+					<printWhenExpression><![CDATA[$F{situacao}.equals("CANCELADA")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="16" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO CANCELADO]]></text>
+			</staticText>
+		</band>
+	</background>
+	<title>
+		<band height="116" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="88" y="28" width="353" height="14" uuid="e681aac6-4a01-4447-9b8d-b3564926f016"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SECRETARIA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="88" y="14" width="353" height="14" uuid="40253f04-d0f6-4f17-9b75-367d4b703bfc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{MUNICIPIO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1" height="71" uuid="4b71bda8-1d8a-4cf7-b804-d8ceb21827da"/>
+			</line>
+			<line>
+				<reportElement x="534" y="0" width="1" height="71" uuid="5197727e-ec55-4933-95f3-3ad9b53825da"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="535" height="1" uuid="618fb99b-db4c-4606-86b6-199f97d1bb66"/>
+			</line>
+			<line>
+				<reportElement x="0" y="71" width="535" height="1" uuid="4827c950-e181-4da6-a1f9-dab4eb006c40"/>
+			</line>
+			<textField>
+				<reportElement x="86" y="49" width="353" height="14" uuid="29f4bd67-41a6-4703-aeb5-6ebc89f843fc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rua Rui Barbosa, 285 – Centro - Rio Branco/AC - CEP: 69.900-901 - Tel.: (68) 3212-7042"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="72" width="1" height="44" uuid="01998fdb-be8c-4bfc-95d4-43f464430681"/>
+			</line>
+			<line>
+				<reportElement x="534" y="72" width="1" height="44" uuid="92a2e453-089d-48d7-a441-202dbc42df84"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-43" x="1" y="72" width="534" height="14" backcolor="#CDCDCD" uuid="b1de0bb0-54d9-4546-a881-de5578eda69d"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[DECLARAÇÃO DE RETENÇÃO NA FONTE - DRF /]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="1" y="86" width="534" height="14" backcolor="#CDCDCD" uuid="9c870fc7-0aa9-4a80-8998-937834db9f09"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Imposto Sobre Serviço de Qualquer Natureza - ISSQN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="1" y="101" width="533" height="14" backcolor="#CDCDCD" uuid="43cf12a4-985e-4d7d-ad2f-434efe6b9e0e"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Identificação dos Contribuintes]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="100" width="535" height="1" uuid="f46ccd82-41c7-43f2-9057-0c82a2a50830"/>
+			</line>
+			<image isUsingCache="true">
+				<reportElement x="21" y="14" width="43" height="49" uuid="d6e5ee7a-24fc-46bd-b2dc-493eaeda0aa0"/>
+				<imageExpression><![CDATA[$P{IMAGEM}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="89">
+			<line>
+				<reportElement x="0" y="88" width="535" height="1" uuid="4c5ee08e-fb9d-4c82-8b85-892b6eab4686"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="535" height="1" uuid="2441c0da-0dc3-4593-9005-bcff5740b007"/>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="1" height="87" uuid="083696ed-8a54-4c0b-adba-e070a1be5b3f"/>
+			</line>
+			<line>
+				<reportElement x="534" y="1" width="1" height="87" uuid="13f70921-5b09-42fd-a019-cf905e1d4324"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-43" x="29" y="1" width="505" height="14" backcolor="#CDCDCD" uuid="4a73be69-6129-452a-b1da-45bf97e9bd02"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[CONTRIBUINTE SUBSTITUTO - RESPONSÁVEL TRIBUTÁRIO - TOMADOR DO SERVIÇO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="29" y="15" width="102" height="14" backcolor="#CDCDCD" uuid="1ec319b0-ecc3-4a56-8318-410f5bd37f44"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[C.M.C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="139" y="15" width="286" height="14" backcolor="#CDCDCD" uuid="25f43b58-159f-44b9-959c-4814259236a0"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Razão Social]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="428" y="15" width="106" height="14" backcolor="#CDCDCD" uuid="738515be-1d5b-4a37-88a2-94558a4ded03"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[CPF/CNPJ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="29" y="29" width="102" height="14" uuid="2478e359-560c-485d-84a0-3cc234efaacb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tomadorCmc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="139" y="29" width="286" height="14" uuid="5e6a277a-c9fb-432f-919a-0c06dd5a5e2a"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tomadorRazaoSocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="29" width="106" height="14" uuid="03461fb4-f240-426a-acd2-31f58e401cb9"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tomadorCpfCnpj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="139" y="74" width="286" height="14" uuid="6f5ba2b2-7a51-44fe-963a-0cdbd4185c21"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prestadorRazaoSocial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-43" x="428" y="60" width="106" height="14" backcolor="#CDCDCD" uuid="e6714780-cad8-469e-a41a-45aa0e8cd72e"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[CPF/CNPJ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="29" y="60" width="102" height="14" backcolor="#CDCDCD" uuid="51d4df41-301e-44dc-8516-0866aad4f664"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[C.M.C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="139" y="60" width="286" height="14" backcolor="#CDCDCD" uuid="ec986107-5ca2-4507-9a01-d3abcb245a09"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Razão Social]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="29" y="74" width="102" height="14" uuid="aa9a2666-49f9-454a-8866-b600de629f7c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prestadorCmc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-43" x="29" y="46" width="505" height="14" backcolor="#CDCDCD" uuid="201cea96-8300-481e-b3f9-bc95bb4da916"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[CONTRIBUINTE SUBSTITUÍDO - PRESTADOR DO SERVIÇO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="428" y="74" width="106" height="14" uuid="9504a32c-8a1f-45f4-b689-fae75a8b7f25"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prestadorCpfCnpj}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="133">
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement positionType="Float" x="456" y="118" width="77" height="14" uuid="470332a1-0a68-4951-99f7-8e9cbe4d91b6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{imposto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-43" x="1" y="0" width="533" height="19" backcolor="#CDCDCD" uuid="ac67a622-7d44-4920-92ac-12817d9e6496"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Dados da Nota Fiscal - NFSE]]></text>
+			</staticText>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="-1" width="1" height="133" uuid="3c9337ca-7808-471c-895a-788bb7282dcd"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="534" y="-1" width="1" height="133" uuid="15c2f093-4125-4193-9385-8ac48e30bbbd"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-43" x="29" y="19" width="86" height="14" backcolor="#CDCDCD" uuid="d2b21e49-b0c2-442a-bcdb-dd247e1fb927"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[N° Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="115" y="19" width="70" height="14" backcolor="#CDCDCD" uuid="68578b25-b1da-40b2-bba7-33d0d64cf38d"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Emissão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="185" y="19" width="186" height="14" backcolor="#CDCDCD" uuid="4906ab4d-b240-44fc-8d97-dfb291a5ecbf"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Tipo de Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="371" y="19" width="163" height="14" backcolor="#CDCDCD" uuid="d72feac7-819e-4079-859c-e92579104c38"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Municipio]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="29" y="33" width="86" height="14" uuid="834bf353-bf26-4ca8-ac77-7d612bc2c527"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="115" y="33" width="70" height="14" uuid="324c882e-1630-4f28-9551-30eb8aa26b62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emissao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="33" width="186" height="14" uuid="2ee0dee3-6d88-4ff6-bb43-bc871020e312"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoDocumento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="33" width="163" height="14" uuid="e9f6ddea-4d85-427b-9b1a-4059680d63e7"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{municipio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-43" x="5" y="47" width="59" height="14" backcolor="#CDCDCD" uuid="4df587a2-b479-45f1-a107-1299d2762e68"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="64" y="47" width="187" height="14" backcolor="#CDCDCD" uuid="9cc34687-b0f8-45ce-ac1f-1010f3125916"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Serviço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="251" y="47" width="70" height="14" backcolor="#CDCDCD" uuid="2448db65-ee66-4111-82b1-526a337e8669"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Valor Serviço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="321" y="47" width="50" height="14" backcolor="#CDCDCD" uuid="365ccbba-68cf-495c-b99f-4a720135fb77"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Dedução]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="371" y="47" width="70" height="14" backcolor="#CDCDCD" uuid="4f9e9825-69ec-4b75-81b7-e3cc4a31c9c5"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Base de Cálculo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="445" y="47" width="27" height="14" backcolor="#CDCDCD" uuid="4b14e14f-a931-4a4b-a9d4-3a3c913d4f78"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Alíq. %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="473" y="47" width="60" height="14" backcolor="#CDCDCD" uuid="d064d3e3-6016-49eb-87b6-558df92226f2"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Imposto]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="5" y="63" width="59" height="14" uuid="f5384726-e3d3-4b24-8391-a6892528b1c4"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="63" width="187" height="14" uuid="4419f29b-6ce1-452b-b719-cbc48afd70a5"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{servico}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="62" width="532" height="1" uuid="fc953f98-5fb3-48bc-adbd-298abd038977"/>
+			</line>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="251" y="63" width="70" height="14" uuid="f8bbc6e9-86cc-4bb1-9866-279950b75960"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorServico}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="321" y="63" width="50" height="14" uuid="ea75d30b-570c-4d20-a830-20071a3eed53"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deducao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="371" y="63" width="70" height="14" uuid="04b46736-545b-4e0c-9670-5875c7b80b55"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{baseCalculo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="445" y="63" width="27" height="14" uuid="b219b3b7-7618-476f-b993-b7f2c5393f60"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aliquota}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="473" y="63" width="60" height="14" uuid="b72e57ea-f587-41ac-b9ae-91f393741063"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{imposto}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="117" width="535" height="1" uuid="4948b1fa-aa5e-4a6b-82ab-9225e4341f08"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-43" positionType="Float" x="363" y="118" width="93" height="14" backcolor="#CDCDCD" uuid="2d876ed6-73af-4cca-9ce1-9c6a21c5178c"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Valor Total Retido:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="0" y="132" width="535" height="1" uuid="6cc41bf2-d65d-4c53-9d50-a944a18822a4"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-43" x="5" y="77" width="134" height="14" backcolor="#CDCDCD" uuid="8a4a5d75-dfd5-4083-a092-0b86540431ce"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Discriminação do Serviço]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="5" y="91" width="528" height="26" uuid="d68da147-ea4c-454d-8104-5e0bb89d2011"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{discriminacaoServico}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="116">
+			<line>
+				<reportElement x="0" y="0" width="1" height="93" uuid="1ba68e55-7675-4df0-8411-18b5e1b65f1e"/>
+			</line>
+			<line>
+				<reportElement x="534" y="0" width="1" height="94" uuid="d07d1bdc-be4d-4d65-ad8a-598a37c53a38"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-43" x="1" y="0" width="533" height="19" backcolor="#CDCDCD" uuid="878a4166-b9ca-46d8-96c2-29477349b58b"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[DA DECLARAÇÂO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="5" y="20" width="520" height="30" backcolor="#CDCDCD" uuid="e672dfc0-6d93-4db2-b543-45b6261779fd"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Arial" size="7" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Declaro que procedi a rentenção do ISS na fonte, conforme Art. 7º do Decreto n.º 165, de 2 de fevereiro de 2014. Nesta senda, comprometo-me a realizar o repasse do valor do imposto retido à Prefeitura Municipal de Rio Branco até o dia 15 do mês subsequente à retenção.Declaro ainda, estar ciente de que o não cumprimento do disposto no Art. 7º do Decreto n.º 165, de 2 de fevereiro de 2014 ensejará nas penalidades do Art. 6º do mesmo decreto.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" x="158" y="77" width="93" height="14" backcolor="#CDCDCD" uuid="1610fff0-6e24-4b33-9f76-963cfbb7e3b0"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Emitido em ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy hh:mm">
+				<reportElement x="258" y="77" width="233" height="14" uuid="db717676-9b80-4a8a-b248-4592a7a01bac"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date())]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="73" width="534" height="1" uuid="29cf04e4-f60c-48ee-92fa-4eb38dae7ddd"/>
+			</line>
+			<line>
+				<reportElement x="0" y="93" width="534" height="1" uuid="3f21a9e6-f593-4fb6-abf8-b4b5d80cbef3"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

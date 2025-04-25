@@ -1,0 +1,28 @@
+{
+    "nfseApp": {
+        "declaracaoPrestacaoServico": {
+            "home": {
+                "title": "DeclaracaoPrestacaoServicos",
+                "createLabel": "Create a new DeclaracaoPrestacaoServico",
+                "createOrEditLabel": "Create or edit a DeclaracaoPrestacaoServico"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete DeclaracaoPrestacaoServico {{ id }}?"
+            },
+            "detail": {
+                "title": "DeclaracaoPrestacaoServico"
+            },
+            "naturezaOperacao": "Natureza da Operação",
+            "situacaoTributaria": "Situação Tributaria",
+            "issRetido": "ISS Retido",
+            "reponsavelRetencao": "Responsável Pela Retenção",
+            "optanteSimplesNacional": "Optante do Simples Nacional",
+            "competencia": "Competência",
+            "tomador": "Tomador de Serviços",
+            "intermediario": "Intermediário",
+            "prestador": "Prestador",
+            "construcaoCivil": "Construcão Civil",
+            "condicaoPagamento": "Condiçãoo de Pagamento"
+        }
+    }
+}

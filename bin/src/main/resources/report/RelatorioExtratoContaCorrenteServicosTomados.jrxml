@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioConsultaDebitos" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="32c1d664-d92b-48e4-aa50-20ac0fae0d2d">
+	<property name="ireport.zoom" value="1.2100000000000029"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="BRASAO" class="java.lang.String"/>
+	<parameter name="USUARIO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PESSOA" class="java.lang.String"/>
+	<parameter name="CPF_CNPJ" class="java.lang.String"/>
+	<parameter name="ENDERECO" class="java.lang.String"/>
+	<parameter name="FILTROS" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\projetos\\trunk\\src\\main\\webapp\\WEB-INF\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TOTALPORSITUACAO" class="java.util.List"/>
+	<parameter name="IMAGEM" class="java.io.InputStream"/>
+	<parameter name="MUNICIPIO" class="java.lang.String"/>
+	<parameter name="TITULO" class="java.lang.String"/>
+	<parameter name="SECRETARIA" class="java.lang.String"/>
+	<parameter name="DEPARTAMENTO" class="java.lang.String"/>
+	<parameter name="CONTRIBUINTE" class="java.lang.String"/>
+	<parameter name="PERIODO" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DETALHAMENTO" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+	<parameter name="SUBREPORT_TOTAL_POR_NATUREZA" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="exercicio" class="java.lang.Integer"/>
+	<field name="mes" class="java.lang.Integer"/>
+	<field name="issqnProprio" class="java.math.BigDecimal"/>
+	<field name="issqnRetido" class="java.math.BigDecimal"/>
+	<field name="issqnPago" class="java.math.BigDecimal"/>
+	<field name="saldoIssqn" class="java.math.BigDecimal"/>
+	<field name="documentos" class="java.util.List"/>
+	<field name="tipoMovimento" class="java.lang.String"/>
+	<field name="totalPorNaturezaSituacao" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="96" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="45" height="42" uuid="876e3651-e926-4d49-85dc-df5111bd9208"/>
+				<imageExpression><![CDATA[$P{IMAGEM}]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="60" y="67" width="743" height="14" uuid="cf1b25fd-03b2-41b6-b208-0cfa87348d7d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PERIODO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="47" width="803" height="1" uuid="bf708610-0f7e-4ce8-b6ed-35739f07034a"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="50" y="28" width="752" height="14" uuid="1d4d8a73-29f9-49e3-ae75-e21063909200"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXTRATO DE CONTA CORRENTE - SERVIÇOS TOMADOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="50" y="14" width="752" height="14" uuid="7127e621-5aa6-4225-bdaf-4ccc0907c6d7"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SECRETARIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="0" width="752" height="14" uuid="3e542e66-7cb5-4f67-983c-d9cf8f11103e"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{MUNICIPIO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="60" y="53" width="743" height="14" uuid="294e9b9e-5800-4041-9978-dcc16da011ed"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CONTRIBUINTE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="53" width="60" height="14" uuid="6559f21d-d9c9-43b7-b34c-a49b681b5533"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Contribuinte:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="67" width="60" height="14" uuid="77816066-3c0c-4de4-9e17-1587b28e5e09"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Período:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<subreport isUsingCache="true">
+				<reportElement x="0" y="0" width="801" height="14" uuid="9ae6c4a3-0981-4cdb-923a-42a44a5a1b47"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_TOTAL_POR_NATUREZA">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_TOTAL_POR_NATUREZA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="totalPorNaturezaSituacao">
+					<subreportParameterExpression><![CDATA[$F{totalPorNaturezaSituacao}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{documentos})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DETALHAMENTO}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="16">
+			<textField>
+				<reportElement positionType="Float" x="516" y="0" width="259" height="11" uuid="1f774685-3881-4176-9b58-e411c482907a"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Usuário: " + $P{USUARIO} + " - Emitido em " + new SimpleDateFormat("dd/MM/yyyy").format(new Date()) + " às " + new SimpleDateFormat("HH").format(new Date()) + "h" + new SimpleDateFormat("mm").format(new Date()) + " - Página: " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="0" width="260" height="11" uuid="4940186a-d1b6-42a2-ace5-208c6a323be2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["WebPúblico - Módulo: Tributário"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="801" height="1" uuid="4d7b6620-2d20-48c3-8248-decd278fce0f"/>
+			</line>
+			<textField evaluationTime="Report">
+				<reportElement x="775" y="1" width="26" height="11" uuid="d9c1fefa-c2c1-42b9-8b03-8c4c579777f8"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="65">
+			<staticText>
+				<reportElement x="0" y="19" width="270" height="14" uuid="15b66063-8694-457f-b78e-276e14738b76"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Total Geral]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="33" width="90" height="14" uuid="111dd028-2bbe-4dd8-a105-ea1d905149ee"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Subs, ISSQN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="33" width="90" height="14" uuid="b278fa35-3b85-440f-a40b-1a7239de0e1c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[ISSQN Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="33" width="90" height="14" uuid="aaff0d9f-844b-4fb1-9661-5192122c4da8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Saldo ISSQN]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="47" width="90" height="14" uuid="20715e2c-1e49-4952-82ae-d153dbea4a6c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{issqnRetido}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="90" y="47" width="90" height="14" uuid="9520e950-3ba4-4b3a-9abc-09d06eb2d66a"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{issqnPago}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="180" y="47" width="89" height="14" uuid="4ee2391a-6c3b-44dc-b0dd-220d26183c5e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldoIssqn}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="33" width="270" height="1" uuid="9c32410e-5547-41a7-90dd-91294a7f47b7"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+	<noData>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="468bb728-5b78-45d4-8e26-683b27f93a97"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Nenhum registro encontrado]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,235 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label>Período Inicial</label>
+                    </div>
+                    <div class="col-md-5">
+                        <label>Período Final</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-2">
+                        <input type="text"
+                               id="field_inicial"
+                               ng-required
+                               class="form-control"
+                               ng-model="exercicioInicial">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <select class="form-control"
+                                id="field_mes_inicial"
+                                ng-required
+                                ng-model="mesInicial"
+                                ng-options="mes as mes.descricao for mes in meses track by mes.numeroMes"></select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <input type="text"
+                               id="field_final"
+                               ng-required
+                               class="form-control"
+                               ng-model="exercicioFinal">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <select class="form-control"
+                                id="field_mes_final"
+                                ng-model="mesFinal"
+                                ng-options="mes as mes.descricao for mes in meses track by mes.numeroMes"></select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <button class="btn btn-info btn-block"
+                                ng-disabled="!exercicioInicial || !exercicioFinal"
+                                ng-click="loadAll()">
+                            <span class="fa fa-search"></span> <span>Filtrar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ibox animated fadeInDown"
+     ng-if="(competenciasServicosPrestados && competenciasServicosPrestados.length > 0) &&
+     (competenciasServicosTomados && competenciasServicosTomados.length > 0)">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li ng-if="!prestador.enquadramentoFiscal.instituicaoFinanceira">
+                        <a class="nav-link {{activeTab == 0 ? 'active' : ''}}" data-toggle="tab" ng-click="mudarTab(0)">
+                            Serviços Prestados
+                        </a>
+                    </li>
+                    <li ng-if="prestador.enquadramentoFiscal.instituicaoFinanceira">
+                        <a class="nav-link {{activeTab == 1 ? 'active' : ''}}" data-toggle="tab" ng-click="mudarTab(1)">
+                            Serviços Prestados
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link {{activeTab == 2 ? 'active' : ''}}" data-toggle="tab" ng-click="mudarTab(2)">
+                            Serviços Tomados
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tabs-container">
+                    <div class="tab-content">
+                        <div role="tabpanel" id="tab-0" class="tab-pane {{activeTab == 0 ? 'active' : ''}}">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover table-condensed">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2"></th>
+                                        <th colspan="4" style="text-align: center!important;"><small>Notas fiscais escrituradas</small></th>
+                                        <th colspan="4" style="text-align: center!important;"><small>Notas fiscais não escrituradas</small></th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th><small>Referência</small></th>
+                                        <th style="text-align: right"><small>Quantidade</small></th>
+                                        <th style="text-align: right"><small>Serviços</small></th>
+                                        <th style="text-align: right"><small>ISSQN Próprio</small></th>
+                                        <th style="text-align: right"><small>ISSQN Retido</small></th>
+                                        <th style="text-align: right"><small>Quantidade</small></th>
+                                        <th style="text-align: right"><small>Serviços</small></th>
+                                        <th style="text-align: right"><small>ISSQN Próprio</small></th>
+                                        <th style="text-align: right"><small>ISSQN Retido</small></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="competencia in competenciasServicosPrestados">
+                                        <td>
+                                            <button class="btn btn-xs" ng-click="imprimirLivro(competencia)">
+                                                <i class="fa fa-print"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <small>{{'nfseApp.Mes.' + competencia.mes | translate}}/{{competencia.exercicio}}</small>
+                                        </td>
+                                        <td style="text-align: right"><small>{{competencia.quantidade}}</small></td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.valorServico | currency: 'R$ '}}</small></td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.issqnProprio | currency: 'R$ '}}</small></td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.issqnRetido | currency: 'R$ '}}</small></td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.quantidadeNaoDeclarado}}</small></td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.valorServicoNaoDeclarado | currency: 'R$ '}}</small>
+                                        </td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.issqnProprioNaoDeclarado | currency: 'R$ '}}</small>
+                                        </td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.issqnRetidoNaoDeclarado | currency: 'R$ '}}</small>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel" id="tab-1" class="tab-pane {{activeTab == 1 ? 'active' : ''}}">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover table-condensed">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th><small>Referência</small></th>
+                                        <th style="text-align: right"><small>Quantidade Contas</small></th>
+                                        <th style="text-align: right"><small>Serviços</small></th>
+                                        <th style="text-align: right"><small>ISSQN Próprio</small></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="competencia in competenciasServicosPrestados">
+                                        <td>
+                                            <button class="btn btn-xs" ng-click="imprimirLivro(competencia)">
+                                                <i class="fa fa-print"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <small>{{'nfseApp.Mes.' + competencia.mes | translate}}/{{competencia.exercicio}}</small>
+                                        </td>
+                                        <td style="text-align: right"><small>{{competencia.quantidade}}</small></td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.valorServico | currency: 'R$ '}}</small></td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.issqnProprio | currency: 'R$ '}}</small></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel" id="tab-2" class="tab-pane {{activeTab == 2 ? 'active' : ''}}">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover table-condensed">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2"></th>
+                                        <th colspan="4" style="text-align: center!important;"><small>Notas fiscais escrituradas</small></th>
+                                        <th colspan="4" style="text-align: center!important;"><small>Notas fiscais não escrituradas</small></th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th><small>Referência</small></th>
+                                        <th style="text-align: right"><small>Quantidade</small></th>
+                                        <th style="text-align: right"><small>Serviços</small></th>
+                                        <th style="text-align: right"><small>ISSQN Próprio</small></th>
+                                        <th style="text-align: right"><small>ISSQN Retido</small></th>
+                                        <th style="text-align: right"><small>Quantidade</small></th>
+                                        <th style="text-align: right"><small>Serviços</small></th>
+                                        <th style="text-align: right"><small>ISSQN Próprio</small></th>
+                                        <th style="text-align: right"><small>ISSQN Retido</small></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="competencia in competenciasServicosTomados">
+                                        <td>
+                                            <button class="btn btn-xs" ng-click="imprimirLivro(competencia)">
+                                                <i class="fa fa-print"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <small>{{'nfseApp.Mes.' + competencia.mes | translate}}/{{competencia.exercicio}}</small>
+                                        </td>
+                                        <td style="text-align: right"><small>{{competencia.quantidade}}</small></td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.valorServico | currency: 'R$ '}}</small></td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.issqnProprio | currency: 'R$ '}}</small></td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.issqnRetido | currency: 'R$ '}}</small></td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.quantidadeNaoDeclarado}}</small></td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.valorServicoNaoDeclarado | currency: 'R$ '}}</small>
+                                        </td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.issqnProprioNaoDeclarado | currency: 'R$ '}}</small>
+                                        </td>
+                                        <td style="text-align: right">
+                                            <small>{{competencia.issqnRetidoNaoDeclarado | currency: 'R$ '}}</small>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="alert alert-info"
+         ng-if="(competenciasServicosPrestados && competenciasServicosPrestados.length == 0) &&
+         (competenciasServicosTomados && competenciasServicosTomados.length == 0)">
+        Nenhum movimento encontrato para os filtros selecionados.
+    </div>
+</div>

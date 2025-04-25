@@ -1,0 +1,44 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myRPSLabel" translate="nfseApp.rPS.home.createOrEditLabel">Create or edit a RPS</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label translate="global.field.id">ID</label>
+            <input type="text" class="form-control" name="id"
+                    ng-model="rPS.id" readonly>
+        </div>
+
+        <div class="form-group">
+            <label translate="nfseApp.rPS.numero" for="field_numero">Numero</label>
+            <input type="text" class="form-control" name="numero" id="field_numero"
+                    ng-model="rPS.numero">
+
+        </div>
+        <div class="form-group">
+            <label translate="nfseApp.rPS.serie" for="field_serie">Serie</label>
+            <input type="text" class="form-control" name="serie" id="field_serie"
+                    ng-model="rPS.serie">
+
+        </div>
+        <div class="form-group">
+            <label translate="nfseApp.rPS.dataEmissao" for="field_dataEmissao">DataEmissao</label>
+            <input type="date" class="form-control" name="dataEmissao" id="field_dataEmissao"
+                    ng-model="rPS.dataEmissao">
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ui-sref="rPS">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid" not-has-role="ROLE_ADMIN" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

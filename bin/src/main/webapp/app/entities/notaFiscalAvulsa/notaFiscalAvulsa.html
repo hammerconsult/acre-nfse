@@ -1,0 +1,129 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-lg-12 text-right">
+                <button class="btn btn-outline btn-primary" ng-show="!mostrarFiltros"
+                        ng-click="habilitarDesabilitarFiltros()">
+                    <i class="fa fa-filter"></i> <span>Filtrar</span>
+                </button>
+
+                <button class="btn btn-primary" ui-sref="notaFiscalAvulsa.new">
+                    <i class="fa fa-plus"></i> <span>Emitir Nota</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="row m-t-md" ng-show="mostrarFiltros">
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <div class="form-group col-md-3">
+                        <label>Período Inicial</label>
+                        <input enter-as-tab type="date"
+                               id="dataInicial"
+                               ng-model="emissaoInicial"
+                               class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Período Final</label>
+                        <input enter-as-tab type="date"
+                               ng-model="emissaoFinal"
+                               class="form-control">
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>N° Nota Inicial</label>
+                        <input enter-as-tab type="text"
+                               ng-model="notaFiscalInicial"
+                               class="form-control">
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>N° Nota Final</label>
+                        <input enter-as-tab type="text"
+                               ng-model="notaFiscalFinal"
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-4 form-group">
+                        <label>CPF/CNPJ Tomador</label>
+                        <input enter-as-tab type="text"
+                               ng-model="cpfCnpjTomador"
+                               class="form-control">
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <label>Nome/Razão Social Tomador</label>
+                        <input enter-as-tab type="text"
+                               ng-model="nomeRazaoSocialTomador"
+                               class="form-control">
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12 form-group">
+                <button type="button"
+                        ng-click="loadAll()"
+                        class="btn btn-primary">
+                    <span class="fa fa-search"></span>
+                    <span>Pesquisar</span>
+                </button>
+                <button ng-click="habilitarDesabilitarFiltros()"
+                        class="btn btn-default">
+                    <span class="fa fa-close"></span>
+                    <span>Cancelar</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="div-tabela-notas" class="table-responsive">
+            <table class="table table-striped table-hover small">
+                <thead>
+                <tr>
+                    <th>Opções</th>
+                    <th>Número</th>
+                    <th>Data da Nota</th>
+                    <th>Tomador</th>
+                    <th>Total Serviços</th>
+                    <th>Total ISS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="notaFiscalAvulsa in notasFiscaisAvulsa | orderBy:'-numero'">
+                    <td class="dropdown">
+                        <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown" type="button">
+                            <i class="fa fa-caret-down"></i>
+                            Opções
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a type="submit"
+                                   title="clique para visualizar os dados deste documento"
+                                   ui-sref="notaFiscalAvulsa.detail({id:notaFiscalAvulsa.id})"
+                                   class="text-info">
+                                    <span class="fa fa-eye"></span>
+                                    Visualizar
+                                </a>
+                            </li>
+                            <li>
+                                <a type="submit"
+                                   title="Clique para imprimir a guia"
+                                   ng-click="imprimeNFSAvulsa(notaFiscalAvulsa.id)"
+                                   class="text-primary">
+                                    <span class="fa fa-print"></span>
+                                    Imprimir Nota
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                    <td>{{notaFiscalAvulsa.numero}}</a></td>
+                    <td>{{notaFiscalAvulsa.dataNota | date : 'dd/MM/yyyy'}}</td>
+                    <td>{{notaFiscalAvulsa.tomador}}</td>
+                    <td>{{notaFiscalAvulsa.valorServicos | currency:"R$ "}}</td>
+                    <td>{{notaFiscalAvulsa.valorTotalIss | currency:"R$ "}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <span nfse-app-pagination></span>
+        </div>
+    </div>
+</div>

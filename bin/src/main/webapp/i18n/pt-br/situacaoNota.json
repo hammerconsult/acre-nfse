@@ -1,0 +1,12 @@
+{
+  "nfseApp": {
+    "SituacaoNota": {
+      "null": "",
+      "EMITIDA": "Emitida",
+      "NAO_EMITIDA": "Não Emitida",
+      "ABERTA": "Aberta",
+      "PAGA": "Paga",
+      "CANCELADA": "Cancelada"
+    }
+  }
+}

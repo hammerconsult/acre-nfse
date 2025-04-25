@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="ibox">
+        <div class="ibox-content">
+            <div class="row">
+
+                <div class="col-lg-4 p-lg">
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <i class="fa fa-tag"></i>
+                            Clique no nome do arquivo para ver o conteúdo
+                        </li>
+                        <li class="list-group-item"
+                            ng-repeat="tipoLegislacao in tiposLegislacao">
+                            <div style="display: flex; justify-content: space-between;"
+                                 ng-click="exibirLegislacoes(tipoLegislacao)">
+                                <div>
+                                    <i class="fa fa-paste"></i>
+                                    <span>{{tipoLegislacao.descricao}}</span>
+                                </div>
+                                <i class="fa {{tipoLegislacao.exibir ? 'fa-arrow-up' : 'fa-arrow-down'}}"
+                                   aria-hidden="true"></i>
+                            </div>
+                            <div ng-show="tipoLegislacao.exibir" style="padding: 10px 0 0 5px">
+                                <table class="table">
+                                    <tr class="{{legislacaoSelecionada.id == legislacao.id ? 'info' : ''}}"
+                                        ng-repeat="legislacao in legislacoesPorTipo[tipoLegislacao.id]">
+                                        <td ng-click="buscarArquivo(legislacao)">
+                                            {{legislacao.nome}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-8 p-lg">
+                    <div ng-show="legislacaoSelecionada">
+                        <div style="text-align: center; padding: 10px;">
+                            <h2>{{legislacaoSelecionada.nome}}</h2>
+                        </div>
+                        <div ng-show="legislacaoSelecionada.arquivoDTO && legislacaoSelecionada.arquivoDTO.id">
+                            <div ng-show="isPdf()">
+                                <div class="row">
+                                    <div class="col-md-12 text-muted text-center">
+                                        <small>Não consegue visualizar o arquivo? <a ng-click="baixarAnexo()"> Clique
+                                            aqui</a>
+                                            para
+                                            fazer
+                                            download
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="row m-t-md">
+                                    <div class="col-md-12 text-center">
+                                        <embed ng-show="conteudo" ng-src="{{conteudo}}"
+                                               style="min-width: 100%; min-height: 500px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="!isPdf()" style="padding: 20px; text-align: center;">
+                                <a class="btn btn-xs btn-success" style="color: white"
+                                   href="/api/arquivo/{{legislacaoSelecionada.arquivoDTO.id}}" target="_blank">
+                                    <i class="fa fa-download"></i>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                        <div ng-show="!legislacaoSelecionada.arquivoDTO || !legislacaoSelecionada.arquivoDTO.id" style="text-align: center;">
+                            <span>Nenhum arquivo informado.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <form name="editForm" class="form-horizontal" role="form" novalidate ng-submit="save()">
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label>Código da Obra</label>
+                            <input id="codigo_bra"
+                                   name="field_codigo_obra"
+                                   ng-value="obra.codigoObra"
+                                   ng-disabled="true"
+                                   class="form-control">
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-success"
+                            ui-sref="construcaoCivil">
+                        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+                        <span>Voltar</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+{
+    "nfseApp": {
+        "TipoPorte": {
+            "null": "",
+            "EVENTUAL": "Eventual",
+            "PERMANENTE": "Permanente"
+        }
+    }
+}

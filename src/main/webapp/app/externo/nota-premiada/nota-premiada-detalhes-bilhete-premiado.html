@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cancel()">&times;
+    </button>
+    <h4 class="modal-title" id="myMunicipioLabel">
+        <strong>{{nota.descricao}}</strong>
+        <!--<div class="font-bold">{{legislacao.nome}}</div>-->
+    </h4>
+</div>
+<div class="modal-body">
+    <div class="row" style="overflow-x: scroll;  max-height: 300px;">
+        <h1>Bilhetes Premiados</h1>
+        <div class="table-responsive"  >
+            <table class="table table-striped table-hover small">
+                <thead>
+                <tr>
+                    <th>Código do Bilhete</th>
+                    <th>Prêmio</th>
+                    <th>Pessoa</th>
+                    <th>NFSe Número</th>
+                    <th>Emissão </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="bilhete in bilhetes | orderBy:'-dataSorteio'">
+                    <td>{{bilhete.id}}</td>
+                    <td>{{bilhete.premio}}</td>
+                    <td>{{bilhete.pessoa}}</td>
+                    <td>{{bilhete.numeroNotaFiscal}}</td>
+                    <td>{{bilhete.emissaoNotaFiscal | date : 'dd/MM/yyyy'}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

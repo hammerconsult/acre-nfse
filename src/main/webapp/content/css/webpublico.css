@@ -1,0 +1,231 @@
+
+.date-input > ul > li > div > table > tbody > tr > td > button {
+    color: #333 !important;
+    background-color: #FFF !important;
+    border-color: #CCC !important;
+}
+
+.date-input > ul > li > div > table > thead > tr > th {
+    vertical-align: middle;
+}
+
+.date-input > ul > li > div > table > thead > tr > th > button {
+    margin-left: 1px;
+}
+
+.onoffswitch-label {
+    height: 30px;
+}
+
+.onoffswitch-inner::before {
+    height: 30px;
+    padding-top: 5%;
+}
+
+.onoffswitch-inner::after {
+    height: 30px;
+    padding-top: 5%;
+}
+
+.form-control, .single-line {
+    border: 1px solid #CCC;
+}
+
+/*.tab-content {*/
+/*    padding-top: 15px;*/
+/*}*/
+
+.cropArea {
+    background: #E4E4E4;
+    overflow: hidden;
+    width: 500px;
+    height: 350px;
+}
+
+.footer-externo {
+    text-align: center;
+    bottom: 0;
+    left: 0;
+    padding: 10px 20px;
+    position: absolute;
+    right: 0;
+}
+
+.loginscreen.middle-box {
+    margin-top: 0 !important
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    /*/!*border: 1px solid #ccc;*!/*/
+    /*display: inline-block;*/
+    /*padding: 6px 12px;*/
+    /*cursor: pointer;*/
+    /*color: #357BB8;*/
+
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #72C6C8;
+
+    display: block;
+    width: 100%;
+
+    color: inherit;
+    background-color: transparent;
+    transition: all .5s;
+}
+
+.custom-file-upload:hover {
+    color: #333;
+    text-decoration: none;
+
+    color: #fff;
+    background-color: #72C6C8;
+    border-color: #72C6C8;
+
+}
+
+.count-info .text-small {
+    line-height: 12px;
+    padding-left: 5px;
+    position: absolute;
+    left: 6px;
+    top: 12px;
+    font-size: 10px;
+    font-weight: normal;
+    color: #fff;
+}
+
+.user-info {
+    max-width: 50px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    vertical-align: top;
+    line-height: 15px;
+    position: relative;
+}
+
+
+@media (min-width: 768px) {
+    .navbar-center {
+        position: absolute;
+        left: 50%;
+        transform: translatex(-50%);
+    }
+}
+
+@media (min-width: 800px) {
+    .user-info {
+        max-width: 100px;
+    }
+}
+
+@media (min-width: 1000px) {
+    .user-info {
+        max-width: 150px;
+    }
+}
+
+@media (min-width: 1100px) {
+    .user-info {
+        max-width: 250px;
+    }
+}
+
+@media (min-width: 1366px) {
+    .user-info {
+        max-width: 390px;
+    }
+}
+
+.icon-animated-bell {
+    display: inline-block;
+    -moz-animation: ringing 5.0s 10 ease 0.5s;
+    -webkit-animation: ringing 5.0s 10 ease 0.5s;
+    -o-animation: ringing 5.0s 10 ease 0.5s;
+    -ms-animation: ringing 5.0s 10 ease 0.5s;
+    animation: ringing 5.0s 10 ease 0.5s;
+    -moz-transform-origin: 50% 0;
+    -webkit-transform-origin: 50% 0;
+    -o-transform-origin: 50% 0;
+    -ms-transform-origin: 50% 0;
+    transform-origin: 50% 0
+}
+
+.icon-animated-bell {
+    display: inline-block;
+    -moz-animation: ringing 5.0s 10 ease 0.5s;
+    -webkit-animation: ringing 5.0s 10 ease 0.5s;
+    -o-animation: ringing 5.0s 10 ease 0.5s;
+    -ms-animation: ringing 5.0s 10 ease 0.5s;
+    animation: ringing 5.0s 10 ease 0.5s;
+    -moz-transform-origin: 50% 0;
+    -webkit-transform-origin: 50% 0;
+    -o-transform-origin: 50% 0;
+    -ms-transform-origin: 50% 0;
+    transform-origin: 50% 0
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-clear-button,
+input::-webkit-calendar-picker-indicator {
+    display: none !important;
+}
+
+.indice {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.indice li:before {
+    float: left;
+    margin-left: -20px;
+    color: #609cec;
+}
+
+.header-indice {
+    margin: 10px 0px 15px 0px;
+}
+
+.header-indice h3 {
+    font-size: 18px;
+    line-height: 36px;
+    font-weight: 600;
+    padding: 0px 10px 6px 0px;
+    border-bottom: 1px solid #eee;
+    color: #666;
+    font-family: 'Open Sans', sans-serif;
+    margin: 2px 0px;
+}
+
+.header-indice h3 span {
+    padding-bottom: 11px;
+    border-bottom: 3px solid;
+    border-color: #609cec;
+}

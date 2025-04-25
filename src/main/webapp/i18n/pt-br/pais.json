@@ -1,0 +1,20 @@
+{
+    "nfseApp": {
+        "pais" : {
+            "home": {
+                "title": "Paises",
+                "createLabel": "Criar um novo País",
+                "createOrEditLabel": "Criar ou editar um País"
+            },
+            "delete": {
+                "question": "Tem certeza que você quer deletar o País {{ id }}?"
+            },
+            "detail": {
+                "title": "País"
+            },
+            "codigo": "Código",
+            "nome": "Nome",
+            "sigla": "Sigla"
+        }
+    }
+}

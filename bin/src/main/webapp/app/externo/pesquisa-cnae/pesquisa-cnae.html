@@ -1,0 +1,57 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-md-2" style="padding: 0px">
+                <button class="btn btn-success"
+                        ng-class="{'btn-outline': !pesquisarPorCnae}"
+                        ng-click="pesquisarPorCnae = true"
+                        type="button">
+                    <i class="fa {{pesquisarPorCnae? 'fa-check-circle-o':'fa-circle-o'}}"></i>
+                    CNAE
+                </button>
+                <button class="btn btn-success"
+                        ng-class="{'btn-outline': pesquisarPorCnae}"
+                        ng-click="pesquisarPorCnae = false"
+                        type="button">
+                    <i class="fa {{!pesquisarPorCnae? 'fa-check-circle-o':'fa-circle-o'}}"></i>
+                    Serviço
+                </button>
+            </div>
+            <div class="col-md-9">
+                <search-box ng-model="filtro" search-method="buscarCneaOrServico()" disabled="true"></search-box>
+            </div>
+            <div class="col-12" ng-show="cnaes != null">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descrição</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="cnae in cnaes">
+                        <td>{{cnae.codigo}}</td>
+                        <td>{{cnae.descricao}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <span nfse-app-pagination></span>
+            </div>
+            <div class="col-md-12 text-right" ng-show="cnaes != null">
+                <button class="btn btn-danger btn-outline"
+                        title="Clique para baixar as notas da tabela acima em formato de PDF"
+                        ng-click="baixar('pdf')">
+                    <i class="fa fa-download"></i>
+                    PDF
+                </button>
+                <button class="btn btn-primary btn-outline"
+                        title="Clique para baixar as {{pesquisarPorCnae}} rnotas da tabela acima em formato de XLS"
+                        ng-click="baixar('xls')">
+                    <i class="fa fa-download"></i>
+                    XLS
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>

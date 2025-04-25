@@ -1,0 +1,127 @@
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <label>Filtros para emissão do relatório de notas fiscais emitidas</label>
+    </div>
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <div class="col-md-12">
+                    <label>Período</label>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-inline">
+                        <input type="date"
+                               ng-model="emissaoInicial"
+                               class="form-control">
+                        <span>até</span>
+                        <input type="date"
+                               ng-model="emissaoFinal"
+                               class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 form-group">
+                <div class="col-md-12">
+                    <label>Operação</label>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control"
+                            ng-model="naturezaOperacao"
+                            ng-options="naturezaOperacao as 'nfseApp.NaturezaOperacao.' + naturezaOperacao.name | translate for naturezaOperacao in naturezasOperacao track by naturezaOperacao.value">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12 form-group">
+                <div class="col-md-12">
+                    <label>N° Nota Fiscal</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-inline">
+                        <input type="text"
+                               ng-model="notaFiscalInicial"
+                               class="form-control">
+                        <span>até</span>
+                        <input type="text"
+                               ng-model="notaFiscalFinal"
+                               class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    <label>CPF/CNPJ Tomador</label>
+                </div>
+                <div class="col-md-6">
+                    <label>Nome/Razão Social Tomador</label>
+                </div>
+            </div>
+            <div class="col-md-12 form-group">
+                <div class="col-md-3">
+                    <input type="text"
+                           ng-model="cpfCnpjTomador"
+                           class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <input type="text"
+                           ng-model="nomeRazaoSocialTomador"
+                           class="form-control">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-2">
+                    <label>N° RPS</label>
+                </div>
+                <div class="col-md-2">
+                    <label>Série RPS</label>
+                </div>
+            </div>
+            <div class="col-md-12 form-group">
+                <div class="col-md-2">
+                    <input type="text"
+                           ng-model="numeroRps"
+                           class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <input type="text"
+                           ng-model="serieRps"
+                           class="form-control">
+                </div>
+            </div>
+            <div class="col-md-12 form-group">
+                <div class="col-md-12">
+                    <label>Situação</label>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control"
+                            ng-model="situacao"
+                            ng-options="situacao as 'nfseApp.SituacaoNota.' + situacao.name | translate for situacao in situacoes track by situacao.value">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12 form-group">
+                <div class="col-md-12">
+                    <label>Tipo de Relatório</label>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control"
+                            ng-model="tipoRelatorio"
+                            ng-options="tipo as 'nfseApp.TipoRelatorio.' + tipo.name | translate for tipo in tiposRelatorio track by tipo.value">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ibox-footer">
+    <button ng-click="imprimirRelatorioNotasFiscais()"
+            class="btn btn-info">
+        <span class="fa fa-print"></span>
+        Imprimir
+    </button>
+    <button ng-click="iniciarFiltros()"
+            class="btn btn-default">
+        <span class="fa fa-eraser"></span>
+        Limpar Filtros
+    </button>
+</div>
+</div>

@@ -1,0 +1,207 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <form name="editForm" class="form-horizontal" role="form" novalidate ng-submit="save()">
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label for="field_cpfCnpj">CPF ou CNPJ</label>
+
+                            <input type="text" class="form-control" name="cpfCnpj" id="field_cpfCnpj"
+                                   ui-br-cpfcnpj-mask
+                                   ng-disabled="tomador.id"
+                                   ng-blur="loadInPessoaRepoByCpfCnpj()"
+                                   ng-model="tomador.dadosPessoais.cpfCnpj" required>
+
+                            <div ng-show="editForm.cpfCnpj.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.cpfCnpj.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+
+                                <p class="help-block"
+                                   ng-show="editForm.cpfCnpj.$error.exists"
+                                   translate="nfseApp.dadosPessoais.validation.cpfCnpj.exists">
+                                    Já existe
+                                </p>
+
+                                <p class="help-block"
+                                   ng-show="editForm.cpfCnpj.$error.cpf || editForm.cpfCnpj.$error.cnpj">
+                                    CPF ou CNPJ inválido
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="field_nomeRazaoSocial">Nome ou Razão Social</label>
+
+                            <input type="text" class="form-control" name="nomeRazaoSocial"
+                                   id="field_nomeRazaoSocial"
+                                   ng-model="tomador.dadosPessoais.nomeRazaoSocial" required>
+
+                            <div ng-show="editForm.nomeRazaoSocial.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.nomeRazaoSocial.$error.required"
+                                   translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <label for="field_inscricaoEstadualRg">Inscricao Estadual ou RG</label>
+
+                            <input type="text" class="form-control" name="inscricaoEstadualRg"
+                                   id="field_inscricaoEstadualRg"
+                                   ng-model="tomador.dadosPessoais.inscricaoEstadualRg">
+
+                        </div>
+                    </div>
+                    <div class="form-group ">
+
+
+                        <div class="col-md-3">
+                            <label for="field_inscricaoMunicipal">Inscrição Municipal</label>
+
+                            <input type="text" class="form-control" name="inscricaoMunicipal"
+                                   id="field_inscricaoMunicipal"
+                                   ng-model="tomador.dadosPessoais.inscricaoMunicipal">
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <label for="field_nomeFantasia">Nome Fantasia</label>
+                            <input type="text" class="form-control" name="nomeFantasia" id="field_nomeFantasia"
+                                   ng-model="tomador.dadosPessoais.nomeFantasia">
+
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="field_apelido">Apelido</label>
+                            <input type="text" class="form-control" name="nomeFantasia" id="field_apelido"
+                                   ng-model="tomador.dadosPessoais.apelido">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label for="field_email">e-Mail</label>
+                            <input type="text" class="form-control" name="email" id="field_email"
+                                   ng-model="tomador.dadosPessoais.email">
+
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="field_telefone">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" id="field_telefone"
+                                   ui-br-phone-number
+                                   ng-model="tomador.dadosPessoais.telefone">
+
+                            <div ng-show="editForm.telefone.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.telefone.$error || editForm.telefone.$error">
+                                    Telefone inválido
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="field_celular">Celular</label>
+                            <input type="text" class="form-control" name="celular"
+                                   id="field_celular"
+                                   ui-br-phone-number
+                                   ng-model="tomador.dadosPessoais.celular">
+
+                            <div ng-show="editForm.celular.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.celular.$error || editForm.celular.$error">
+                                    Celular inválido
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label for="field_cep">Cep</label>
+                            <input type="text" class="form-control" name="id" id="field_cep"
+                                   ui-br-cep-mask
+                                   ng-blur="loadEnderecoByCEP(tomador.dadosPessoais.cep)"
+                                   ng-model="tomador.dadosPessoais.cep">
+                        </div>
+
+                        <div class="col-md-8">
+                            <label for="field_nome_municipio">Município</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="nome_municipio"
+                                       id="field_nome_municipio"
+                                       disabled
+                                       ng-model="tomador.dadosPessoais.municipio.nome">
+                                <span class="input-group-btn">
+                                            <button type="button" class="btn btn-info" ng-click="searchMunicipio()">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                            </div>
+
+                        </div>
+                        <div class="col-md-2">
+                            <label for="field_estado_municipio">Estado</label>
+                            <input type="text" class="form-control" name="estado_municipio"
+                                   id="field_estado_municipio"
+                                   disabled
+                                   ng-model="tomador.dadosPessoais.municipio.estado">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label for="field_logradouro">Logradouro</label>
+                            <input type="text" class="form-control" name="logradouro" id="field_logradouro"
+                                   ng-model="tomador.dadosPessoais.logradouro">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label for="field_bairro">Bairro</label>
+                            <input type="text" class="form-control" name="bairro" id="field_bairro"
+                                   ng-model="tomador.dadosPessoais.bairro">
+
+                        </div>
+                        <div class="col-md-2">
+                            <label for="field_numero">Número</label>
+                            <input type="text" class="form-control" name="numero" id="field_numero"
+                                   ng-model="tomador.dadosPessoais.numero">
+
+
+                        </div>
+                        <div class="col-md-4">
+                            <label for="field_complemento">Complemento</label>
+                            <input type="text" class="form-control" name="complemento" id="field_complemento"
+                                   ng-model="tomador.dadosPessoais.complemento">
+
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-default" ui-sref="tomador">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                                translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit"
+                                not-has-role="ROLE_ADMIN"
+                                ng-disabled="editForm.$invalid"
+                                class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;
+                            <span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

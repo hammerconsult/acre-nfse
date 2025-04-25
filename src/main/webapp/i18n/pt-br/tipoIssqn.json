@@ -1,0 +1,16 @@
+{
+    "nfseApp": {
+        "TipoIssqn": {
+            "null": "",
+            "ESTIMADO": "Estimado",
+            "FIXO": "Fixo Anual",
+            "MENSAL": "Mensal",
+            "MEI": "MEI",
+            "NAO_INCIDENCIA": "Não Incidência",
+            "SIMPLES_NACIONAL": "Simples Nacional",
+            "SUBLIMITE_ULTRAPASSADO": "Sublimite Ultrapassado",
+            "IMUNE": "Imune",
+            "ISENTO": "Isento"
+        }
+    }
+}

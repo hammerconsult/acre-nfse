@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NotaFiscalEletronica_subreport1" pageWidth="535" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="2.1435888100000025"/>
+	<property name="ireport.x" value="186"/>
+	<property name="ireport.y" value="0"/>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[descricao]]></fieldDescription>
+	</field>
+	<field name="valorServico" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[valorServico]]></fieldDescription>
+	</field>
+	<field name="quantidade" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[quantidade]]></fieldDescription>
+	</field>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="535" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="1" height="29"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="16" width="318" height="14"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição do Item]]></text>
+			</staticText>
+			<line>
+				<reportElement x="446" y="16" width="1" height="14"/>
+			</line>
+			<staticText>
+				<reportElement x="322" y="16" width="52" height="14"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<line>
+				<reportElement x="375" y="16" width="1" height="14"/>
+			</line>
+			<staticText>
+				<reportElement x="376" y="16" width="70" height="14"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor (R$)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="457" y="16" width="75" height="14"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total (R$)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="534" y="1" width="1" height="29"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-43" x="2" y="1" width="530" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Itens do Serviço]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="15" width="535" height="1"/>
+			</line>
+			<line>
+				<reportElement x="321" y="16" width="1" height="14"/>
+			</line>
+			<line>
+				<reportElement x="0" y="30" width="535" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="1" height="14"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="2" y="0" width="318" height="14"/>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="322" y="0" width="52" height="14"/>
+				<box leftPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="321" y="0" width="1" height="14"/>
+			</line>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="376" y="0" width="69" height="14"/>
+				<box leftPadding="1" rightPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorServico}.divide($F{quantidade}, 2, RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="470" y="0" width="61" height="14"/>
+				<box leftPadding="1" rightPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorServico}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="534" y="0" width="1" height="14"/>
+			</line>
+			<line>
+				<reportElement x="0" y="14" width="535" height="1"/>
+			</line>
+			<line>
+				<reportElement x="375" y="0" width="1" height="14"/>
+			</line>
+			<line>
+				<reportElement x="446" y="0" width="1" height="14"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

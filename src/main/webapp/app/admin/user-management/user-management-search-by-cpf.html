@@ -1,0 +1,113 @@
+<div class="modal-header" ng-form="form-user">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cancel()">&times;
+    </button>
+    <h4>Procure usuários por nome, e-mail ou cpf</h4>
+
+</div>
+<div class="modal-body">
+    <div class="row">
+        <form name="form">
+            <div ng-show="users == undefined">
+                <div class="col-md-12">
+
+                    <search-box ng-model="searchQuery" id="search"
+                                search-method="search()"></search-box>
+                </div>
+            </div>
+            <div ng-show='users.length > 0'>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Login/Cpf</th>
+                            <th>e-Mail</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="user in users">
+                            <td>{{user.login}}</td>
+                            <td>{{user.email}}</td>
+                            <td class="text-right">
+                                <button type="submit"
+                                        ng-click="ok(user)"
+                                        class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-check">
+                            </span>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <span nfse-app-pagination></span>
+
+                </div>
+                <div class="col-md-12 text-center" style="padding: 10px; ">
+                    <button type="button"
+                            ng-click="novo()"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-check"></span>
+                        Digitar novo Filtro
+                    </button>
+                </div>
+            </div>
+            <div ng-show="users.length == 0">
+                <div>
+                    <div class="alert alert-warning">
+                        Não foi encontrado nenhum usuário para o Filtro {{searchQuery}}. Por favor digite o email para
+                        solicitar o cadastro do usuário.
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="email"
+                                       ng-model="solicitacao.dadosPessoais.email" required>
+
+                                <div ng-show="form.email.$invalid" class="has-error">
+                                    <p class="help-block small">
+                                        E-mail inválido.
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Nome</label>
+                                <input type="text" class="form-control" name="nome"
+                                       ng-model="solicitacao.dadosPessoais.nomeRazaoSocial" required>
+
+                                <div ng-show="form.nome.$invalid" class="has-error">
+                                    <p class="help-block small">
+                                        Nome inválido.
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center" style="padding: 10px; ">
+                    <button ng-disabled="form.email.$invalid"
+                            ng-click="emailSolicitandoCadastro()"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-check">
+                        </span>
+                        Enviar Email
+                    </button>
+                    <button type="button"
+                            ng-click="novo()"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-check">
+                        </span>
+                        Digitar novo Filtro
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,183 @@
+<div class="row">
+    <form name="editForm" role="form" class="form-horizontal" novalidate ng-submit="save()">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4 class="modal-title">
+                        Edição das Configurações do Sistema
+                    </h4>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label translate="global.field.id">ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="configuracao.id" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label for="field_configuracao_codigo_municipio">Município</label>
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="configuracaoMunicipio"
+                                       id="field_configuracao_codigo_municipio"
+                                       ng-blur="loadMunicipioByCodigo(configuracao.municipio.codigo,configuracao)"
+                                       ng-model="configuracao.municipio.codigo">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn" ng-click="searchMunicipio(configuracao)">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                         </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7">
+                            <label for="field_configuracao_nome_municipio">Nome</label>
+                            <input type="text" class="form-control" name="nome_configuracao_municipio"
+                                   id="field_configuracao_nome_municipio"
+                                   disabled
+                                   ng-model="configuracao.municipio.nome">
+
+                        </div>
+                        <div class="col-md-3">
+                            <label for="field_configuracao_estado_municipio">Estado</label>
+                            <input type="text" class="form-control" name="estado_configuracao_municipio"
+                                   id="field_configuracao_estado_municipio"
+                                   disabled
+                                   ng-model="configuracao.municipio.estado">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label>Verificar Aidf-e na geração de NF-e</label>
+
+                            <div class="switch">
+                                <div class="onoffswitch">
+                                    <input type="checkbox" checked name="ativo"
+                                           ng-model="configuracao.verificarAidfe"
+                                           class="onoffswitch-checkbox" id="field_ativo">
+                                    <label class="onoffswitch-label" for="field_ativo">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4 class="modal-title">
+                        Integração com o Sistema de Tributação
+                    </h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label for="field_configuracao_urlconexao">Url de Conexão</label>
+                            <input type="text" class="form-control" name="urlConexao"
+                                   id="field_configuracao_urlconexao"
+                                   ng-model="configuracao.urlConexao"
+                                   ng-blur="onBlurUrlConexao()" maxlength="255">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label for="field_configuracao_intervalointegracao">Intervalo para Integração (em
+                                minutos)</label>
+                            <input type="number" class="form-control" name="intervaloIntegracao"
+                                   id="field_configuracao_intervalointegracao"
+                                   ng-model="configuracao.intervaloIntegracao"
+                                   ng-disabled="configuracao.urlConexao == undefined || configuracao.urlConexao == ''"
+                                   ng-blur="onBlurIntervaloIntegracao()"
+                                   ng-required="configuracao.urlConexao != undefined && configuracao.urlConexao != ''">
+
+                            <div ng-show="editForm.intervaloIntegracao.$invalid" class="has-error">
+                                <p class="help-block small has-error"
+                                   ng-show="editForm.intervaloIntegracao.$error">
+                                    Intervalo informado é invalido.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4 class="modal-title">
+                        Documentos Obrigatórios para Credenciamento
+                    </h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label for="field_configuracao_descricao_documento_novo">Nome do Documento</label>
+                        </div>
+                    </div>
+                    <div class="form-group"
+                         data-ng-repeat="documento in configuracao.documentosObrigatorios | orderBy: 'descricao'">
+                        <div class="col-md-6">
+                            <input type="text"
+                                   class="form-control"
+                                   id="field_configuracao_descricao_documento"
+                                   name="descricaoDocumento"
+                                   ng-model="documento.descricao"
+                                   min="2"
+                                   maxlength="255"
+                                   required>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-danger"
+                                    type="button"
+                                    ng-click="removerDocumentoObrigatorio(documento)">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <input type="text"
+                                   class="form-control"
+                                   id="field_configuracao_descricao_documento_novo"
+                                   name="descricaoDocumentoNovo"
+                                   ng-model="documentoObrigatorio.descricao"
+                                   ng-minlength="2"
+                                   ng-maxlength="255"
+                                   required>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-danger"
+                                    type="button"
+                                    ng-click="limparDescricao()">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                            <button class="btn btn-primary"
+                                    type="button"
+                                    ng-show="editForm.descricaoDocumentoNovo.$valid"
+                                    ng-click="adicionarDocumentoObrigatorio()">
+                                <span class="glyphicon glyphicon-save"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;<span
+                    translate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+

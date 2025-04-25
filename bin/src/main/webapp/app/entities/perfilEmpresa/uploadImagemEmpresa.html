@@ -1,0 +1,69 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cancel()">&times;
+    </button>
+    <h4 class="modal-title" id="myServicoLabel"> Logo da Empresa</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="form-group" ng-show="imagemPrestador">
+            <div class="col-md-4 col-md-offset-4">
+                <img ng-src="{{imagemPrestador}}" class="img-circle img-responsive">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group">
+                <div class="col-md-8 col-md-offset-2">
+                    <label for="file-upload"
+                           class="custom-file-upload">
+                        <span class="fa fa-cloud-upload"></span> Selecionar Imagem
+                    </label>
+                    <input type="file"
+                           id="file-upload"
+                           name="file"
+                           ngf-select="upload($file)"
+                           ng-model="arquivo"
+                           ngf-max-size="15MB"
+                           accept="image/*">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-show="!imagemPrestador && myImage">
+
+            <div class="col-md-7">
+                <label>Imagem Original</label>
+
+                <div class="cropArea">
+                    <img-crop area-type="square" image="myImage" result-image="myCroppedImage"></img-crop>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="col-md-12">
+                    <label>Imagem Ajustada</label>
+                </div>
+                <div class="col-md-12">
+                    <img ng-src="{{myCroppedImage}}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button"
+                ng-show="myImage"
+                ng-click="updateImagem()"
+                class="btn btn-primary">
+            <i class="fa fa-save"></i>&nbsp;
+            Salvar
+        </button>
+
+        <button class="btn btn-primary"
+                ng-show="imagemPrestador"
+                type="button"
+                ng-click="deleteImagem()">
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;
+            Excluir imagem
+        </button>
+    </div>
+
+</div>

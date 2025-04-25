@@ -1,0 +1,9 @@
+{
+    "nfseApp": {
+        "TipoDocumento": {
+            "null": "",
+            "NFSE": "Nfse-e",
+            "SERVICO_DECLARADO": "Declarado"
+        }
+    }
+}

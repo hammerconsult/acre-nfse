@@ -1,0 +1,58 @@
+server:
+    port: 8484
+
+spring:
+    profiles:
+        active: prod
+    data:
+        elasticsearch:
+            cluster-name:
+            cluster-nodes: localhost:9200
+        mongodb:
+            host: localhost
+            port: 27017
+            database: nfse
+    thymeleaf:
+        mode: XHTML
+        cache: true
+    datasource:
+        url: jdbc:oracle:thin:@//192.168.1.10:1521/wpub
+        username: atualizacaosemanal
+        password: senha10
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+    rabbitmq:
+        host: 192.168.1.24
+        port: 5672
+        username: user
+        password: senha10
+
+metrics:
+    jmx.enabled: true
+    spark:
+        enabled: false
+        host: localhost
+        port: 9999
+    graphite:
+        enabled: false
+        host: localhost
+        port: 2003
+        prefix: nfse
+
+http:
+    cache:
+        timeToLiveInDays: 31
+
+logging:
+    level:
+        ROOT: INFO
+        br:
+            com:
+                webpublico: INFO
+        io:
+            github:
+                jhipster: INFO
+
+perfil:
+    aplicacao: PRODUCAO
+
+

@@ -1,0 +1,21 @@
+{
+    "nfseApp": {
+        "guia" : {
+            "home": {
+                "title": "Guias",
+                "createLabel": "Create a new Guia",
+                "createOrEditLabel": "Create or edit a Guia"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Guia {{ id }}?"
+            },
+            "detail": {
+                "title": "Guia"
+            },
+            "guia": "Guia",
+            "valor": "Valor",
+            "dataVencimento": "DataVencimento",
+            "declaracaoMensalServico": "declaracaoMensalServico"
+        }
+    }
+}

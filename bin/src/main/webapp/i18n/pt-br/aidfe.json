@@ -1,0 +1,27 @@
+{
+  "nfseApp": {
+    "aidfe": {
+      "home": {
+        "title": "AIDF-e",
+        "createLabel": "Solicitar AIDF-e",
+        "createOrEditLabel": "Solicitar AIDF-e",
+        "deferimentoAidfe": "Deferimento de AIDF-e"
+      },
+      "delete": {
+        "question": "Você tem certeza que quer excluir essa solicitação de AIDF-e {{ id }}?"
+      },
+      "detail": {
+        "title": "Detalhes da AIDFE"
+      },
+      "dadosPessoais": "dadosPessoais",
+      "prestador": "prestador",
+      "quantidade": "Quantidade Solicitada",
+      "observacao": "Observação",
+      "numeroInicial": "NFS-e Inicial",
+      "numeroFinal": "NFS-e Final",
+      "numero": "Numero da Sequencia",
+      "usuarioEmpresa": "Usuário da Empresa",
+      "prestadorServicos": "Prestador de Serviços"
+    }
+  }
+}

@@ -1,0 +1,170 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cancel()">&times;
+    </button>
+    <h4 class="modal-title" id="myServicoLabel">
+        Adicionar itens de serviço
+    </h4>
+</div>
+<div class="modal-body">
+    <form name="editForm">
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="center-block">Descrição do Item</label>
+                <input enter-as-tab type="text" class="form-control"
+                       name="servico_descricao"
+                       id="field_servico_descricao"
+                       minlength="3"
+                       maxlength="255"
+                       ng-model="detalhe.descricao">
+
+                <p class="small text-danger"
+                   ng-show="editForm.servico_descricao.$invalid">
+                    A Descrição do Item deve ter entre 3 e 255 caracteres
+                </p>
+            </div>
+
+            <div class="form-group col-md-2">
+                <label class="center-block">Quantidade</label>
+                <input enter-as-tab type="number" class="form-control"
+                       ng-class="{'has-error' : detalhe.quantidade <= 0 && (editForm.$submitted || editForm.detalhe_quantidade.$touched)}"
+                       ng-blur="calculaValoresServico()"
+                       name="detalhe_quantidade" id="field_detalhe_quantidade"
+                       ng-model="detalhe.quantidade">
+
+                <div class="margin">
+                    <p class="help-block"
+                       ng-show="detalhe.quantidade <= 0">
+                        A Quantidade deve ser maior que ZERO (0)
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-group col-md-4"
+                 ng-class="{'has-error' : detalhe.valorServico <= 0 && (editForm.$submitted || editForm.servico_aliquota.$touched)}">
+                <label class="control-label">Valor Unitário</label>
+                <input enter-as-tab type="text" class="form-control"
+                       ui-money-mask=""
+                       name="detalhe_aliquota"
+                       id="field_detalhe_valor_servico"
+                       ng-change="calculaValoresServico()"
+                       ng-model="detalhe.valorUnitario">
+                <div class="margin">
+                    <div ng-show="editForm.detalhe_aliquota.$invalid">
+                        <p class="help-block text-danger">
+                            O valor inválido deve ser maior que ZERO (R$ 0,00) e ter até 5 casas
+                            decimais
+                        </p>
+                    </div>
+                    <p class="help-block"
+                       ng-show="detalhe.valorServico <= 0">
+                        O valor deve ser maior que ZERO (R$ 0,00)
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="center-block">Valor do Serviço</label>
+                <input enter-as-tab type="text" class="form-control"
+                       ui-money-mask=""
+                       disabled
+                       name="detalhe_total_servico" id="field_detalhe_total_servico"
+                       ng-model="detalhe.valorServico">
+            </div>
+
+            <div class="form-group col-md-2">
+                <label class="center-block">&ensp;</label>
+                <button class="btn btn-success"
+                        ng-click="adicionarItem()"
+                        ng-disabled="disabledItem()">
+                    <i class="fa fa-plus-circle"></i>
+                    Adicionar
+                </button>
+            </div>
+        </div>
+        <div class="table-responsive"
+             ng-if="servico.detalhes && servico.detalhes.length > 0"
+             style="max-height: 400px; overflow-y: auto">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Quantidade</th>
+                    <th>Valor Unitário</th>
+                    <th>Valor Total</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="detalhe in servico.detalhes">
+                    <td>{{detalhe.descricao}}</td>
+                    <td>{{detalhe.quantidade}}</td>
+                    <td>{{detalhe.valorUnitario | number:2}}</td>
+                    <td>{{detalhe.valorServico | number:2}}</td>
+                    <td class="text-center">
+                        <a type="button"
+                           ng-click="editarItem($index)"
+                           class="text-warning">
+                            <span class="fa fa-pencil"></span>
+                        </a>
+                        <a type="button"
+                           ng-click="removerItem($index)"
+                           class="text-danger">
+                            <span class="fa fa-times"></span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <h3>Valor Total</h3>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label">Valor Total do Serviço</label>
+                <input enter-as-tab type="text" class="form-control"
+                       ui-money-mask=""
+                       disabled
+                       name="servico_aliquota"
+                       id="field_servico_valor_servico"
+                       ng-model="notaFiscal.totalNota">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="control-label">Valor Total dos Itens</label>
+                <input enter-as-tab type="text" class="form-control"
+                       disabled
+                       name="valor_itens"
+                       id="field_valor_itens"
+                       value="{{getTotal() | number:2}}">
+            </div>
+
+            <div class="form-group col-md-4"
+                 ng-class="{'has-error' : getDiferenca() >0}">
+                <label class="center-block">Diferença</label>
+                <input enter-as-tab type="text" class="form-control"
+                       disabled
+                       name="diferenca"
+                       id="field_diferenca"
+                       value="{{getDiferenca() | number:2}}">
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn"
+            ng-click="cancel()">
+        <i class="fa fa-times"></i>
+        Cancelar
+    </button>
+
+    <button class="btn btn-success"
+            ng-click="ok()"
+            ng-disabled="!servico.detalhes || servico.detalhes.length == 0">
+        <i class="fa fa-save"></i>
+        Confirmar
+    </button>
+</div>
+

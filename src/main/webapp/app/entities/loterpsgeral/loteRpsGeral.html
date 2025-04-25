@@ -1,0 +1,189 @@
+<div class="ibox animated fadeInDown">
+    <div class="ibox-content">
+        <form name="formFiltros" class="validate-input">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>Opções de Filtros</span>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <div class="col-md-2">
+                                <label>Inscrição Cadastral</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="filtro.inscricaoCadastral"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label>CNPJ</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="filtro.cnpj"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-7">
+                                <label>Razão Social</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="filtro.razaoSocial"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <div class="col-md-2">
+                                <label>Recebimento Inicial</label>
+                                <input enter-as-tab type="date"
+                                       id="dataRecebimentoInicial"
+                                       name="dataRecebimentoInicial"
+                                       ng-model="filtro.dataRecebimentoInicial"
+                                       class="form-control">
+                                <div ng-show="formFiltros.dataRecebimentoInicial.$invalid">
+                                    <p class="help-block">Data inválida.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Recebimento Final</label>
+                                <input enter-as-tab
+                                       type="date"
+                                       name="dataRecebimentoFinal"
+                                       ng-model="filtro.dataRecebimentoFinal"
+                                       class="form-control">
+                                <div ng-show="formFiltros.dataRecebimentoFinal.$invalid">
+                                    <p class="help-block">Data inválida.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>N° Lote Inicial</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="filtro.numeroLoteInicial"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <label>N° Lote Final</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="filtro.numeroLoteFinal"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <label>N° RPS</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="filtro.numeroRps"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <label>N° Nota Fiscal</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="filtro.numeroNotaFiscal"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="col-md-2">
+                                <label>Situação</label>
+                                <select class="form-control"
+                                        ng-model="filtro.situacao"
+                                        ng-options="situacao as 'nfseApp.SituacaoLoteRps.' + situacao.name | translate for situacao in situacoes track by situacao.value">
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Versão do Sistema</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="filtro.versaoSistema"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <label>Versão da Abrasf</label>
+                                <input enter-as-tab type="text"
+                                       ng-model="filtro.versaoAbrasf"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-1">
+                                <label>Reprocessar?</label>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" checked name="reprocessar"
+                                               ng-model="filtro.reprocessar" class="onoffswitch-checkbox"
+                                               id="reprocessar">
+                                        <label class="onoffswitch-label" for="reprocessar">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group">
+                                <button type="button"
+                                        ng-disabled="formFiltros.$invalid"
+                                        ng-click="loadAll()"
+                                        class="btn btn-primary">
+                                    <span class="fa fa-search"></span>
+                                    <span>Pesquisar</span>
+                                </button>
+                                <button type="button"
+                                        ng-click="limparFiltros()"
+                                        class="btn btn-default">
+                                    <span class="fa fa-close"></span>
+                                    <span>Limpar Filtros</span>
+                                </button>
+                                <button type="button"
+                                        ng-click="dispararReprocessamento()"
+                                        class="btn btn-danger">
+                                    <span class="fa fa-check"></span>
+                                    <span>Disparar Reprocessamento</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12 table-responsive">
+                    <table class="table table-striped small">
+                        <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Prestador</th>
+                            <th>Versão do Sistema</th>
+                            <th>Versão da Abrasf</th>
+                            <th>Data de Recebimento</th>
+                            <th>Situação</th>
+                            <th class="text-center">Reprocessar?</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="lote in lotes">
+                            <td>
+                                <a ui-sref="loteRpsGeral.detail({id:lote.id})">
+                                    {{lote.numero}}
+                                </a>
+                            </td>
+                            <td>{{lote.prestador.inscricaoMunicipal}} (
+                                {{lote.prestador.pessoa.dadosPessoais.nomeRazaoSocial}}
+                                -{{lote.prestador.pessoa.dadosPessoais.cpfCnpj}} )
+                            </td>
+                            <td>{{lote.versaoSistema}}</td>
+                            <td>{{lote.versaoAbrasf}}</td>
+                            <td>{{lote.dataRecebimento | date: 'dd/MM/yyyy': '+0000'}}</td>
+
+                            <td>{{'nfseApp.SituacaoLoteRps.' + lote.situacao | translate}}</td>
+                            <td class="text-center">
+                                <a ng-if="lote.situacao != 'PROCESSADO'" ng-click="inverterReprocessar(lote)">
+                                    <span ng-if="lote.reprocessar" class="label label-success">Sim</span>
+                                    <span ng-if="!lote.reprocessar" class="label label-default">Não</span>
+                                </a>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <span nfse-app-pagination></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

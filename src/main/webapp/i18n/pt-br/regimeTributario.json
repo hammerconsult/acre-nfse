@@ -1,0 +1,22 @@
+{
+    "nfseApp": {
+        "RegimeTributario": {
+            "null": "",
+            "MICROEMPRESA_MUNICIPAL": "Microempresa Municipal",
+            "ESTIMATIVA": "Estimativa",
+            "SOCIEDADE_DE_PROFISSIONAIS": "Sociedade de Profissionais",
+            "COOPERATIVA": "Cooperativa",
+            "MICROEMPRESARIO_INDIVIDUAL": "Microempreendedor Individual (MEI)",
+            "MICROEMPRESARIO_E_EMPRESA_DE_PEQUENO_PORTE": "Microempresário e Empresa de Pequeno Porte (ME EPP)",
+            "SIMPLES_NACIONAL": "Simples Nacional",
+            "ENTIDADE_FILANTROPICA": "Entidade Filantrópica",
+            "ISS_FIXO_PESSOA_FISICA": "ISS Fixo Pessoa Física",
+            "ISS_FIXO_PESSOA_JURIDICA": "ISS Fixo Pessoa Jurídica",
+            "EMPRESA_EM_FISCALIZACAO": "Empresa em Fiscalização",
+            "LUCRO_PRESUMIDO": "Lucro Presumido",
+            "LUCRO_REAL": "Lucro Real",
+            "INSTITUICAO_FINANCEIRA": "Instituição Financeira",
+            "SEM_REGIME_FISCAL": "Sem Regime Fiscal"
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "nfseApp": {
+    "TipoPartidaArquivoDesif": {
+      "null": "",
+      "CREDITO": "1 - Crédito",
+      "DEBITO": "2 - Débito"
+    }
+  }
+}

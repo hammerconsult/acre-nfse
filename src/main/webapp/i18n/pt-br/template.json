@@ -1,0 +1,20 @@
+{
+    "nfseApp": {
+        "template" : {
+            "home": {
+                "title": "Templates",
+                "createLabel": "Criar um novo Template",
+                "createOrEditLabel": "Criar ou editar um Template"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Template {{ id }}?"
+            },
+            "detail": {
+                "title": "Template"
+            },
+            "codigo": "Codigo",
+            "tipo": "Tipo",
+            "template": "Template/Modelo"
+        }
+    }
+}

@@ -1,0 +1,305 @@
+<form class="form-horizontal" name="editForm" role="form" novalidate>
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="row">
+                        <div class="col-md-12 m-t-md border-bottom">
+                            <h3>Dados do RPS </h3>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-1">
+                            <small>Número</small>
+                            <br>
+                            <input type="text" readonly class="form-control" value="{{rPS.numero}}">
+                        </div>
+
+                        <div class="col-md-2">
+                            <small>Competência</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.competencia|date:'MM/yyyy': '+0000'}}">
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <small>Emissão</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.dataEmissao|date:'dd/MM/yyyy HH:mm': '+0000'}}">
+
+                        </div>
+                        <div class="col-md-1">
+                            <small>ISS Retido</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.issRetido ? 'Sim': 'Nao'}}">
+
+                        </div>
+                    </div>
+
+                    <div
+                        ng-show="rPS.modalidade != 'NAO_IDENTIFICADO'">
+                        <div class="row">
+                            <div class="col-md-12 m-t-md border-bottom">
+                                <h3>Tomador do Serviço</h3>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <small>CPF ou CNPJ</small>
+                                <br>
+                                <input type="text" readonly class="form-control" value="{{rPS.dadosPessoaisTomador.cpfCnpj |
+                    brCpfCnpj}}">
+                            </div>
+
+                            <div class="col-md-3">
+                                <small>Inscrição Municipal</small>
+                                <br>
+                                <input type="text" readonly class="form-control"
+                                       value="{{rPS.dadosPessoaisTomador.inscricaoMunicipal}}">
+                            </div>
+
+                            <div class="col-md-3">
+                                <small>Inscrição Estadual ou RG</small>
+                                <br>
+                                <input type="text" readonly class="form-control"
+                                       value="{{rPS.dadosPessoaisTomador.inscricaoEstadualRg}}">
+                            </div>
+                            <div class="col-md-3">
+                                <small>e-Mail</small>
+                                <br>
+                                <input type="text" readonly class="form-control"
+                                       value="{{rPS.dadosPessoaisTomador.email}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <small>Nome ou Razão Social</small>
+                                <br>
+                                <input type="text" readonly class="form-control"
+                                       value="{{rPS.dadosPessoaisTomador.nomeRazaoSocial}}">
+                            </div>
+
+                            <div class="col-md-4">
+                                <small>Nome Fantasia</small>
+                                <br>
+                                <input type="text" readonly class="form-control"
+                                       value="{{rPS.dadosPessoaisTomador.nomeFantasia}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <small>Telefone</small>
+                                <br>
+                                <input type="text" readonly class="form-control"
+                                       value="{{rPS.dadosPessoaisTomador.telefone}}">
+                            </div>
+                            <div class="col-md-2">
+                                <small>Celular</small>
+                                <br>
+                                <input type="text" readonly class="form-control" value="{{rPS.dadosPessoaisTomador.celular
+                    }}">
+                            </div>
+                            <div class="col-md-2">
+                                <small>Cep</small>
+                                <br>
+                                <input type="text" readonly class="form-control" value="{{rPS.dadosPessoaisTomador.cep |
+                    brCep}}">
+                            </div>
+                            <div class="col-md-6">
+                                <small>Município</small>
+                                <br>
+                                <input type="text" readonly class="form-control" value="{{rPS.dadosPessoaisTomador.municipio.nome}}
+                    {{rPS.dadosPessoaisTomador.municipio.estado}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <small>Logradouro</small>
+                                <br>
+                                <input type="text" readonly class="form-control"
+                                       value="{{rPS.dadosPessoaisTomador.logradouro}}">
+                            </div>
+                            <div class="col-md-3">
+                                <small>Bairro</small>
+                                <br>
+                                <input type="text" readonly class="form-control"
+                                       value="{{rPS.dadosPessoaisTomador.bairro}}">
+                            </div>
+                            <div class="col-md-1">
+                                <small>Número</small>
+                                <br>
+                                <input type="text" readonly class="form-control"
+                                       value="{{rPS.dadosPessoaisTomador.numero}}">
+                            </div>
+                            <div class="col-md-3">
+                                <small>Complemento</small>
+                                <br>
+                                <input type="text" readonly class="form-control"
+                                       value="{{rPS.dadosPessoaisTomador.complemento}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 m-t-md border-bottom">
+                            <h3>Serviços</h3>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Descrição</th>
+                                    <th>Alíquota</th>
+                                    <th>Base de Cálculo</th>
+                                    <th>Valor ISS</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="serv in rPS.itens">
+                                    <td>{{serv.servico.codigo}}</td>
+                                    <td>{{serv.nomeServico}}</td>
+                                    <td>{{serv.servico.aliquota}}</td>
+                                    <td>{{serv.baseCalculo | currency : 'R$ '}}</td>
+                                    <td>{{serv.iss | currency : 'R$ '}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div style="text-align: center"
+                                 ng-show="rPS.itens.length == 0">
+                                <div class="help-block">
+                                    <strong>Atenção!</strong> Adicione ao menos um serviço para salvar a Nota
+                                    Fiscal
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 m-t-md border-bottom">
+                            <h3>Tributos Federais</h3>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <small>PIS</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.tributosFederais.pis | currency:'R$ '}}">
+                        </div>
+                        <div class="col-md-4">
+                            <small>COFINS</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.tributosFederais.cofins | currency:'R$ '}}">
+                        </div>
+                        <div class="col-md-4">
+                            <small>INSS</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.tributosFederais.inss | currency:'R$ '}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <small>IRRF</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.tributosFederais.irrf | currency:'R$ '}}">
+                        </div>
+                        <div class="col-md-4">
+                            <small>CSLL</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.tributosFederais.csll | currency:'R$ '}}">
+                        </div>
+                        <div class="col-md-4">
+                            <small>Outras Retencoes</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.tributosFederais.outrasRetencoes | currency:'R$ '}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 m-t-md border-bottom">
+                            <h3>Valores do RPS</h3>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <small>Total dos Serviços</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.totalServicos | finance:'R$ '}}">
+                        </div>
+                        <div class="col-md-3">
+                            <small>Deduções Legais</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.deducoesLegais | finance:'R$ '}}">
+                        </div>
+                        <div class="col-md-3">
+                            <small>Descontos Incondicionados</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.descontosIncondicionais | finance:'R$ '}}">
+                        </div>
+                        <div class="col-md-3">
+                            <small>Descontos Condicionados</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.descontosCondicionais | finance:'R$ '}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <small>Retenções Federais</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.retencoesFederais | finance:'R$ '}}">
+                        </div>
+                        <div class="col-md-3">
+                            <small>Base de Cálculo</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.baseCalculo | finance:'R$ '}}">
+                        </div>
+                        <div class="col-md-3">
+                            <small>Valor de ISS</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.issCalculado | finance:'R$ '}}">
+                        </div>
+                        <div class="col-md-3">
+                            <small>Valor Liquido</small>
+                            <br>
+                            <input type="text" readonly class="form-control"
+                                   value="{{rPS.valorLiquido | finance:'R$ '}}">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <button type="submit"
+            ui-sref="rPS"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;
+        Voltar
+    </button>
+</form>
